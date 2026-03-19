@@ -1,0 +1,22 @@
+# Environment
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Dependencies
+node_modules/
+
+# Sessions (ephemeral, local only)
+tasks/sessions/*.md
+
+# Cost log (local tracking)
+tasks/cost-log.md
