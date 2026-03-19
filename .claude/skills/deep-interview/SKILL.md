@@ -1,63 +1,59 @@
 ---
 name: deep-interview
-description: "요구사항 명확화. 모호성 게이팅.\n\n트리거: 인터뷰, 요구사항, 명확화, 모호, 뭘 원하는지"
+description: "Requirements clarification. Ambiguity gating.\n\nTrigger: interview, requirements, clarify, ambiguous"
 user-invocable: true
 ---
 
 # Deep Interview
 
-## 목적
-모호한 요청을 구체적 요구사항으로 변환. 모호성 20% 이하에서만 실행 진입.
+## Purpose
+Convert ambiguous requests into concrete requirements. Proceed only when ambiguity ≤ 20%.
 
-## 모호성 점수 (가중 평균)
-| 차원 | 가중치 | 측정 |
+## Ambiguity Score (weighted)
+| Dimension | Weight | Measures |
 |---|---|---|
-| Goal (목표) | 40% | 무엇을 달성해야 하는가? |
-| Constraints (제약) | 30% | 하면 안 되는 것, 기술 제약, 시간/범위 |
-| Success Criteria (성공기준) | 30% | 어떻게 되면 완료인가? |
+| Goal | 40% | What must be achieved? |
+| Constraints | 30% | What must NOT happen? Tech limits? Scope? |
+| Success Criteria | 30% | How do we know it's done? |
 
-각 차원 0~100% (0=완전 명확, 100=완전 모호).
-가중 평균 ≤ 20%일 때만 다음 단계 진입.
+Each dimension: 0~100% (0=fully clear, 100=fully ambiguous).
+Weighted average ≤ 20% → proceed to next stage.
 
-## 절차
+## Procedure
 
-### 1. 코드베이스 먼저 탐색
-- 요청과 관련된 파일/패턴/의존성을 **먼저** 탐색.
-- 코드가 답할 수 있는 질문은 사용자에게 묻지 않음 (토큰 절약).
+### 1. Codebase First
+- Explore related files/patterns/dependencies **before** asking the user.
+- Don't waste user's time on questions the code can answer (save tokens).
 
-### 2. 질문 프로토콜
-- **한 번에 질문 1개**. 배치 질문 금지.
-- 가장 약한 차원(가장 모호한 차원)을 공략.
-- 질문 전 현재 모호성 점수 보고:
+### 2. Question Protocol
+- **One question at a time**. No batch questions.
+- Target the weakest dimension (most ambiguous).
+- Report current ambiguity score before each question:
   ```
-  [모호성] Goal: 60% | Constraints: 40% | Success: 80% → 가중 평균: 62%
-  → Success 차원 공략.
-  질문: "이 기능이 완료되었다고 판단할 수 있는 구체적 조건은?"
+  [Ambiguity] Goal: 60% | Constraints: 40% | Success: 80% → Weighted: 62%
+  → Targeting: Success dimension.
+  Question: "What specific condition would mean this feature is complete?"
   ```
 
-### 3. 챌린지 라운드
-| 라운드 | 역할 | 질문 |
+### 3. Challenge Rounds
+| Round | Role | Question |
 |---|---|---|
-| 4 | 반대론자 (Contrarian) | "만약 정반대가 맞다면?" |
-| 6 | 단순화론자 (Simplifier) | "가장 단순한 버전은?" |
+| 4 | Contrarian | "What if the opposite were true?" |
+| 6 | Simplifier | "What's the simplest possible version?" |
 
-각 챌린지는 1회만 발동. 관점 전환 목적.
+Each challenge fires once. Purpose: shift perspective.
 
-### 4. 수렴 판단
-- 모호성 ≤ 20% → 요약 제시 → 사용자 확인 → 다음 단계.
-- 8라운드 이후에도 > 20% → 현재 상태 요약 + 사용자에게 판단 위임.
+### 4. Convergence
+- Ambiguity ≤ 20% → present summary → user confirms → next stage.
+- After 8 rounds still > 20% → present current state + delegate decision to user.
 
-## 출력 형식
+## Output Format
 ```
-## 요구사항 요약
-- **Goal**: {목표}
-- **Constraints**: {제약}
-- **Success Criteria**: {성공기준}
-- **모호성**: Goal {N}% | Constraints {N}% | Success {N}% → 가중 평균 {N}%
+## Requirements Summary
+- **Goal**: {goal}
+- **Constraints**: {constraints}
+- **Success Criteria**: {criteria}
+- **Ambiguity**: Goal {N}% | Constraints {N}% | Success {N}% → Weighted {N}%
 
-→ 다음 단계: brainstorming / writing-plans
+→ Next: brainstorming / direct execution
 ```
-
-## 다음 단계
-- 복합 작업 → brainstorming
-- 단순 작업 → 직접 실행

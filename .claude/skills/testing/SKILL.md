@@ -1,16 +1,16 @@
 ---
 name: testing
-description: "테스트 작성/실행. 트리거: 테스트, test, 검증, TDD, 단위 테스트, 통합 테스트."
+description: "Test writing and execution.\n\nTrigger: test, TDD, verify, unit test, integration test"
 ---
 
 # Testing
 
-## 절차
-1. 테스트 프레임워크 감지.
-2. 변경 파일 대응 테스트 존재 확인. 없으면 생성.
-3. 기존 패턴 따라 케이스 추가. 엣지 케이스 포함.
-4. 실행. 실패 시 원인 분석 → 수정.
+## Procedure
+1. Detect test framework.
+2. Check if tests exist for changed files. Create if missing.
+3. Follow existing patterns. Add edge cases.
+4. Run. On failure: root cause analysis → fix.
 
-## 규칙
-- 테스트명: should_return_X_when_Y.
-- 엣지: null, 빈 값, 경계값, 에러.
+## Rules
+- Test names: should_return_X_when_Y.
+- Edge cases: null, empty, boundary, error conditions.

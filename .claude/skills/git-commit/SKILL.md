@@ -1,42 +1,42 @@
 ---
 name: git-commit
-description: "Git 커밋 규칙 + 구조적 트레일러. 트리거: 커밋, commit, git, 변경 저장."
+description: "Git commit rules + structured trailers.\n\nTrigger: commit, git, save changes"
 ---
 
 # Git Commit
 
-## 형식
+## Format
 ```
 type(scope): summary
 
 body (optional)
 
-Constraint: (이 변경의 제약 조건)
-Rejected: (검토했으나 버린 대안 + 이유)
-Directive: (이 변경이 따르는 지시/요구사항)
-Not-tested: (테스트하지 못한 시나리오)
+Constraint: (constraints on this change)
+Rejected: (alternatives considered + why rejected)
+Directive: (requirement/instruction this follows)
+Not-tested: (scenarios not covered by tests)
 ```
 
-## 타입
+## Types
 type: feat|fix|refactor|docs|test|chore|style|perf
-summary: 영어, 현재형, 50자 이내, 소문자 시작.
+summary: English, present tense, ≤50 chars, lowercase start.
 
-## 트레일러 규칙
-- **Constraint**: 항상 포함. 없으면 `none`.
-- **Rejected**: brainstorming에서 버린 대안이 있을 때. 없으면 생략.
-- **Directive**: 사용자 지시 또는 요구사항 번호. 없으면 생략.
-- **Not-tested**: 테스트 커버리지 밖 시나리오. 없으면 `none`.
+## Trailer Rules
+- **Constraint**: always include. `none` if none.
+- **Rejected**: when alternatives were discarded in brainstorming. Omit otherwise.
+- **Directive**: user instruction or requirement ID. Omit if none.
+- **Not-tested**: scenarios outside test coverage. `none` if fully covered.
 
-## 절차
+## Procedure
 1. git status.
-2. 논리적 단위 스테이징 (관련 변경만 묶기).
-3. 메시지 + 트레일러 작성.
-4. 커밋 전 확인:
-   - .env, 시크릿, 빌드 산출물 포함 여부.
-   - 디버그 코드 (console.log, print) 포함 여부.
-5. 커밋.
+2. Stage logical units (related changes only).
+3. Write message + trailers.
+4. Pre-commit check:
+   - .env, secrets, build artifacts must not be included.
+   - Debug code (console.log, print) must not be included.
+5. Commit.
 
-## 예시
+## Example
 ```
 feat(auth): add JWT refresh token rotation
 

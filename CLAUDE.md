@@ -139,14 +139,6 @@
 - 서브에이전트 1개 = 작업 1개 = 최소 컨텍스트.
 - 서브에이전트 완료 후: 결과만 수신. 내부 과정은 버림.
 
-## 작업 기억
-- tasks/plan.md: 현재 Phase + 다음 액션 (compact).
-- tasks/context.md: 결정 근거.
-- tasks/checklist.md: 진행 상황.
-- tasks/change_log.md: 수정 기록.
-- tasks/lessons.md: 실패/성공 → 규칙.
-- 컨텍스트 단절 시: plan + checklist + lessons 재독 → 3줄 요약 → 재개.
-
 ## 자동화 훅 (.claude/hooks/)
 - **SessionStart**: plan.md + lessons.md + 최근 세션 자동 로드.
 - **PreCompact**: 핸드오프 작성 리마인더.

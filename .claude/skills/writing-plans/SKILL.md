@@ -1,55 +1,55 @@
 ---
 name: writing-plans
-description: "구체적 구현 계획 작성. Bite-sized Steps.\n\n트리거: 계획, 구현 계획, 플랜 작성, 단계 설계"
+description: "Concrete implementation plan. Bite-sized steps.\n\nTrigger: plan, implementation plan, step design"
 ---
 
 # Writing Plans
 
-## 전제
-brainstorming에서 사용자가 설계를 승인한 상태.
+## Prerequisite
+User approved design from brainstorming stage.
 
-## 원칙
-- 각 단계는 **2~5분** 분량.
-- "테스트 추가", "리팩토링 수행" 같은 추상적 표현 **금지**.
-- 실제 코드, 정확한 명령어, 예상 출력을 포함.
+## Principles
+- Each step: **2~5 minutes** of work.
+- Abstract expressions like "add tests" or "refactor" are **forbidden**.
+- Include actual code, exact commands, and expected output.
 
-## 절차
-1. 승인된 설계를 기반으로 파일 구조 매핑.
-2. 단계 분해 (TDD 사이클 적용 시):
-   - Step N-1: 실패하는 테스트 작성 (코드 포함)
-   - Step N-2: 테스트 실행, 실패 확인 (명령어 + 예상 출력)
-   - Step N-3: 최소 구현 (코드 포함)
-   - Step N-4: 테스트 실행, 통과 확인 (명령어 + 예상 출력)
-   - Step N-5: 커밋 (명령어)
-3. tasks/plan.md에 현재 단계 기록.
+## Procedure
+1. Map file structure based on approved design.
+2. Decompose into steps (TDD cycle when applicable):
+   - Step N-1: Write failing test (include code)
+   - Step N-2: Run test, confirm failure (command + expected output)
+   - Step N-3: Minimal implementation (include code)
+   - Step N-4: Run test, confirm pass (command + expected output)
+   - Step N-5: Commit (command)
+3. Record current step in tasks/plan.md.
 
-## 탈출 조건
-- 모든 단계에 구체적 코드 + 명령어 + 예상 출력 포함.
-- 사용자 계획 승인.
+## Exit Condition
+- All steps contain concrete code + commands + expected output.
+- User approves plan.
 
-## 합리화 방지 테이블
-| 변명 | 반박 |
+## Rationalization Prevention
+| Excuse | Rebuttal |
 |---|---|
-| "코드를 미리 다 쓸 수 없다" | 방향과 골격은 쓸 수 있다. 완벽하지 않아도 구체적이어야 한다. |
-| "너무 상세하면 유연성이 떨어진다" | 상세한 계획은 변경 시 어디를 고칠지 명확하게 해준다. |
-| "이 단계는 자명하다" | 자명함은 검증하지 않은 가정이다. 명시하라. |
+| "Can't write all code upfront" | Direction and skeleton are writable. Concrete > vague. |
+| "Too detailed = inflexible" | Detailed plans make change points explicit. |
+| "This step is obvious" | "Obvious" = unverified assumption. Make it explicit. |
 
-## 출력 형식
+## Output Format
 ```
-## 구현 계획: {작업 요약}
-예상 단계: N개 | 예상 파일: M개
+## Implementation Plan: {task summary}
+Estimated steps: N | Estimated files: M
 
-### Step 1: {제목}
-- 파일: {경로}
-- 코드:
+### Step 1: {title}
+- File: {path}
+- Code:
   ```{lang}
-  (실제 코드)
+  (actual code)
   ```
-- 실행: `{명령어}`
-- 예상 결과: {출력}
+- Run: `{command}`
+- Expected: {output}
 
 ### Step 2: ...
 ```
 
-## 다음 단계
-→ execution (사용자 승인 후, executor-agent에 위임)
+## Next Step
+→ execution (after user approval, delegate to executor-agent)

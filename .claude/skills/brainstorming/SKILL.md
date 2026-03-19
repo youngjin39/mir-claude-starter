@@ -1,49 +1,49 @@
 ---
 name: brainstorming
-description: "설계 강제. 코딩 전 Hard Gate.\n\n트리거: 설계, 브레인스토밍, 아키텍처, 구조 설계, 새 기능(복합)"
+description: "Design enforcement. Hard gate before coding.\n\nTrigger: design, brainstorming, architecture, new feature (complex)"
 ---
 
 # Brainstorming
 
 <HARD-GATE>
-이 단계를 통과하지 않으면 코드를 작성하지 않는다.
-설계 승인 없이 구현으로 넘어가는 것은 금지.
+No code without passing this stage.
+Implementation without design approval is forbidden.
 </HARD-GATE>
 
-## 절차
-1. 요청 분석: 무엇을 달성해야 하는가?
-2. 기존 코드 탐색: 관련 파일/패턴/의존성 파악.
-3. **2~3개 대안 제시** (1개만 제시 금지):
-   - 각 대안: 접근 방식 + 장단점 + 리스크 + 영향 범위.
-4. 추천안 표시 + 근거.
-5. 사용자 승인 대기.
+## Procedure
+1. Analyze request: what must be achieved?
+2. Explore existing code: related files/patterns/dependencies.
+3. **Present 2~3 alternatives** (single option forbidden):
+   - Each: approach + pros/cons + risks + blast radius.
+4. Mark recommendation + rationale.
+5. Wait for user approval.
 
-## 탈출 조건
-- 사용자가 설계를 승인했을 때만 writing-plans로 진행.
+## Exit Condition
+- User approves design → proceed to writing-plans.
 
-## 합리화 방지 테이블
-| 변명 | 반박 |
+## Rationalization Prevention
+| Excuse | Rebuttal |
 |---|---|
-| "너무 단순해서 설계 불필요" | 단순해 보이는 것이 가장 위험. 영향 범위 확인은 필수. |
-| "시간이 없어서 바로 코딩" | 잘못된 설계로 재작업하는 시간이 더 크다. |
-| "이전에 비슷한 걸 했으니까" | 비슷함 ≠ 동일. 차이점을 명시적으로 확인해야 한다. |
-| "대안이 하나밖에 없다" | 대안이 없다는 것은 탐색이 부족하다는 증거. |
+| "Too simple for design" | What looks simple is most dangerous. Always check blast radius. |
+| "No time, just code" | Rework from bad design costs more than upfront planning. |
+| "Did something similar before" | Similar ≠ identical. Explicitly confirm differences. |
+| "Only one option exists" | No alternatives = insufficient exploration. |
 
-## 출력 형식
+## Output Format
 ```
-## 설계: {작업 요약}
-### 대안 A: {이름}
-- 접근: ...
-- 장점: ...
-- 단점: ...
-- 리스크: ...
+## Design: {task summary}
+### Option A: {name}
+- Approach: ...
+- Pros: ...
+- Cons: ...
+- Risk: ...
 
-### 대안 B: {이름}
-(동일 구조)
+### Option B: {name}
+(same structure)
 
-### 추천: 대안 {X}
-- 근거: ...
+### Recommendation: Option {X}
+- Rationale: ...
 ```
 
-## 다음 단계
-→ writing-plans (사용자 승인 후)
+## Next Step
+→ writing-plans (after user approval)
