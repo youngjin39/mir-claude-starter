@@ -1,16 +1,16 @@
-# prompt_DEV — Claude Code Project Management Harness
+# claude-code-harness — Claude Code Project Management Harness
 
-## 개발 환경
-| 항목 | 값 |
+## Development Environment
+| Item | Value |
 |---|---|
 | OS | macOS Darwin 25.3.0 (ARM64, Apple Silicon) |
-| 언어/프레임워크 | 미정 (프로젝트 관리 하네스) |
-| 패키지 매니저 | 미정 |
+| Language/Framework | TBD (project management harness) |
+| Package Manager | TBD |
 
-## 빌드 & 실행
-- 하네스 전용 구성. 코드 프로젝트 추가 시 이 섹션 갱신.
+## Build & Run
+- Harness-only configuration. Update this section when a code project is added.
 
-## 프로젝트 구조
+## Project Structure
 ```
 .
 ├── CLAUDE.md
@@ -18,158 +18,150 @@
 ├── .claude/
 │   ├── settings.local.json
 │   ├── agents/          # main-orchestrator, quality-agent, executor-agent
-│   └── skills/          # 7개 스킬 (트리거 테이블 참조)
+│   └── skills/          # 7 skills (see skill trigger table)
 ├── tasks/
-│   ├── plan.md          # 현재 Phase 요약 (compact)
-│   ├── context.md       # 결정 근거
-│   ├── checklist.md     # 진행 상황
-│   ├── change_log.md    # 수정 기록
-│   ├── lessons.md       # 실패/성공 → 규칙
-│   ├── handoffs/        # 단계 간 핸드오프 문서
-│   ├── sessions/        # 세션 스냅샷
-│   └── log/             # 완료 작업 아카이브
-└── docs/                # 뉴런 장기 메모리 (감쇠 없음)
-    ├── memory-map.md    # 키워드 인덱스
-    ├── architecture/    # 시스템 구조
-    ├── decisions/       # ADR + 전체 설계 아카이브
-    ├── patterns/        # 반복 패턴
-    ├── domain/          # 도메인 지식
-    ├── risks/           # 리스크
-    ├── integrations/    # 외부 연동
-    └── references/      # 참조 레포 분석
+│   ├── plan.md          # current phase summary (compact)
+│   ├── context.md       # decision rationale
+│   ├── checklist.md     # progress tracking
+│   ├── change_log.md    # change history
+│   ├── lessons.md       # failures/successes → rules
+│   ├── handoffs/        # inter-phase handoff documents
+│   ├── sessions/        # session snapshots
+│   └── log/             # completed task archive
+└── docs/                # long-term memory (no decay)
+    ├── memory-map.md    # keyword index
+    ├── architecture/    # system structure
+    ├── decisions/       # ADR + full design archive
+    ├── patterns/        # recurring patterns
+    ├── domain/          # domain knowledge
+    ├── risks/           # risks
+    ├── integrations/    # external integrations
+    └── references/      # reference repo analysis
 ```
 
-## 워크플로우 파이프라인
+## Workflow Pipeline
 
-### 모호 요청 게이트
-요청에 구체성 신호(파일 경로, 함수명, 번호 단계, 에러 메시지) 0개 → deep-interview.
-`force:` 접두사로 우회 가능.
+### Ambiguous Request Gate
+If a request contains zero specificity signals (file path, function name, numbered step, error message) → deep-interview.
+Can be bypassed with the `force:` prefix.
 
-### 작업 흐름
+### Task Flow
 ```
-요청 → 구체성 신호? → 없으면 deep-interview → 분류
-  ├─ 단순(1~2단계) → orchestrator 직접 실행 → 셀프체크 → 완료
-  └─ 복합(3단계+) → 플랜 모드
-       brainstorming → writing-plans → execution → verification → 완료
+Request → specificity signals? → none → deep-interview → classify
+  ├─ simple (1~2 steps) → orchestrator executes directly → self-check → done
+  └─ complex (3+ steps) → plan mode
+       brainstorming → writing-plans → execution → verification → done
 ```
 
-### 오케스트레이션 프리셋
-| 프리셋 | 파이프라인 |
+### Orchestration Presets
+| Preset | Pipeline |
 |---|---|
 | feature | brainstorming → plans → executor → code-review → verification |
 | bugfix | deep-interview(lite) → executor → testing → verification |
 | refactor | brainstorming → plans → executor → code-review |
 | security | code-review(security) → executor → verification |
 
-### 에이전트 역할 분리
-| 에이전트 | 모델 | 역할 | 코드 작성 |
+### Agent Role Separation
+| Agent | Model | Role | Writes Code |
 |---|---|---|---|
-| main-orchestrator | opus | 대화, 판단, 분류, 단순 작업 실행 | O (단순) |
-| executor-agent | sonnet | 복합 작업 코드 작성 전담 서브에이전트 | O (복합) |
-| quality-agent | sonnet | 읽기 전용 리뷰. Write/Edit 금지. | X |
+| main-orchestrator | opus | conversation, judgment, classification, simple task execution | Yes (simple) |
+| executor-agent | sonnet | dedicated sub-agent for complex task code writing | Yes (complex) |
+| quality-agent | sonnet | read-only review. Write/Edit forbidden. | No |
 
-### 분기 기준
-- **단순 (1~2단계)**: orchestrator가 직접 실행. executor 호출 오버헤드 > 작업량일 때.
-- **복합 (3단계+)**: brainstorming→plans→executor→verification 파이프라인.
-- 기준이 모호하면 복합으로 분류 (과소평가보다 과대평가가 안전).
+### Branching Criteria
+- **Simple (1~2 steps)**: orchestrator executes directly. When executor call overhead exceeds the work involved.
+- **Complex (3+ steps)**: brainstorming → plans → executor → verification pipeline.
+- When criteria are ambiguous, classify as complex (overestimating is safer than underestimating).
 
-### 게이트 조건
-| 단계 | 진입 | 탈출 |
+### Gate Conditions
+| Phase | Entry | Exit |
 |---|---|---|
-| brainstorming | 복합 분류 | 사용자 설계 승인 |
-| writing-plans | brainstorming 탈출 | 구체적 코드+명령어+예상 출력 포함 |
-| execution | plans 탈출 | 모든 단계 완료 또는 3회 실패→STOP |
-| verification | execution 탈출 | 실행 증거 기반 검증 통과 |
+| brainstorming | complex classification | user design approval |
+| writing-plans | brainstorming exit | includes concrete code + commands + expected output |
+| execution | plans exit | all steps complete or 3 failures → STOP |
+| verification | execution exit | verification passed based on execution evidence |
 
-### 내장 규칙
-- brainstorming: 2~3개 대안 비교 필수.
-- writing-plans: 추상적 표현 금지. 실제 코드 포함.
-- execution: 3회 실패 서킷 브레이커 → 아키텍처 재검토.
-- verification: "should work", "probably fine" 금지. 증거만 인정.
+### Built-in Rules
+- brainstorming: must compare 2~3 alternatives.
+- writing-plans: no abstract expressions. Include actual code.
+- execution: 3-failure circuit breaker → revisit architecture.
+- verification: "should work", "probably fine" forbidden. Evidence only.
 
-## 스킬 트리거 테이블 (본문은 발동 시 Read로 로드)
+## Skill Trigger Table (body loaded via Read when triggered)
 
-| 키워드 | 스킬 | 경로 |
+| Keyword | Skill | Path |
 |---|---|---|
-| 리뷰, PR, 품질 | code-review | .claude/skills/code-review/SKILL.md |
-| 테스트, TDD, 검증 | testing | .claude/skills/testing/SKILL.md |
-| 커밋, git | git-commit | .claude/skills/git-commit/SKILL.md |
-| 진단, 헬스체크 | project-doctor | .claude/skills/project-doctor/SKILL.md |
-| 설계, 브레인스토밍 | brainstorming | .claude/skills/brainstorming/SKILL.md |
-| 계획, 구현 계획 | writing-plans | .claude/skills/writing-plans/SKILL.md |
-| 완료 확인, 검증 | verification | .claude/skills/verification/SKILL.md |
-| 인터뷰, 요구사항, 모호 | deep-interview | .claude/skills/deep-interview/SKILL.md |
+| review, PR, quality | code-review | .claude/skills/code-review/SKILL.md |
+| test, TDD, verify | testing | .claude/skills/testing/SKILL.md |
+| commit, git | git-commit | .claude/skills/git-commit/SKILL.md |
+| diagnose, health check | project-doctor | .claude/skills/project-doctor/SKILL.md |
+| design, brainstorm | brainstorming | .claude/skills/brainstorming/SKILL.md |
+| plan, implementation plan | writing-plans | .claude/skills/writing-plans/SKILL.md |
+| completion check, verification | verification | .claude/skills/verification/SKILL.md |
+| interview, requirements, ambiguous | deep-interview | .claude/skills/deep-interview/SKILL.md |
 
-## 모델 라우팅
-| 작업 유형 | 모델 | 근거 |
+## Model Routing
+| Task Type | Model | Rationale |
 |---|---|---|
-| 파일 탐색, 키워드 검색, 단순 변환 | haiku | 기계적, 판단 불필요 |
-| 코드 작성, 버그 수정, 테스트 | sonnet | 구현력 필요 |
-| 아키텍처 설계, 계획, 리뷰 종합 | opus | 복합 판단 + 맥락 이해 |
+| file search, keyword lookup, simple transformation | haiku | mechanical, no judgment needed |
+| code writing, bug fixing, testing | sonnet | implementation capability required |
+| architecture design, planning, review synthesis | opus | complex judgment + context understanding |
 
-## 메모리 시스템 (3층)
+## Memory System (3 layers)
 
-### 층 1: 프로젝트 지식 (docs/) — what we know
-- 장기 메모리. 감쇠 없음. 영구 보존.
-- 키워드 인덱스(memory-map.md) → 카테고리 → 파일. 필요한 것만 로드.
-- 파일당 50줄 이내. 프론트매터: title, keywords, created, last_used.
+### Layer 1: Project Knowledge (docs/) — what we know
+- Long-term memory. No decay. Permanently preserved.
+- Keyword index (memory-map.md) → category → file. Load only what is needed.
+- Max 50 lines per file. Frontmatter: title, keywords, created, last_used.
 
-### 층 2: 행동 규칙 (tasks/lessons.md) — what to do / not do
-- 실패/성공 테이블 → 2회 반복 시 규칙 승격.
-- 세션 시작 시 반드시 읽기.
+### Layer 2: Behavioral Rules (tasks/lessons.md) — what to do / not do
+- Failure/success table → promoted to rule after 2 repetitions.
+- Must be read at session start.
 
-### 층 3: 세션 복원 (tasks/sessions/) — ephemeral snapshots
+### Layer 3: Session Restore (tasks/sessions/) — ephemeral snapshots
 - What Worked / What Did NOT Work / Decisions / Next Step.
-- 최근 1개만 유효. 오래된 것은 docs/로 승격하거나 삭제.
+- Only the most recent snapshot is valid. Older ones are promoted to docs/ or deleted.
 
-### 메모리 활용 프로토콜
-1. 작업 시작: memory-map.md 키워드 테이블 스캔.
-2. 관련 키워드 있으면 해당 파일만 Read.
-3. 없으면 생략 (토큰 절약).
-4. 작업 완료: 새로 배운 것 → docs/{category}/ 저장 + 인덱스 갱신.
+### Memory Usage Protocol
+1. Task start: scan memory-map.md keyword table.
+2. If a relevant keyword exists, Read only that file.
+3. If none, skip (token savings).
+4. Task complete: new learnings → save to docs/{category}/ + update index.
 
-## 컨텍스트 관리
-- 논리적 전환점에서 /compact 고려: 리서치→계획, 디버그→기능.
-- 압축 전 tasks/handoffs/ 에 핸드오프 작성.
-- 컨텍스트 윈도우 마지막 20%에서 복합 작업 시작 금지.
+## Context Management
+- Consider /compact at logical transition points: research → planning, debug → feature.
+- Write a handoff to tasks/handoffs/ before compacting.
+- Do not start complex tasks in the last 20% of the context window.
 
-### 서브에이전트 격리
-- 서브에이전트에 세션 히스토리 **절대 전달 금지**.
-- 핸드오프 문서에서 필요 컨텍스트만 추출하여 전달.
-- 서브에이전트 1개 = 작업 1개 = 최소 컨텍스트.
-- 서브에이전트 완료 후: 결과만 수신. 내부 과정은 버림.
+### Sub-agent Isolation
+- NEVER pass session history to sub-agents.
+- Extract only the necessary context from the handoff document and pass that.
+- 1 sub-agent = 1 task = minimum context.
+- After sub-agent completes: receive results only. Discard internal process.
 
-## 자동화 훅 (.claude/hooks/)
-- **SessionStart**: plan.md + lessons.md + 최근 세션 자동 로드.
-- **PreCompact**: 핸드오프 작성 리마인더.
-- **PostToolUse(Edit|Write)**: 디버그 문(console.log, print) 경고.
+## Automation Hooks (.claude/hooks/)
+- **SessionStart**: auto-load plan.md + lessons.md + most recent session.
+- **PreCompact**: handoff writing reminder.
+- **PostToolUse(Edit|Write)**: warning for debug statements (console.log, print).
 
-## 메모리 자동 수확
-- 작업 완료 시 판단: "새로 배운 것이 있는가?"
-- 있으면 → docs/{category}/ 저장 + memory-map.md 갱신.
-- 없으면 → 생략 (불필요한 메모리 방지).
+## Automatic Memory Harvesting
+- On task completion, assess: "Was anything new learned?"
+- If yes → save to docs/{category}/ + update memory-map.md.
+- If no → skip (prevent unnecessary memory bloat).
 
-## 품질 검사
-- 수정마다 change_log.md 기록.
-- 완료 후 린트/정적 분석. 에러 0~3 즉시 수정, 4+ quality-agent.
-- 셀프체크: 최근 2파일 오류 처리 + 보안.
+## Quality Checks
+- Record every change in change_log.md.
+- After completion, run lint/static analysis. Fix 0~3 errors immediately; 4+ errors → quality-agent.
+- Self-check: error handling + security on the 2 most recently modified files.
 
-## 프로젝트 관리
-- 시작 시 plan, checklist, lessons 읽기 (SessionStart 훅이 자동 주입).
-- 변경 시 plan, checklist 수정 후 진행.
-- 기능 완료 시 tasks/log/ 아카이브.
+## Project Management
+- At start, read plan, checklist, lessons (SessionStart hook injects automatically).
+- Before proceeding with changes, update plan and checklist.
+- On feature completion, archive to tasks/log/.
 
-## 언어 프로토콜 (토큰 절약)
-| 대상 | 언어 | 예시 |
-|---|---|---|
-| 사용자 대면 보고 | **한글** | "[발견] 인증 로직 누락" |
-| tasks/ 로그 (change_log, lessons) | **한글** | "JWT 갱신 실패 → 만료 체크 추가" |
-| 에이전트 간 통신 (핸드오프) | **영어** | "Decision: use refresh token rotation" |
-| 컨텍스트 정리 (plan, context) | **영어** | "Phase 1 complete. Next: verification." |
-| 스킬/에이전트 정의 파일 | **영어** | SKILL.md, agent .md 내부 |
-| docs/ 장기 메모리 | **영어** | 키워드 인덱스, 패턴 기록 |
-| 코드, 커밋 메시지 | **영어** | `feat(auth): add token refresh` |
+## Language Protocol
+All documentation, logs, and user-facing output in English. Code and commit messages in English.
 
-## 원칙
-- 단순함 우선. 최소 영향.
-- 근본 원인 해결. 임시방편 금지.
+## Principles
+- Simplicity first. Minimum impact.
+- Solve root causes. No workarounds.

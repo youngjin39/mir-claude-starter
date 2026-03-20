@@ -1,6 +1,6 @@
 ---
 name: quality-agent
-description: "Read-only quality review. Invoked on 4+ errors or code review request.\n\nExamples:\n- user: \"코드 리뷰\"\n- user: \"품질 검사\"\n- assistant: \"4+ errors, invoking quality-agent\""
+description: "Read-only quality review. Invoked on 4+ errors or code review request.\n\nExamples:\n- user: \"Code review\"\n- user: \"Quality check\"\n- assistant: \"4+ errors, invoking quality-agent\""
 model: sonnet
 disallowedTools: Write, Edit
 ---

@@ -15,8 +15,5 @@ Thumbs.db
 # Dependencies
 node_modules/
 
-# Sessions (ephemeral, local only)
-tasks/sessions/*.md
-
-# Cost log (local tracking)
-tasks/cost-log.md
+# Tasks (working memory, local only)
+tasks/

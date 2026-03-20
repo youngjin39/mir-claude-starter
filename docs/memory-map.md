@@ -1,69 +1,69 @@
-# Neuron Memory Map — 키워드 인덱스
+# Neuron Memory Map — Keyword Index
 
-> 장기 메모리. 감쇠 없음. 카테고리 맵으로 필요한 것만 로드.
-> 파일당 50줄 이내. 프론트매터: title, keywords, created, last_used.
-> 메모리 파일 100개+ → SQLite 전환 검토. 이 파일 200줄+ → 카테고리별 서브 인덱스 분할.
+> Long-term memory. No decay. Load only what you need via category map.
+> Keep files under 50 lines. Frontmatter: title, keywords, created, last_used.
+> 100+ memory files → consider switching to SQLite. This file 200+ lines → split into per-category sub-indexes.
 
-## 검색 프로토콜
-1. 아래 키워드 테이블에서 관련 키워드 스캔.
-2. 매칭된 파일만 Read.
-3. 매칭 없으면 메모리 로드 생략 (토큰 절약).
-4. **절대 카테고리 전체를 한 번에 읽지 않음.**
+## Search Protocol
+1. Scan the keyword table below for relevant keywords.
+2. Read only the matched files.
+3. If no match, skip memory load (save tokens).
+4. **Never read an entire category at once.**
 
-## 저장 프로토콜
-1. 새 메모리 파일 생성: `docs/{category}/{topic}.md`
-2. 프론트매터 필수:
+## Storage Protocol
+1. Create new memory file: `docs/{category}/{topic}.md`
+2. Frontmatter required:
    ```yaml
    ---
-   title: {제목}
-   keywords: [키워드1, 키워드2, ...]
+   title: {title}
+   keywords: [keyword1, keyword2, ...]
    created: {YYYY-MM-DD}
    last_used: {YYYY-MM-DD}
    ---
    ```
-3. 50줄 이내. 초과 시 분할.
-4. **이 파일의 키워드 테이블에 행 추가** (자동 갱신).
-5. 중복 키워드 → 같은 행에 파일 추가 (1:N).
+3. Keep under 50 lines. Split if exceeded.
+4. **Add a row to the keyword table in this file** (auto-update).
+5. Duplicate keywords → add file to the same row (1:N).
 
-## 승격 파이프라인
-- 프로젝트 로컬(docs/) → 2회+ 동일 패턴 → lessons.md 규칙화
-- 2+프로젝트에서 동일 패턴 → ~/.claude/global-memory/ 승격 검토
+## Promotion Pipeline
+- Project-local (docs/) → same pattern 2+ times → promote to lessons.md rule
+- Same pattern across 2+ projects → consider promoting to ~/.claude/global-memory/
 
-## 키워드 → 파일 매핑
-| 키워드 | 카테고리 | 파일 |
+## Keyword → File Mapping
+| Keywords | Category | File |
 |---|---|---|
-| superpowers, TDD, hard-gate, iron-law | references | [레포 분석 종합](references/repo-analysis-summary.md) |
-| cli-anything, harness, SOP, registry | references | [레포 분석 종합](references/repo-analysis-summary.md) |
-| omc, deep-interview, 리스크, 리뷰분리 | references | [레포 분석 종합](references/repo-analysis-summary.md) |
-| 토큰최적화, 레이지로딩, 세션지속성 | references | [레포 분석 종합](references/repo-analysis-summary.md) |
-| 3축, 파이프라인, 마스터플랜 | decisions | [Master Plan v2](decisions/master-plan-v2.md) |
+| superpowers, TDD, hard-gate, iron-law | references | [Repo Analysis Summary](references/repo-analysis-summary.md) |
+| cli-anything, harness, SOP, registry | references | [Repo Analysis Summary](references/repo-analysis-summary.md) |
+| omc, deep-interview, risk, review-separation | references | [Repo Analysis Summary](references/repo-analysis-summary.md) |
+| token-optimization, lazy-loading, session-persistence | references | [Repo Analysis Summary](references/repo-analysis-summary.md) |
+| 3-axis, pipeline, master-plan | decisions | [Master Plan v2](decisions/master-plan-v2.md) |
 
-## 카테고리별 항목
+## Items by Category
 
 ### architecture
-> 시스템 구조, 설계 패턴, 의존성 관계
-- (없음)
+> System structure, design patterns, dependency relationships
+- (none)
 
 ### decisions
-> 주요 결정 사항과 그 근거 (ADR 스타일)
-- [Master Plan v2](decisions/master-plan-v2.md) — 전체 설계 아카이브 (3축, Phase 1~3)
+> Key decisions and their rationale (ADR style)
+- [Master Plan v2](decisions/master-plan-v2.md) — Full Design Archive (3-axis, Phase 1~3)
 
 ### patterns
-> 반복 사용되는 코드/워크플로우 패턴
-- (없음)
+> Reusable code/workflow patterns
+- (none)
 
 ### domain
-> 도메인 지식, 비즈니스 규칙, 용어집
-- (없음)
+> Domain knowledge, business rules, glossary
+- (none)
 
 ### risks
-> 알려진 리스크, 취약점, 주의사항
-- (없음)
+> Known risks, vulnerabilities, cautions
+- (none)
 
 ### integrations
-> 외부 시스템 연동 정보, API, 서비스
-- (없음)
+> External system integration info, APIs, services
+- (none)
 
 ### references
-> 참조 프로젝트, 문서, 레포 분석 결과
-- [4개 레포 분석 종합](references/repo-analysis-summary.md) — Superpowers, CLI-Anything, OMC, everything-claude-code
+> Reference projects, documents, repo analysis results
+- [4 Repo Analysis Summary](references/repo-analysis-summary.md) — Superpowers, CLI-Anything, OMC, everything-claude-code

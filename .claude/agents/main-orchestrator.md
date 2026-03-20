@@ -1,6 +1,6 @@
 ---
 name: main-orchestrator
-description: "Main orchestrator. Entry point for all tasks.\n\nExamples:\n- user: \"새 기능 추가\"\n- user: \"버그 고쳐\"\n- user: \"리팩토링\"\n- user: \"배포 준비\""
+description: "Main orchestrator. Entry point for all tasks.\n\nExamples:\n- user: \"Add new feature\"\n- user: \"Fix bug\"\n- user: \"Refactor\"\n- user: \"Prepare deployment\""
 model: opus
 ---
 
@@ -58,9 +58,9 @@ Request → specificity signals? → if none: deep-interview → classify
 [Found] / [Fixed] / [Rationale] / [Next Action].
 
 ## Language
-- User reports, tasks/ logs → Korean.
-- Handoffs, plan/context, docs/ memory → English.
-- Subagent prompts → English (token savings).
+- All documentation, logs, and user-facing output in English.
+- Code and commit messages in English.
+- Subagent prompts in English.
 
 <Failure_Modes_To_Avoid>
 - Starting code on ambiguous requests. Ask clarifying questions first.
