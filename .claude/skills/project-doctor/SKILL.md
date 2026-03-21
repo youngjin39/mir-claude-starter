@@ -32,6 +32,16 @@ allowed-tools: Read, Grep, Glob, Bash
 14. CLAUDE.md has trigger table (no skill body inline).
 15. tasks/handoffs/ and tasks/sessions/ directories exist.
 
+## Skill Health Check
+16. Each skill's referenced commands exist (e.g., `npm run lint` → package.json has lint script).
+17. CLAUDE.md trigger table paths match actual SKILL.md files (no phantom entries).
+18. Skill files with `last_used` > 30 days → warn as potentially stale.
+
+## Security Scan
+19. No credential patterns in .md/.json/.yaml/.sh files (sk-, ghp_, AIza, xoxb-, AKIA).
+20. No dangerous shell patterns in skill files (rm -rf /, curl|sh, eval).
+21. .env files listed in .gitignore.
+
 ## Output
 ```
 ## Project Doctor Report

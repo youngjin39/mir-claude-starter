@@ -25,6 +25,21 @@
 4. **Add a row to the keyword table in this file** (auto-update).
 5. Duplicate keywords → add file to the same row (1:N).
 
+## Skill Usage Tracking
+- When a skill is triggered, update its `last_used` in this table.
+- Skills unused for 30+ days → project-doctor flags as stale.
+
+| Skill | Last Used | Count |
+|---|---|---|
+| brainstorming | — | 0 |
+| code-review | — | 0 |
+| deep-interview | — | 0 |
+| git-commit | — | 0 |
+| project-doctor | — | 0 |
+| testing | — | 0 |
+| verification | — | 0 |
+| writing-plans | — | 0 |
+
 ## Promotion Pipeline
 - Project-local (docs/) → same pattern 2+ times → promote to lessons.md rule
 - Same pattern across 2+ projects → consider promoting to ~/.claude/global-memory/

@@ -100,6 +100,8 @@ Request → specificity signals? → none → deep-interview → classify
 | completion check, verification | verification | .claude/skills/verification/SKILL.md |
 | interview, requirements, ambiguous | deep-interview | .claude/skills/deep-interview/SKILL.md |
 
+> On skill trigger: update `last_used` + `count` in docs/memory-map.md Skill Usage table.
+
 ## Model Routing
 | Task Type | Model | Rationale |
 |---|---|---|
