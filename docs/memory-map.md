@@ -26,8 +26,8 @@ type: index
 ## Keyword → File Mapping
 | Keywords | Category | File |
 |---|---|---|
-| superpowers, TDD, hard-gate, cli-anything, omc | references | [Repo Analysis](references/repo-analysis-summary.md) |
-| 3-axis, pipeline, master-plan, workflow, memory | decisions | [Master Plan v2](decisions/master-plan-v2.md) |
+| superpowers, TDD, hard-gate, cli-anything, omc, harness, everything-claude-code | references | [Repo Analysis](references/repo-analysis-summary.md) |
+| 3-axis, pipeline, master-plan, workflow, memory, context | decisions | [Master Plan v2](decisions/master-plan-v2.md) |
 
 ## Category Index
 | Category | Files | Description |

@@ -20,7 +20,7 @@ A project management harness for orchestrating Claude Code agents with structure
    └─────────────────────┘           └─────────────────────┘
 ```
 
-- **Workflow**: Ambiguity gate → classify → brainstorming → plans → execution → verification
+- **Workflow**: Ambiguity gate → classify → brainstorming → writing-plans → execution → verification
 - **Memory**: Neuron-style long-term memory (keyword index, no decay, 3-layer separation)
 - **Context**: Lazy loading, model routing, sub-agent isolation, handoff documents
 
@@ -30,12 +30,15 @@ A project management harness for orchestrating Claude Code agents with structure
 .
 ├── CLAUDE.md                    # Root configuration
 ├── .mcp.json                    # MCP servers (fetch + sequential-thinking)
+├── setup.sh                     # Harness installer
+├── README.md
+├── LICENSE
 ├── .claude/
 │   ├── settings.local.json      # Permissions + hook configuration
 │   ├── hooks/                   # Automation hook scripts
 │   │   ├── session-start.sh     # Inject context at session start
 │   │   ├── pre-compact.sh       # Handoff reminder before /compact
-│   │   └── post-edit-check.sh   # Warn on debug statements after edits
+│   │   └── post-edit-check.sh   # Debug statement + credential leak detection
 │   ├── agents/                  # 3 agents
 │   │   ├── main-orchestrator.md # Orchestration, judgment, routing (opus)
 │   │   ├── executor-agent.md    # Code writing sub-agent (sonnet)
@@ -82,14 +85,14 @@ A project management harness for orchestrating Claude Code agents with structure
 
 | Skill | Trigger Keywords | Role |
 |---|---|---|
-| brainstorming | design, brainstorm | Hard Gate. Requires comparison of 2–3 alternatives. |
-| writing-plans | plan, implementation plan | Bite-sized steps. Must include concrete code. |
-| verification | done check, verify | 6-stage gate + circuit breaker. |
-| deep-interview | interview, ambiguous, requirements | Ambiguity scoring + challenge round. |
-| code-review | review, PR, quality | Quality inspection (forked read-only). |
-| testing | test, TDD | Test writing and execution. |
-| git-commit | commit, git | Commit rules + structured trailers. |
-| project-doctor | diagnose, health check | Structure + memory + context diagnostics. |
+| brainstorming | design, brainstorming, architecture, new feature | Hard Gate. Requires comparison of 2–3 alternatives. |
+| writing-plans | plan, implementation plan, step design | Bite-sized steps. Must include concrete code. |
+| verification | verify, done check, proof, self-check | 6-stage gate + circuit breaker. |
+| deep-interview | interview, requirements, clarify, ambiguous | Ambiguity scoring + challenge round. |
+| code-review | review, PR, quality, merge check, post-completion | Quality inspection (forked read-only). |
+| testing | test, TDD, unit test, integration test | Test writing and execution. |
+| git-commit | commit, git, save changes | Commit rules + structured trailers. |
+| project-doctor | diagnose, doctor, health check, status | Structure + memory + context diagnostics. |
 
 ## Workflow Pipeline
 
@@ -104,9 +107,9 @@ Request → specificity signals? → none → deep-interview → classify
 
 | Preset | Pipeline |
 |---|---|
-| feature | brainstorming → plans → executor → code-review → verification |
-| bugfix | deep-interview (lite) → executor → testing → verification |
-| refactor | brainstorming → plans → executor → code-review → verification |
+| feature | brainstorming → writing-plans → executor → code-review → verification |
+| bugfix | deep-interview(lite) → executor → testing → verification |
+| refactor | brainstorming → writing-plans → executor → code-review → verification |
 | security | code-review (security) → executor → verification |
 
 ## Memory System
@@ -137,9 +140,13 @@ Request → specificity signals? → none → deep-interview → classify
 |---|---|---|
 | session-start.sh | SessionStart | Auto-inject `plan.md` + `lessons.md` + latest session snapshot |
 | pre-compact.sh | PreCompact | Remind to write a handoff document before compacting |
-| post-edit-check.sh | PostToolUse (Edit\|Write) | Warn on debug statements (`console.log`, `print`, etc.) |
+| post-edit-check.sh | PostToolUse (Edit\|Write) | Debug statement detection + credential leak scan |
 
 ## Getting Started
+
+### Prerequisites
+- [Claude Code](https://claude.com/claude-code) CLI installed
+- `jq` (required by post-edit-check hook; pre-installed on macOS, install via `apt-get install jq` on Linux)
 
 ### Quick Setup (Recommended)
 
@@ -156,7 +163,7 @@ This automatically clones the harness, sets up the directory structure, and conf
 1. Clone or copy this repository into your project root.
 2. Edit `CLAUDE.md` — update the **Development Environment** and **Build & Run** sections to match your project.
 3. Add project-specific domain skills under `.claude/skills/`.
-4. Initialize `tasks/` files (`plan.md`, `checklist.md`, `lessons.md`, `change_log.md`, `cost-log.md`).
+4. Initialize `tasks/` files (`plan.md`, `context.md`, `checklist.md`, `lessons.md`, `change_log.md`, `cost-log.md`) and create subdirectories (`tasks/sessions/`, `tasks/handoffs/`, `tasks/log/`).
 5. Configure tool permissions in `.claude/settings.local.json`.
 6. Start working — the orchestrator will guide the rest.
 

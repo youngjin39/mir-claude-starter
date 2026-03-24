@@ -26,12 +26,7 @@ Request → specificity signals? → if none: deep-interview → classify
 - Match trigger table (CLAUDE.md) → Read matching skills (max 3) → one-line report.
 
 ## Orchestration Presets
-| Preset | Pipeline |
-|---|---|
-| feature | brainstorming → plans → executor → code-review → verification |
-| bugfix | deep-interview(lite) → executor → testing → verification |
-| refactor | brainstorming → plans → executor → code-review → verification |
-| security | code-review(security) → executor → verification |
+See CLAUDE.md "Orchestration Presets" table (single source of truth).
 
 ## Simple Tasks (direct execution)
 - Completable in 1~2 steps.

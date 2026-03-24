@@ -34,7 +34,7 @@ allowed-tools: Read, Grep, Glob, Bash
 ## Skill Health Check
 16. Each skill's referenced commands exist (e.g., `npm run lint` → package.json has lint script).
 17. CLAUDE.md trigger table paths match actual SKILL.md files (no phantom entries).
-18. Skills with `last_used` > 30 days in memory-map.md Skill Usage table → warn as stale.
+18. Skills with `last_used` > 30 days in memory-map.md Skill Usage table → warn as stale. Skip skills with `—` (never used).
 
 ## Security Scan
 19. No credential patterns in .md/.json/.yaml/.sh files (sk-, ghp_, gho_, AIza, xoxb-, AKIA, aws_secret_access_key).

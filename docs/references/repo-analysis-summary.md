@@ -1,6 +1,6 @@
 ---
 title: Reference Repo Analysis Summary
-keywords: [superpowers, cli-anything, omc, everything-claude-code, TDD, harness]
+keywords: [superpowers, cli-anything, omc, everything-claude-code, TDD, harness, hard-gate]
 created: 2026-03-20
 last_used: 2026-03-24
 type: archive

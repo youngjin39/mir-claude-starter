@@ -15,9 +15,13 @@
 .
 ├── CLAUDE.md
 ├── .mcp.json
+├── setup.sh             # harness installer
+├── README.md
+├── LICENSE
 ├── .claude/
 │   ├── settings.local.json
 │   ├── agents/          # main-orchestrator, quality-agent, executor-agent
+│   ├── hooks/           # session-start, pre-compact, post-edit-check
 │   └── skills/          # 8 skills (see skill trigger table)
 ├── tasks/
 │   ├── plan.md          # current phase summary (compact)
@@ -57,9 +61,9 @@ Request → specificity signals? → none → deep-interview → classify
 ### Orchestration Presets
 | Preset | Pipeline |
 |---|---|
-| feature | brainstorming → plans → executor → code-review → verification |
+| feature | brainstorming → writing-plans → executor → code-review → verification |
 | bugfix | deep-interview(lite) → executor → testing → verification |
-| refactor | brainstorming → plans → executor → code-review → verification |
+| refactor | brainstorming → writing-plans → executor → code-review → verification |
 | security | code-review(security) → executor → verification |
 
 ### Agent Role Separation
@@ -71,7 +75,7 @@ Request → specificity signals? → none → deep-interview → classify
 
 ### Branching Criteria
 - **Simple (1~2 steps)**: orchestrator executes directly. When executor call overhead exceeds the work involved.
-- **Complex (3+ steps)**: brainstorming → plans → executor → verification pipeline.
+- **Complex (3+ steps)**: brainstorming → writing-plans → executor → verification pipeline.
 - When criteria are ambiguous, classify as complex (overestimating is safer than underestimating).
 
 ### Gate Conditions
@@ -79,7 +83,7 @@ Request → specificity signals? → none → deep-interview → classify
 |---|---|---|
 | brainstorming | complex classification | user design approval |
 | writing-plans | brainstorming exit | includes concrete code + commands + expected output |
-| execution | plans exit | all steps complete or 3 failures → STOP |
+| execution | writing-plans exit | all steps complete or 3 failures → STOP |
 | verification | execution exit | verification passed based on execution evidence |
 
 ### Built-in Rules

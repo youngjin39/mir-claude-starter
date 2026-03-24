@@ -305,7 +305,7 @@ Format:
 |---|---|---|
 | feature | brainstorming → writing-plans → executor → code-review → verification | opus→opus→sonnet→sonnet→sonnet |
 | bugfix | deep-interview-lite → executor → testing → verification | sonnet→sonnet→sonnet→sonnet |
-| refactor | brainstorming → writing-plans → executor → code-review | opus→opus→sonnet→sonnet |
+| refactor | brainstorming → writing-plans → executor → code-review → verification | opus→opus→sonnet→sonnet→sonnet |
 | security | code-review(security-focus) → executor → verification | opus→sonnet→sonnet |
 
 #### 2.1.4 Structured Commit Trailers
