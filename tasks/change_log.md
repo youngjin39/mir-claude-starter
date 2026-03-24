@@ -24,3 +24,4 @@
 | 2026-03-24 | .claude/hooks/ | credential detection, auto-handoff, skill health checks | AgentLinter insights |
 | 2026-03-24 | all | 3-round integrity audit + refactoring (17 fixes) | Stabilization |
 | 2026-03-24 | all | Code-level refactoring: hooks, skills, agents, configs aligned | Deep stabilization |
+| 2026-03-24 | 9 files | 5-round integrity audit — 30 fixes (see docs/decisions/optimization-log.md) | Final stabilization |

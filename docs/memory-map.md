@@ -28,12 +28,13 @@ type: index
 |---|---|---|
 | superpowers, TDD, hard-gate, cli-anything, omc, harness, everything-claude-code | references | [Repo Analysis](references/repo-analysis-summary.md) |
 | 3-axis, pipeline, master-plan, workflow, memory, context | decisions | [Master Plan v2](decisions/master-plan-v2.md) |
+| audit, optimization, refactoring, stabilization, integrity | decisions | [Optimization Log](decisions/optimization-log.md) |
 
 ## Category Index
 | Category | Files | Description |
 |---|---|---|
 | architecture | (none) | System structure, design patterns |
-| decisions | [Master Plan v2](decisions/master-plan-v2.md) | ADR + full design archive |
+| decisions | [Master Plan v2](decisions/master-plan-v2.md), [Optimization Log](decisions/optimization-log.md) | ADR + full design archive |
 | patterns | (none) | Reusable code/workflow patterns |
 | domain | (none) | Domain knowledge, business rules |
 | risks | (none) | Known risks, vulnerabilities |
