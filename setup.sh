@@ -234,6 +234,21 @@ echo -e "${YELLOW}--- Project Configuration ---${NC}"
 read -p "Project name: " PROJECT_NAME
 read -p "Language/Framework (e.g., TypeScript/Next.js): " LANG_FRAMEWORK
 read -p "Package manager (e.g., npm, pnpm, pip): " PKG_MANAGER
+echo ""
+echo "  User-facing language (agent output, reports, logs):"
+echo "    1) Korean (한국어)"
+echo "    2) English"
+echo "    3) Japanese (日本語)"
+echo "    4) Chinese (中文)"
+echo "    5) Other (enter language name)"
+read -p "  Select [1-5, default: 2]: " LANG_CHOICE
+case "$LANG_CHOICE" in
+  1) USER_LANG="Korean" ;;
+  3) USER_LANG="Japanese" ;;
+  4) USER_LANG="Chinese" ;;
+  5) read -p "  Enter language name: " USER_LANG ;;
+  *) USER_LANG="English" ;;
+esac
 
 # Update CLAUDE.md (use perl to avoid sed delimiter issues with user input)
 if [ -n "$PROJECT_NAME" ]; then
@@ -244,6 +259,14 @@ if [ -n "$LANG_FRAMEWORK" ]; then
 fi
 if [ -n "$PKG_MANAGER" ]; then
   P="$PKG_MANAGER" perl -pi -e 's/\| Package Manager \| TBD \|/| Package Manager | $ENV{P} |/' CLAUDE.md
+fi
+
+# --- Step 5b: Set language protocol ---
+if [ "$USER_LANG" = "English" ]; then
+  # All English — simplify the protocol
+  perl -pi -e 's/- User-facing output \(reports, task logs\) → Korean\./- User-facing output (reports, task logs) → English./' CLAUDE.md
+else
+  P="$USER_LANG" perl -pi -e 's/- User-facing output \(reports, task logs\) → Korean\./- User-facing output (reports, task logs) → $ENV{P}./' CLAUDE.md
 fi
 
 # --- Step 6: Clean settings.local.json ---
@@ -307,11 +330,12 @@ echo -e "${GREEN}========================================${NC}"
 echo -e "${GREEN}  Setup complete!${NC}"
 echo -e "${GREEN}========================================${NC}"
 echo ""
-echo "  Project: ${PROJECT_NAME:-unnamed}"
-echo "  Agents:  3 (orchestrator, executor, quality)"
-echo "  Skills:  8 (brainstorming, writing-plans, verification, interview,"
-echo "              code-review, testing, git-commit, project-doctor)"
-echo "  Hooks:   3 (SessionStart, PreCompact, PostToolUse)"
+echo "  Project:  ${PROJECT_NAME:-unnamed}"
+echo "  Language: ${USER_LANG} (user-facing output)"
+echo "  Agents:   3 (orchestrator, executor, quality)"
+echo "  Skills:   8 (brainstorming, writing-plans, verification, interview,"
+echo "               code-review, testing, git-commit, project-doctor)"
+echo "  Hooks:    3 (SessionStart, PreCompact, PostToolUse)"
 echo ""
 echo "  Note: tasks/ files are local working memory (gitignored by default)."
 echo ""
