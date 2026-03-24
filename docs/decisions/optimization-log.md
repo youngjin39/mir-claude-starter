@@ -16,12 +16,12 @@ Full history of integrity audits and refactoring performed on the harness.
 
 | Dimension | Focus |
 |---|---|
-| Consistency (정합성) | Cross-references between all files match exactly |
-| Conflicts (충돌) | No contradictions between files |
-| Duplication (중복) | No redundant content across files |
-| Optimization (최적화) | Simplification opportunities |
-| Reorganization (재배치) | Content in the right place |
-| Functional verification (기능재검증) | Scripts, triggers, paths all valid |
+| Consistency | Cross-references between all files match exactly |
+| Conflicts | No contradictions between files |
+| Duplication | No redundant content across files |
+| Optimization | Simplification opportunities |
+| Reorganization | Content in the right place |
+| Functional verification | Scripts, triggers, paths all valid |
 
 ## Phase 1: Initial Stabilization (2026-03-24, Rounds 1–9)
 
