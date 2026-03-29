@@ -17,8 +17,9 @@ Implementation without design approval is forbidden.
    - Each: approach + pros/cons + risks + blast radius.
    - Alternatives must differ in philosophy, not just implementation detail.
 4. **Counter-narrative attack**: identify the most attractive wrong approach, build its strongest case, then demolish it with evidence. This prevents confirmation bias toward the first plausible option.
-5. Mark recommendation + rationale.
-6. Wait for user approval.
+5. **Synthesis check**: if strengths from multiple options can be combined without their weaknesses, present a hybrid option.
+6. Mark recommendation + rationale.
+7. Wait for user approval.
 
 ## Exit Condition
 - User approves design → proceed to writing-plans.

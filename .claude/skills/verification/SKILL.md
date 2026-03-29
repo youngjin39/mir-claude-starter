@@ -39,6 +39,7 @@ After all 6 stages PASS, answer these 5 questions before issuing READY:
 3. "Would this design hold if input volume increases 10x?"
 4. "Am I confident because of evidence, or because I wrote it?"
 5. "What is the most likely way this fails in production?"
+6. "What hidden assumption does this design rely on, and what happens if that assumption is wrong?"
 
 If any answer raises doubt → investigate before issuing READY.
 

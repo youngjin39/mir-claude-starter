@@ -92,7 +92,19 @@ Request → specificity signals? → none → deep-interview → classify
 - execution: 3-failure circuit breaker → revisit architecture. Use git worktree for risky changes.
 - verification: "should work", "probably fine" forbidden. Evidence only. Red Team 5Q after gate pass.
 
-## Skill Trigger Table (body loaded via Read when triggered)
+## Skill Trigger System (body loaded via Read when triggered)
+
+### Trigger Types
+| Type | How it fires | Example |
+|---|---|---|
+| Keyword | Request contains listed keywords | "test", "review", "commit" |
+| Intent | Inferred user goal | "add feature" → brainstorming, "fix bug" → deep-interview(lite) |
+| File path | Changed/mentioned file matches pattern | `*.test.*` → testing, `*.md` → skip lint |
+| Code pattern | Code contains risky patterns | external input handling → security review |
+
+When triggered: report trigger reason + loaded skill(s) (max 3) in one line.
+
+### Skill Keyword Table
 
 | Keyword | Skill | Path |
 |---|---|---|
@@ -135,10 +147,15 @@ Request → specificity signals? → none → deep-interview → classify
 3. If none, skip (token savings).
 4. Task complete: new learnings → save to docs/{category}/ + update index.
 
+## Autonomous Bug Fix
+- Bug report received → investigate and fix without waiting for instructions.
+- Still follows the pipeline: classify → execute → verify. Autonomy applies to initiation, not to skipping gates.
+
 ## Context Management
 - Consider /compact at logical transition points: research → planning, debug → feature.
 - Write a handoff to tasks/handoffs/ before compacting.
 - Do not start complex tasks in the last 20% of the context window.
+- **Context recovery**: on session break or compact, re-read plan.md + lessons.md + latest session snapshot → produce 3-line summary → resume from there.
 
 ### Sub-agent Isolation
 - NEVER pass session history to sub-agents.
@@ -176,3 +193,4 @@ Request → specificity signals? → none → deep-interview → classify
 - Simplicity first. Minimum impact.
 - Solve root causes. No workarounds.
 - **Prohibition > instruction.** Explicit bans are stronger than vague guidance. When defining behavior, state what is forbidden before what is desired.
+- **No filler.** Ban: repetition, padding adjectives, hedging phrases ("전반적으로", "다만", "arguably"). Every sentence must carry information.

@@ -359,12 +359,38 @@ SELECTED_COUNT=0
 echo ""
 info "$SELECTED_COUNT/4 optional modules selected."
 
-# --- Step 6: Clean settings.local.json ---
-info "Resetting settings.local.json to template..."
-cat > .claude/settings.local.json << 'SETEOF'
+# --- Step 6: Permissions + settings.local.json ---
+echo ""
+echo -e "${YELLOW}--- Permission Level ---${NC}"
+echo ""
+echo "  [1] Strict  — ask before every tool use (safest)"
+echo "  [2] Standard — allow read-only tools, ask for writes (recommended)"
+echo "  [3] Permissive — allow most tools, ask for destructive ops only"
+echo ""
+read -p "  Select [1-3, default: 2]: " PERM_CHOICE
+
+case "$PERM_CHOICE" in
+  1)
+    PERM_LEVEL="strict"
+    PERM_ALLOW='[]'
+    ;;
+  3)
+    PERM_LEVEL="permissive"
+    PERM_ALLOW='["Bash(*)", "Read(*)", "Write(*)", "Edit(*)", "WebFetch(*)", "WebSearch(*)", "Agent(*)", "Glob(*)", "Grep(*)", "Skill(*)"]'
+    ;;
+  *)
+    PERM_LEVEL="standard"
+    PERM_ALLOW='["Read(*)", "Glob(*)", "Grep(*)", "Agent(*)", "Skill(*)"]'
+    ;;
+esac
+
+info "Permission level: $PERM_LEVEL"
+
+info "Generating settings.local.json..."
+cat > .claude/settings.local.json << SETEOF
 {
   "permissions": {
-    "allow": []
+    "allow": $PERM_ALLOW
   },
   "hooks": {
     "SessionStart": [
@@ -372,7 +398,7 @@ cat > .claude/settings.local.json << 'SETEOF'
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/session-start.sh\"",
+            "command": "bash \"\$CLAUDE_PROJECT_DIR/.claude/hooks/session-start.sh\"",
             "timeout": 10,
             "statusMessage": "Loading session context..."
           }
@@ -384,7 +410,7 @@ cat > .claude/settings.local.json << 'SETEOF'
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/pre-compact.sh\"",
+            "command": "bash \"\$CLAUDE_PROJECT_DIR/.claude/hooks/pre-compact.sh\"",
             "timeout": 5,
             "statusMessage": "Checking handoff..."
           }
@@ -397,7 +423,7 @@ cat > .claude/settings.local.json << 'SETEOF'
         "hooks": [
           {
             "type": "command",
-            "command": "bash \"$CLAUDE_PROJECT_DIR/.claude/hooks/post-edit-check.sh\"",
+            "command": "bash \"\$CLAUDE_PROJECT_DIR/.claude/hooks/post-edit-check.sh\"",
             "timeout": 10,
             "statusMessage": "Checking debug statements + credentials..."
           }
@@ -432,12 +458,13 @@ MCP_COUNT=1
 [ "$MOD_CONTEXT7" -eq 1 ] && { MCP_LIST="$MCP_LIST, context7"; MCP_COUNT=$((MCP_COUNT + 1)); }
 [ "$MOD_SEQ_THINK" -eq 1 ] && { MCP_LIST="$MCP_LIST, sequential-thinking"; MCP_COUNT=$((MCP_COUNT + 1)); }
 
-echo "  Project:  ${PROJECT_NAME:-unnamed}"
-echo "  Language: ${USER_LANG} (user-facing output)"
-echo "  Agents:   3 (orchestrator, executor, quality)"
-echo "  Skills:   ${SKILL_COUNT} (${SKILL_LIST})"
-echo "  MCP:      ${MCP_COUNT} (${MCP_LIST})"
-echo "  Hooks:    3 (SessionStart, PreCompact, PostToolUse)"
+echo "  Project:     ${PROJECT_NAME:-unnamed}"
+echo "  Language:    ${USER_LANG} (user-facing output)"
+echo "  Permissions: ${PERM_LEVEL}"
+echo "  Agents:      3 (orchestrator, executor, quality)"
+echo "  Skills:      ${SKILL_COUNT} (${SKILL_LIST})"
+echo "  MCP:         ${MCP_COUNT} (${MCP_LIST})"
+echo "  Hooks:       3 (SessionStart, PreCompact, PostToolUse)"
 echo ""
 echo "  Note: tasks/ files are local working memory (gitignored by default)."
 echo ""
