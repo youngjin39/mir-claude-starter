@@ -17,6 +17,15 @@ context: fork
 - Edge cases: null, empty, boundary, error, concurrent.
 - No mocks for external services unless explicitly approved.
 
+## GUI Testing (Computer Use)
+When the project has GUI components and computer-use MCP is enabled:
+1. Build and launch the app.
+2. Execute UI flows: tap, scroll, navigate between screens.
+3. Screenshot any visual anomalies or errors.
+4. Report layout issues with screenshot evidence.
+
+Ref: `docs/integrations/computer-use-gui-testing.md`
+
 ## Output
 ```
 ## Test Results

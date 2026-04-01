@@ -35,3 +35,11 @@ allowed-tools: Read, Grep, Glob, Bash
 ### Verdict
 APPROVE / REQUEST_CHANGES / BLOCK
 ```
+
+## External Review (Optional)
+When GitHub + Codex review is configured:
+1. After internal APPROVE → create branch + PR.
+2. Wait for Codex review comments.
+3. Address all findings before merge.
+
+Ref: `docs/integrations/codex-code-review.md`
