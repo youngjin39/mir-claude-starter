@@ -26,20 +26,27 @@ allowed-tools: Read, Grep, Glob, Bash
 11. docs/ .md files have frontmatter (title, keywords). Index files (`type: index`) exempt from content rules.
 12. No docs/ file exceeds 50 lines (exception: `type: archive` in frontmatter).
 
+## Memory Lint Check
+13. Orphan files: docs/ .md files not listed in memory-map.md Keyword table or Category Index.
+14. Phantom entries: memory-map.md references files that don't exist on disk.
+15. Contradiction scan: files sharing ≥2 keywords → skim for conflicting claims → warn.
+16. Missing cross-refs: files sharing keywords but lacking `related` field pointing to each other.
+17. Stale content: `last_used` > 90 days → warn (review, not delete).
+
 ## Context Efficiency Check
-13. plan.md ≤ 50 lines.
-14. CLAUDE.md has trigger table (no skill body inline).
-15. tasks/handoffs/ and tasks/sessions/ directories exist.
+18. plan.md ≤ 50 lines.
+19. CLAUDE.md has trigger table (no skill body inline).
+20. tasks/handoffs/ and tasks/sessions/ directories exist.
 
 ## Skill Health Check
-16. Each skill's referenced commands exist (e.g., `npm run lint` → package.json has lint script).
-17. CLAUDE.md trigger table paths match actual SKILL.md files (no phantom entries).
-18. Skills with `last_used` > 30 days in memory-map.md Skill Usage table → warn as stale. Skip skills with `—` (never used).
+21. Each skill's referenced commands exist (e.g., `npm run lint` → package.json has lint script).
+22. CLAUDE.md trigger table paths match actual SKILL.md files (no phantom entries).
+23. Skills with `last_used` > 30 days in memory-map.md Skill Usage table → warn as stale. Skip skills with `—` (never used).
 
 ## Security Scan
-19. No credential patterns in .md/.json/.yaml/.sh files (sk-, ghp_, gho_, AIza, xoxb-, AKIA, aws_secret_access_key).
-20. No dangerous shell patterns in skill files (rm -rf /, curl|sh, eval).
-21. .env files listed in .gitignore.
+24. No credential patterns in .md/.json/.yaml/.sh files (sk-, ghp_, gho_, AIza, xoxb-, AKIA, aws_secret_access_key).
+25. No dangerous shell patterns in skill files (rm -rf /, curl|sh, eval).
+26. .env files listed in .gitignore.
 
 ## Output
 ```

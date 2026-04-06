@@ -132,7 +132,7 @@ When triggered: report trigger reason + loaded skill(s) (max 3) in one line.
 ### Layer 1: Project Knowledge (docs/) — what we know
 - Long-term memory. No decay. Permanently preserved.
 - Keyword index (memory-map.md) → category → file. Load only what is needed.
-- Max 50 lines per file (exception: `type: archive` files). Frontmatter: title, keywords, created, last_used.
+- Max 50 lines per file (exception: `type: archive` files). Frontmatter: title, keywords, related, created, last_used.
 
 ### Layer 2: Behavioral Rules (tasks/lessons.md) — what to do / not do
 - Failure/success table → promoted to rule after 2 repetitions.
@@ -173,6 +173,7 @@ When triggered: report trigger reason + loaded skill(s) (max 3) in one line.
 - On task completion, assess: "Was anything new learned?"
 - If yes → save to docs/{category}/ + update memory-map.md.
 - If no → skip (prevent unnecessary memory bloat).
+- **Cascade Update**: on save, check memory-map.md for existing files sharing keywords. If found, review for contradiction/overlap → update or flag. A single new insight may touch multiple files.
 
 ## Quality Checks
 - Record every change in change_log.md.

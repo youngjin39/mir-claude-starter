@@ -46,6 +46,7 @@ type: index
 | references | [Repo Analysis](references/repo-analysis-summary.md) | Reference repo analysis |
 
 ## Protocols
-- **Search**: Scan keyword table → Read matched file only → Skip if no match.
-- **Store**: Create `docs/{category}/{topic}.md` with frontmatter → Add keyword row here.
+- **Search**: Scan keyword table → Read matched file only → If file has `related` field, consider loading related files too → Skip if no match.
+- **Store**: Create `docs/{category}/{topic}.md` with frontmatter (title, keywords, related, created, last_used) → Add keyword row here.
+- **Cascade**: On store, check keyword table for existing files sharing keywords. Review for contradiction/overlap → update affected files + their `last_used`. A single insight may touch multiple files.
 - **Promote**: 2+ repetitions → lessons.md rule. Cross-project → ~/.claude/global-memory/.

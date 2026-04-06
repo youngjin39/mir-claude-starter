@@ -84,14 +84,15 @@ type: index
 # Memory Map
 
 > Long-term memory. No decay. Load only what's needed via category map.
-> Max 50 lines per file (exception: `type: archive`). Frontmatter required: title, keywords, created, last_used.
+> Max 50 lines per file (exception: `type: archive`). Frontmatter required: title, keywords, related, created, last_used.
 > 100+ memory files → consider SQLite. 200+ lines in this file → split into sub-indexes.
 
 ## Search Protocol
 1. Scan keyword table below for relevant keywords.
 2. Read only matched files.
-3. No match → skip memory loading (save tokens).
-4. **Never load an entire category at once.**
+3. If file has `related` field, consider loading related files too.
+4. No match → skip memory loading (save tokens).
+5. **Never load an entire category at once.**
 
 ## Save Protocol
 1. Create memory file: `docs/{category}/{topic}.md`
@@ -100,6 +101,7 @@ type: index
    ---
    title: {title}
    keywords: [keyword1, keyword2, ...]
+   related: [other-file.md, ...]
    created: {YYYY-MM-DD}
    last_used: {YYYY-MM-DD}
    ---
@@ -107,6 +109,7 @@ type: index
 3. Max 50 lines. Split if exceeded.
 4. **Add a row to the keyword table below** (auto-update).
 5. Duplicate keywords → add file to same row (1:N).
+6. **Cascade**: check keyword table for existing files sharing keywords → review for contradiction/overlap → update affected files.
 
 ## Skill Usage Tracking
 | Skill | Last Used | Count |

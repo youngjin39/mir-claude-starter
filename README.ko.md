@@ -246,6 +246,8 @@ EOF
 - **[CLI-Anything](https://github.com/HKUDS/CLI-Anything)** — 에이전트 하네스 구조, 스킬 레지스트리 패턴.
 - **[oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudecode)** — 작성/리뷰 분리, Deep Interview, 서킷 브레이커.
 - **[everything-claude-code](https://github.com/affaan-m/everything-claude-code)** — 토큰 최적화, 지연 로딩, 모델 라우팅.
+- **[ByteRover CLI](https://github.com/campfirein/byterover-cli)** — Context Tree 아키텍처 분석: 연쇄 업데이트, 교차참조(`related` 필드), 메모리 린트 패턴.
+- **[LLM Wiki (Karpathy)](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)** — 영속적 지식 축적 패턴: 인제스트 시 연쇄 업데이트, 모순 감지, 위키 린트.
 
 프롬프트 기법 참고 연구: ReAct, CoVE, Tree/Graph of Thoughts, Contrastive CoT, Maieutic Prompting, Self-Refinement, Chain of Density, Plan-and-Solve, Reflexion, Skeleton-of-Thought.
 

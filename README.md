@@ -246,6 +246,8 @@ Designed with inspiration from:
 - **[CLI-Anything](https://github.com/HKUDS/CLI-Anything)** — Agent harness structure, skill registry pattern.
 - **[oh-my-claudecode](https://github.com/Yeachan-Heo/oh-my-claudecode)** — Write/Review separation, Deep Interview, circuit breaker.
 - **[everything-claude-code](https://github.com/affaan-m/everything-claude-code)** — Token optimization, lazy loading, model routing.
+- **[ByteRover CLI](https://github.com/campfirein/byterover-cli)** — Context Tree architecture analysis: cascade update, cross-reference (`related` field), memory lint patterns.
+- **[LLM Wiki (Karpathy)](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)** — Persistent compounding knowledge base pattern: cascade update on ingest, contradiction detection, wiki lint.
 
 Prompt techniques informed by research on: ReAct, CoVE, Tree/Graph of Thoughts, Contrastive CoT, Maieutic Prompting, Self-Refinement, Chain of Density, Plan-and-Solve, Reflexion, Skeleton-of-Thought.
 
