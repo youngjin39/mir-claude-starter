@@ -326,7 +326,7 @@ echo "    ✓ 6 skills: brainstorming, writing-plans, verification,"
 echo "                 deep-interview, git-commit, project-doctor"
 echo "    ✓ 3 agents: orchestrator, executor, quality"
 echo "    ✓ 4 hooks:  session-start, pre-compact, post-edit-check, session-end"
-echo "    ✓ MCP:      fetch (web access)"
+echo "    ✓ Web:      built-in WebFetch / WebSearch (no MCP needed)"
 echo ""
 echo "  Optional modules:"
 echo "    [1] code-review skill  — PR/quality review"
@@ -386,18 +386,24 @@ else
 fi
 
 # Build .mcp.json dynamically
-MCP_JSON='{\n  "mcpServers": {\n    "fetch": {\n      "command": "npx",\n      "args": ["-y", "@anthropic-ai/mcp-server-fetch"]\n    }'
+# Note: web access is handled by Claude Code's built-in WebFetch tool — no MCP server needed.
+MCP_JSON='{\n  "mcpServers": {'
+MCP_FIRST=1
 
 if [ "$MOD_CONTEXT7" -eq 1 ]; then
   info "  Including: Context7 MCP"
-  MCP_JSON="$MCP_JSON"',\n    "context7": {\n      "command": "npx",\n      "args": ["-y", "@upstash/context7-mcp@latest"]\n    }'
+  [ "$MCP_FIRST" -eq 0 ] && MCP_JSON="$MCP_JSON"','
+  MCP_JSON="$MCP_JSON"'\n    "context7": {\n      "command": "npx",\n      "args": ["-y", "@upstash/context7-mcp@latest"]\n    }'
+  MCP_FIRST=0
 else
   info "  Skipping: Context7 MCP"
 fi
 
 if [ "$MOD_SEQ_THINK" -eq 1 ]; then
   info "  Including: Sequential Thinking MCP"
-  MCP_JSON="$MCP_JSON"',\n    "sequential-thinking": {\n      "command": "npx",\n      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]\n    }'
+  [ "$MCP_FIRST" -eq 0 ] && MCP_JSON="$MCP_JSON"','
+  MCP_JSON="$MCP_JSON"'\n    "sequential-thinking": {\n      "command": "npx",\n      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]\n    }'
+  MCP_FIRST=0
 else
   info "  Skipping: Sequential Thinking MCP"
 fi
@@ -526,10 +532,11 @@ SKILL_COUNT=7
 [ "$MOD_TESTING" -eq 1 ] && { SKILL_LIST="$SKILL_LIST, testing"; SKILL_COUNT=$((SKILL_COUNT + 1)); }
 
 # Build MCP list for summary
-MCP_LIST="fetch"
-MCP_COUNT=1
-[ "$MOD_CONTEXT7" -eq 1 ] && { MCP_LIST="$MCP_LIST, context7"; MCP_COUNT=$((MCP_COUNT + 1)); }
-[ "$MOD_SEQ_THINK" -eq 1 ] && { MCP_LIST="$MCP_LIST, sequential-thinking"; MCP_COUNT=$((MCP_COUNT + 1)); }
+MCP_LIST=""
+MCP_COUNT=0
+[ "$MOD_CONTEXT7" -eq 1 ] && { MCP_LIST="${MCP_LIST:+$MCP_LIST, }context7"; MCP_COUNT=$((MCP_COUNT + 1)); }
+[ "$MOD_SEQ_THINK" -eq 1 ] && { MCP_LIST="${MCP_LIST:+$MCP_LIST, }sequential-thinking"; MCP_COUNT=$((MCP_COUNT + 1)); }
+[ "$MCP_COUNT" -eq 0 ] && MCP_LIST="(none — built-in WebFetch only)"
 
 echo "  Project:     ${PROJECT_NAME:-unnamed}"
 echo "  Preset:      ${PRESET_NAME}"

@@ -126,7 +126,6 @@ The quality-agent uses an **adversarial lens**: its job is to find what the exec
 
 | Server | Role | Core/Optional |
 |---|---|---|
-| fetch | Web access | Core |
 | Context7 | Latest library docs auto-injection | Optional |
 | Sequential Thinking | Structured reasoning chains | Optional |
 

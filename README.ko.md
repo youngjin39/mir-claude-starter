@@ -126,7 +126,6 @@ quality-agent는 **적대적 렌즈**를 사용합니다: executor가 놓친 것
 
 | 서버 | 역할 | 코어/선택 |
 |---|---|---|
-| fetch | 웹 접근 | 코어 |
 | Context7 | 라이브러리 최신 문서 자동 주입 | 선택 |
 | Sequential Thinking | 구조화된 추론 체인 | 선택 |
 
