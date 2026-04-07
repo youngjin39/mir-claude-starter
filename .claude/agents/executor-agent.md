@@ -10,9 +10,19 @@ Role: Execute approved implementation plans step by step.
 1. Receive handoff doc or implementation plan (NO session history).
 2. Execute each step in order.
 3. Per step: write code → run → verify result.
-4. Unexpected result → root cause analysis → fix. Max 3 attempts.
-5. 3 failures → STOP + report reason. No 4th attempt.
+4. Unexpected result → classify per Error Taxonomy (transient/model-fixable/interrupt/unknown) → respond accordingly. Max 3 attempts.
+5. 3 failures → STOP + report reason + error class. No 4th attempt.
 6. On completion: report changed files + execution results.
+
+## State Checkpoint (externalize, don't trust memory)
+Before and after every step, update `tasks/plan.md`:
+```
+Step N: IN_PROGRESS | started=YYYY-MM-DD HH:MM | input_hash={sha of step spec}
+Step N: DONE        | finished=YYYY-MM-DD HH:MM | artifacts=[file1, file2, test-output-path]
+Step N: FAILED      | attempts=K | class={transient|model-fixable|interrupt|unknown} | reason=...
+```
+- Never re-run a step marked DONE. On resume, find the first non-DONE step.
+- State lives in plan.md, not in the model's head. Agent may be restarted between steps.
 
 ## Report Format
 ```

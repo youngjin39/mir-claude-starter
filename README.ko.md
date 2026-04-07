@@ -129,14 +129,28 @@ quality-agent는 **적대적 렌즈**를 사용합니다: executor가 놓친 것
 | Context7 | 라이브러리 최신 문서 자동 주입 | 선택 |
 | Sequential Thinking | 구조화된 추론 체인 | 선택 |
 
-### 훅 (4개)
+### 훅 (5개)
 
 | 훅 | 이벤트 | 동작 |
 |---|---|---|
 | session-start.sh | SessionStart | plan.md + lessons.md + 최근 세션 자동 주입 |
 | pre-compact.sh | PreCompact | /compact 전 핸드오프 문서 작성 리마인더 |
+| pre-tool-use.sh | PreToolUse (Bash\|Edit\|Write) | 입력 단계 가드레일: 파괴적 패턴 + 금지 경로 사전 차단 |
 | post-edit-check.sh | PostToolUse (Edit\|Write) | 디버그 구문 + 자격증명 유출 탐지 |
 | session-end.sh | SessionEnd | 세션 스냅샷 자동 저장 + 메모리 하베스팅 리마인더 |
+
+### 에러 분류 + 출력 파싱 복구
+
+모든 실패는 4가지 클래스로 분류 — 대응은 에러 메시지가 아니라 클래스가 결정:
+
+| 클래스 | 대응 |
+|---|---|
+| transient | 지수 백오프 (1s → 4s → 10s), 최대 3회 재시도 |
+| model-fixable | 에러를 관찰값으로 재전달, 호출 수정, 최대 3회 |
+| interrupt | STOP, 사용자 에스컬레이션 (파괴적/모호/범위 확장) |
+| unknown | lessons.md 기록, STOP, 즉흥 금지 |
+
+파싱 실패는 partial-extract → feedback 라운드 → unknown 승격 순서. "기본값 가정", "동일 프롬프트 재시도"는 금지.
 
 ### 4종 스킬 트리거 시스템
 
@@ -219,7 +233,7 @@ Select [1-4, comma-separated, 'all', or 'none', default: all]:
 ├── .claude/
 │   ├── settings.local.json      # 권한 + 훅
 │   ├── agents/                  # 에이전트 3개
-│   ├── hooks/                   # 자동화 훅 4개
+│   ├── hooks/                   # 자동화 훅 5개
 │   └── skills/                  # 스킬 6~8개 (선택에 따라)
 ├── tasks/                       # 작업 메모리 (gitignore)
 │   ├── plan.md                  # 현재 계획

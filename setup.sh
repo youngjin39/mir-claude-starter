@@ -325,7 +325,7 @@ echo "  Core (always included):"
 echo "    ✓ 6 skills: brainstorming, writing-plans, verification,"
 echo "                 deep-interview, git-commit, project-doctor"
 echo "    ✓ 3 agents: orchestrator, executor, quality"
-echo "    ✓ 4 hooks:  session-start, pre-compact, post-edit-check, session-end"
+echo "    ✓ 5 hooks:  session-start, pre-compact, pre-tool-use, post-edit-check, session-end"
 echo "    ✓ Web:      built-in WebFetch / WebSearch (no MCP needed)"
 echo ""
 echo "  Optional modules:"
@@ -484,6 +484,19 @@ cat > .claude/settings.local.json << SETEOF
         ]
       }
     ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash|Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"\$CLAUDE_PROJECT_DIR/.claude/hooks/pre-tool-use.sh\"",
+            "timeout": 5,
+            "statusMessage": "Input-stage guardrail..."
+          }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
         "matcher": "Edit|Write",
@@ -546,7 +559,7 @@ echo "  Permissions: ${PERM_LEVEL}"
 echo "  Agents:      3 (orchestrator, executor, quality)"
 echo "  Skills:      ${SKILL_COUNT} (${SKILL_LIST})"
 echo "  MCP:         ${MCP_COUNT} (${MCP_LIST})"
-echo "  Hooks:       4 (SessionStart, PreCompact, PostToolUse, SessionEnd)"
+echo "  Hooks:       5 (SessionStart, PreCompact, PreToolUse, PostToolUse, SessionEnd)"
 echo ""
 echo "  Note: tasks/ files are local working memory (gitignored by default)."
 echo ""

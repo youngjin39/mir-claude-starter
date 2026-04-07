@@ -43,6 +43,16 @@ After all 6 stages PASS, answer these 5 questions before issuing READY:
 
 If any answer raises doubt → investigate before issuing READY.
 
+## Output Parsing Recovery
+When a tool result or model output is malformed, partial, or schema-mismatched:
+1. **Never** proceed as if successful. Never silently retry identically.
+2. **Partial extract**: keep only validated fields. List what was dropped.
+3. **Decision coverage check**: does the partial cover the current step? If yes → continue with explicit note. If no → go to step 4.
+4. **Feed-back round**: return the parse failure to the model with (a) expected schema, (b) actual fragment, (c) which field failed. Request a corrected response.
+5. **Two strikes**: after 2 feed-back rounds without valid parse → classify as `unknown` per Error Taxonomy → STOP.
+
+Banned moves: "assume the missing field is default", "parse loosely and hope", "retry with same prompt expecting different output".
+
 ## Circuit Breaker
 - Same issue fails **3 times** → STOP.
 - Instead of 4th attempt: re-examine architecture or escalate to user.

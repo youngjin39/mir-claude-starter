@@ -129,14 +129,28 @@ The quality-agent uses an **adversarial lens**: its job is to find what the exec
 | Context7 | Latest library docs auto-injection | Optional |
 | Sequential Thinking | Structured reasoning chains | Optional |
 
-### Hooks (4)
+### Hooks (5)
 
 | Hook | Event | Action |
 |---|---|---|
 | session-start.sh | SessionStart | Auto-inject plan.md + lessons.md + latest session |
 | pre-compact.sh | PreCompact | Remind to write handoff before /compact |
+| pre-tool-use.sh | PreToolUse (Bash\|Edit\|Write) | Input-stage guardrail: block destructive patterns + denied paths |
 | post-edit-check.sh | PostToolUse (Edit\|Write) | Debug statement + credential leak detection |
 | session-end.sh | SessionEnd | Auto-save session snapshot + memory harvesting reminder |
+
+### Error Taxonomy + Output Parsing Recovery
+
+Every failure is classified into one of four classes — response is determined by class, not by the error message:
+
+| Class | Response |
+|---|---|
+| transient | Exponential backoff (1s → 4s → 10s), max 3 retries |
+| model-fixable | Feed error back as observation, revise call, max 3 attempts |
+| interrupt | STOP, escalate to user (destructive/ambiguous/scope expansion) |
+| unknown | Log to lessons.md, STOP, no improvisation |
+
+Output parsing failures go through partial-extract → feedback round → unknown escalation. "Assume default on missing field" and "retry with same prompt" are explicitly banned.
 
 ### 4-Type Skill Trigger System
 
@@ -219,7 +233,7 @@ Unselected modules are removed at setup time — no dead context, no wasted toke
 ├── .claude/
 │   ├── settings.local.json      # Permissions + hooks
 │   ├── agents/                  # 3 agents
-│   ├── hooks/                   # 4 automation hooks
+│   ├── hooks/                   # 5 automation hooks
 │   └── skills/                  # 6–8 skills (based on selection)
 ├── tasks/                       # Working memory (gitignored)
 │   ├── plan.md                  # Current plan
