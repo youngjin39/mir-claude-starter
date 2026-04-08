@@ -613,8 +613,8 @@ echo -e "${GREEN}  Setup complete!${NC}"
 echo -e "${GREEN}========================================${NC}"
 echo ""
 # Build skill list for summary
-SKILL_LIST="brainstorming, writing-plans, verification, interview, git-commit, project-doctor, self-audit"
-SKILL_COUNT=7
+SKILL_LIST="brainstorming, writing-plans, verification, interview, git-commit, project-doctor, self-audit, ux-ui-design"
+SKILL_COUNT=8
 [ "$MOD_CODE_REVIEW" -eq 1 ] && { SKILL_LIST="$SKILL_LIST, code-review"; SKILL_COUNT=$((SKILL_COUNT + 1)); }
 [ "$MOD_TESTING" -eq 1 ] && { SKILL_LIST="$SKILL_LIST, testing"; SKILL_COUNT=$((SKILL_COUNT + 1)); }
 [ "$MOD_KNOWLEDGE_WIKI" -eq 1 ] && { SKILL_LIST="$SKILL_LIST, knowledge-ingest, knowledge-lint"; SKILL_COUNT=$((SKILL_COUNT + 2)); }

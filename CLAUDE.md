@@ -22,7 +22,7 @@
 │   ├── settings.local.json
 │   ├── agents/          # main-orchestrator, quality-agent, executor-agent
 │   ├── hooks/           # session-start, pre-compact, pre-tool-use, post-edit-check, session-end
-│   └── skills/          # 9 skills (see skill trigger table)
+│   └── skills/          # 10 skills (see skill trigger table)
 ├── tasks/
 │   ├── plan.md          # current phase summary (compact)
 │   ├── context.md       # decision rationale
@@ -61,7 +61,7 @@ Request → specificity signals? → none → deep-interview → classify
 ### Orchestration Presets
 | Preset | Pipeline |
 |---|---|
-| feature | brainstorming → writing-plans → executor → testing → code-review → verification |
+| feature | brainstorming → **ux-ui-design (if UI)** → writing-plans → executor → testing → code-review → verification |
 | bugfix | deep-interview(lite) → executor → testing → verification |
 | refactor | brainstorming → writing-plans → executor → code-review → verification |
 | security | code-review(security) → executor → verification |
@@ -88,6 +88,7 @@ Request → specificity signals? → none → deep-interview → classify
 
 ### Built-in Rules
 - brainstorming: must compare 2~3 alternatives with different lenses. Counter-narrative mandatory.
+- ux-ui-design: **hard gate** if the work produces UI. No UI code until Steps 1–7 approved by user.
 - writing-plans: no abstract expressions. Include actual code. Banned: "add tests", "refactor as needed".
 - execution: 3-failure circuit breaker → revisit architecture. Use git worktree for risky changes.
 - verification: "should work", "probably fine" forbidden. Evidence only. Red Team 5Q after gate pass.
@@ -117,6 +118,7 @@ When triggered: report trigger reason + loaded skill(s) (max 3) in one line.
 | verify, done check, proof, self-check | verification | .claude/skills/verification/SKILL.md |
 | interview, requirements, clarify, ambiguous | deep-interview | .claude/skills/deep-interview/SKILL.md |
 | self-audit, compliance, harness check, 자기점검 | self-audit | .claude/skills/self-audit/SKILL.md |
+| ui, ux, screen, wireframe, frontend, design system, 화면, 디자인 | ux-ui-design | .claude/skills/ux-ui-design/SKILL.md |
 
 > On skill trigger: update `last_used` + `count` in docs/memory-map.md Skill Usage table.
 
