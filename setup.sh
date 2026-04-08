@@ -261,16 +261,16 @@ read -p "  Select [1-11, default: 11]: " PRESET_CHOICE
 PRESET_NAME=""
 PRESET_LOCKED=0
 case "$PRESET_CHOICE" in
-  1)  PRESET_NAME="Flutter Mobile App";   LANG_FRAMEWORK="Dart/Flutter";       PKG_MANAGER="pub";    MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=1; MOD_SEQ_THINK=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
-  2)  PRESET_NAME="Next.js Web App";      LANG_FRAMEWORK="TypeScript/Next.js"; PKG_MANAGER="pnpm";   MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=1; MOD_SEQ_THINK=1; PERM_PRESET=2; PRESET_LOCKED=1 ;;
-  3)  PRESET_NAME="Node/TS Backend API";  LANG_FRAMEWORK="TypeScript/Node.js"; PKG_MANAGER="npm";    MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=0; MOD_SEQ_THINK=1; PERM_PRESET=2; PRESET_LOCKED=1 ;;
-  4)  PRESET_NAME="Python Backend";       LANG_FRAMEWORK="Python/FastAPI";     PKG_MANAGER="uv";     MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=1; MOD_SEQ_THINK=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
-  5)  PRESET_NAME="Python Data/ML";       LANG_FRAMEWORK="Python/ML";          PKG_MANAGER="uv";     MOD_CODE_REVIEW=0; MOD_TESTING=1; MOD_CONTEXT7=0; MOD_SEQ_THINK=1; PERM_PRESET=2; PRESET_LOCKED=1 ;;
-  6)  PRESET_NAME="Rust Systems";         LANG_FRAMEWORK="Rust";               PKG_MANAGER="cargo";  MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; PERM_PRESET=1; PRESET_LOCKED=1 ;;
-  7)  PRESET_NAME="Go Service";           LANG_FRAMEWORK="Go";                 PKG_MANAGER="go mod"; MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
-  8)  PRESET_NAME="Embedded C/C++";       LANG_FRAMEWORK="C/C++";              PKG_MANAGER="cmake";  MOD_CODE_REVIEW=1; MOD_TESTING=0; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; PERM_PRESET=1; PRESET_LOCKED=1 ;;
-  9)  PRESET_NAME="Claude-only Agent";    LANG_FRAMEWORK="Claude (no code)";   PKG_MANAGER="n/a";    MOD_CODE_REVIEW=0; MOD_TESTING=0; MOD_CONTEXT7=0; MOD_SEQ_THINK=1; PERM_PRESET=2; PRESET_LOCKED=1 ;;
-  10) PRESET_NAME="Static Site / Docs";   LANG_FRAMEWORK="Astro or Hugo";      PKG_MANAGER="npm";    MOD_CODE_REVIEW=0; MOD_TESTING=0; MOD_CONTEXT7=1; MOD_SEQ_THINK=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
+  1)  PRESET_NAME="Flutter Mobile App";   LANG_FRAMEWORK="Dart/Flutter";       PKG_MANAGER="pub";    MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=1; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
+  2)  PRESET_NAME="Next.js Web App";      LANG_FRAMEWORK="TypeScript/Next.js"; PKG_MANAGER="pnpm";   MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=1; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
+  3)  PRESET_NAME="Node/TS Backend API";  LANG_FRAMEWORK="TypeScript/Node.js"; PKG_MANAGER="npm";    MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=0; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
+  4)  PRESET_NAME="Python Backend";       LANG_FRAMEWORK="Python/FastAPI";     PKG_MANAGER="uv";     MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=1; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
+  5)  PRESET_NAME="Python Data/ML";       LANG_FRAMEWORK="Python/ML";          PKG_MANAGER="uv";     MOD_CODE_REVIEW=0; MOD_TESTING=1; MOD_CONTEXT7=0; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=1; PERM_PRESET=2; PRESET_LOCKED=1 ;;
+  6)  PRESET_NAME="Rust Systems";         LANG_FRAMEWORK="Rust";               PKG_MANAGER="cargo";  MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; PERM_PRESET=1; PRESET_LOCKED=1 ;;
+  7)  PRESET_NAME="Go Service";           LANG_FRAMEWORK="Go";                 PKG_MANAGER="go mod"; MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
+  8)  PRESET_NAME="Embedded C/C++";       LANG_FRAMEWORK="C/C++";              PKG_MANAGER="cmake";  MOD_CODE_REVIEW=1; MOD_TESTING=0; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; PERM_PRESET=1; PRESET_LOCKED=1 ;;
+  9)  PRESET_NAME="Claude-only Agent";    LANG_FRAMEWORK="Claude (no code)";   PKG_MANAGER="n/a";    MOD_CODE_REVIEW=0; MOD_TESTING=0; MOD_CONTEXT7=0; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=1; PERM_PRESET=2; PRESET_LOCKED=1 ;;
+  10) PRESET_NAME="Static Site / Docs";   LANG_FRAMEWORK="Astro or Hugo";      PKG_MANAGER="npm";    MOD_CODE_REVIEW=0; MOD_TESTING=0; MOD_CONTEXT7=1; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
   *)  PRESET_NAME="Custom"; PRESET_LOCKED=0 ;;
 esac
 
@@ -333,23 +333,24 @@ echo "    [1] code-review skill  — PR/quality review"
 echo "    [2] testing skill      — TDD enforcement"
 echo "    [3] Context7 MCP       — latest library docs auto-injection"
 echo "    [4] Sequential Thinking MCP — structured reasoning chains"
+echo "    [5] Knowledge Wiki     — LLM Wiki pattern (docs/sources + docs/wiki + ingest/lint skills)"
 echo ""
 if [ "$PRESET_LOCKED" -eq 1 ]; then
   MODULE_CHOICE="__preset__"
-  info "  Modules locked by preset: code-review=$MOD_CODE_REVIEW testing=$MOD_TESTING context7=$MOD_CONTEXT7 seq-think=$MOD_SEQ_THINK"
+  info "  Modules locked by preset: code-review=$MOD_CODE_REVIEW testing=$MOD_TESTING context7=$MOD_CONTEXT7 seq-think=$MOD_SEQ_THINK knowledge-wiki=$MOD_KNOWLEDGE_WIKI"
 else
-  read -p "  Select [1-4, comma-separated, 'all', or 'none', default: all]: " MODULE_CHOICE
+  read -p "  Select [1-5, comma-separated, 'all', or 'none', default: all]: " MODULE_CHOICE
 fi
 
 # Parse selection
 if [ "$MODULE_CHOICE" = "__preset__" ]; then
   : # already set by preset
 elif [ -z "$MODULE_CHOICE" ] || [ "$MODULE_CHOICE" = "all" ]; then
-  MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=1; MOD_SEQ_THINK=1
+  MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=1; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=1
 elif [ "$MODULE_CHOICE" = "none" ]; then
-  MOD_CODE_REVIEW=0; MOD_TESTING=0; MOD_CONTEXT7=0; MOD_SEQ_THINK=0
+  MOD_CODE_REVIEW=0; MOD_TESTING=0; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0
 else
-  MOD_CODE_REVIEW=0; MOD_TESTING=0; MOD_CONTEXT7=0; MOD_SEQ_THINK=0
+  MOD_CODE_REVIEW=0; MOD_TESTING=0; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0
   IFS=',' read -ra MODS <<< "$MODULE_CHOICE"
   for m in "${MODS[@]}"; do
     m=$(echo "$m" | tr -d ' ')
@@ -358,9 +359,11 @@ else
       2) MOD_TESTING=1 ;;
       3) MOD_CONTEXT7=1 ;;
       4) MOD_SEQ_THINK=1 ;;
+      5) MOD_KNOWLEDGE_WIKI=1 ;;
     esac
   done
 fi
+MOD_KNOWLEDGE_WIKI=${MOD_KNOWLEDGE_WIKI:-0}
 
 # Remove unselected optional skills + update CLAUDE.md references
 if [ "$MOD_CODE_REVIEW" -eq 0 ]; then
@@ -383,6 +386,53 @@ if [ "$MOD_TESTING" -eq 0 ]; then
   perl -ni -e 'print unless /\| testing /' docs/memory-map.md
 else
   info "  Including: testing skill"
+fi
+
+if [ "$MOD_KNOWLEDGE_WIKI" -eq 0 ]; then
+  info "  Skipping: Knowledge Wiki"
+  rm -rf .claude/skills/knowledge-ingest
+  rm -rf .claude/skills/knowledge-lint
+else
+  info "  Including: Knowledge Wiki (docs/sources + docs/wiki + ingest/lint skills)"
+  mkdir -p docs/sources docs/wiki
+  cat > docs/sources/index.md << 'WIKIEOF'
+---
+title: Sources Index — LLM Wiki Raw Archive
+keywords: [sources, index, wiki, ingest]
+created: SETUP_DATE
+last_used: SETUP_DATE
+type: index
+---
+
+# Sources Index
+
+> Raw, immutable. Edit only by appending rows. Files in this directory must never be modified after ingest.
+
+| Date | Slug | 1-line Summary | Pages Touched |
+|---|---|---|---|
+| | | | |
+WIKIEOF
+  cat > docs/sources/log.md << 'WIKIEOF'
+# Ingest Log
+
+> Append-only. Parseable prefix: `INGEST {YYYY-MM-DD} {slug} → [pages]`.
+
+WIKIEOF
+  cat > docs/wiki/README.md << 'WIKIEOF'
+---
+title: Wiki Root
+keywords: [wiki, root]
+created: SETUP_DATE
+last_used: SETUP_DATE
+---
+
+# Wiki
+
+LLM-maintained knowledge pages derived from `docs/sources/`. Each page ≤50 lines. Every claim cites a source.
+
+Lint with the `knowledge-lint` skill. Ingest new material with the `knowledge-ingest` skill.
+WIKIEOF
+  SETUP_DATE=$(date +%Y-%m-%d) perl -pi -e 's/SETUP_DATE/$ENV{SETUP_DATE}/g' docs/sources/index.md docs/wiki/README.md
 fi
 
 # Build .mcp.json dynamically
@@ -417,9 +467,10 @@ SELECTED_COUNT=0
 [ "$MOD_TESTING" -eq 1 ] && SELECTED_COUNT=$((SELECTED_COUNT + 1))
 [ "$MOD_CONTEXT7" -eq 1 ] && SELECTED_COUNT=$((SELECTED_COUNT + 1))
 [ "$MOD_SEQ_THINK" -eq 1 ] && SELECTED_COUNT=$((SELECTED_COUNT + 1))
+[ "$MOD_KNOWLEDGE_WIKI" -eq 1 ] && SELECTED_COUNT=$((SELECTED_COUNT + 1))
 
 echo ""
-info "$SELECTED_COUNT/4 optional modules selected."
+info "$SELECTED_COUNT/5 optional modules selected."
 
 # --- Step 6: Permissions + settings.local.json ---
 echo ""
@@ -543,6 +594,7 @@ SKILL_LIST="brainstorming, writing-plans, verification, interview, git-commit, p
 SKILL_COUNT=7
 [ "$MOD_CODE_REVIEW" -eq 1 ] && { SKILL_LIST="$SKILL_LIST, code-review"; SKILL_COUNT=$((SKILL_COUNT + 1)); }
 [ "$MOD_TESTING" -eq 1 ] && { SKILL_LIST="$SKILL_LIST, testing"; SKILL_COUNT=$((SKILL_COUNT + 1)); }
+[ "$MOD_KNOWLEDGE_WIKI" -eq 1 ] && { SKILL_LIST="$SKILL_LIST, knowledge-ingest, knowledge-lint"; SKILL_COUNT=$((SKILL_COUNT + 2)); }
 
 # Build MCP list for summary
 MCP_LIST=""
