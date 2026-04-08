@@ -335,23 +335,24 @@ echo "    [3] Context7 MCP       — latest library docs auto-injection"
 echo "    [4] Sequential Thinking MCP — structured reasoning chains"
 echo "    [5] Knowledge Wiki     — LLM Wiki pattern (docs/sources + docs/wiki + ingest/lint skills)"
 echo "    [6] Browser Automation — dev-browser CLI (real Playwright in QuickJS sandbox)"
+echo "    [7] Graphify            — automated knowledge graph for large codebases (71.5x token saving)"
 echo ""
 if [ "$PRESET_LOCKED" -eq 1 ]; then
   MODULE_CHOICE="__preset__"
   info "  Modules locked by preset: code-review=$MOD_CODE_REVIEW testing=$MOD_TESTING context7=$MOD_CONTEXT7 seq-think=$MOD_SEQ_THINK knowledge-wiki=$MOD_KNOWLEDGE_WIKI browser=$MOD_BROWSER"
 else
-  read -p "  Select [1-6, comma-separated, 'all', or 'none', default: all]: " MODULE_CHOICE
+  read -p "  Select [1-7, comma-separated, 'all', or 'none', default: all]: " MODULE_CHOICE
 fi
 
 # Parse selection
 if [ "$MODULE_CHOICE" = "__preset__" ]; then
   : # already set by preset
 elif [ -z "$MODULE_CHOICE" ] || [ "$MODULE_CHOICE" = "all" ]; then
-  MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=1; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=1; MOD_BROWSER=1
+  MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=1; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=1; MOD_BROWSER=1; MOD_GRAPHIFY=1
 elif [ "$MODULE_CHOICE" = "none" ]; then
-  MOD_CODE_REVIEW=0; MOD_TESTING=0; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=0
+  MOD_CODE_REVIEW=0; MOD_TESTING=0; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=0; MOD_GRAPHIFY=0
 else
-  MOD_CODE_REVIEW=0; MOD_TESTING=0; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=0
+  MOD_CODE_REVIEW=0; MOD_TESTING=0; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=0; MOD_GRAPHIFY=0
   IFS=',' read -ra MODS <<< "$MODULE_CHOICE"
   for m in "${MODS[@]}"; do
     m=$(echo "$m" | tr -d ' ')
@@ -362,11 +363,13 @@ else
       4) MOD_SEQ_THINK=1 ;;
       5) MOD_KNOWLEDGE_WIKI=1 ;;
       6) MOD_BROWSER=1 ;;
+      7) MOD_GRAPHIFY=1 ;;
     esac
   done
 fi
 MOD_KNOWLEDGE_WIKI=${MOD_KNOWLEDGE_WIKI:-0}
 MOD_BROWSER=${MOD_BROWSER:-0}
+MOD_GRAPHIFY=${MOD_GRAPHIFY:-0}
 
 # Remove unselected optional skills + update CLAUDE.md references
 if [ "$MOD_CODE_REVIEW" -eq 0 ]; then
@@ -447,6 +450,18 @@ else
   warn "    npm install -g dev-browser && dev-browser install"
 fi
 
+if [ "$MOD_GRAPHIFY" -eq 0 ]; then
+  info "  Skipping: Graphify"
+  rm -rf .claude/skills/graphify
+else
+  info "  Including: Graphify (automated knowledge graph)"
+  # Ensure cache/ is gitignored
+  grep -qxF "cache/" .gitignore 2>/dev/null || echo "cache/" >> .gitignore
+  warn "  Graphify is NOT auto-installed. Run in your terminal after setup:"
+  warn "    pip install graphifyy && graphify install"
+  warn "    (package name is 'graphifyy' — two y's)"
+fi
+
 # Build .mcp.json dynamically
 # Note: web access is handled by Claude Code's built-in WebFetch tool — no MCP server needed.
 MCP_JSON='{\n  "mcpServers": {'
@@ -481,9 +496,10 @@ SELECTED_COUNT=0
 [ "$MOD_SEQ_THINK" -eq 1 ] && SELECTED_COUNT=$((SELECTED_COUNT + 1))
 [ "$MOD_KNOWLEDGE_WIKI" -eq 1 ] && SELECTED_COUNT=$((SELECTED_COUNT + 1))
 [ "$MOD_BROWSER" -eq 1 ] && SELECTED_COUNT=$((SELECTED_COUNT + 1))
+[ "$MOD_GRAPHIFY" -eq 1 ] && SELECTED_COUNT=$((SELECTED_COUNT + 1))
 
 echo ""
-info "$SELECTED_COUNT/6 optional modules selected."
+info "$SELECTED_COUNT/7 optional modules selected."
 
 # --- Step 6: Permissions + settings.local.json ---
 echo ""
@@ -619,6 +635,7 @@ SKILL_COUNT=8
 [ "$MOD_TESTING" -eq 1 ] && { SKILL_LIST="$SKILL_LIST, testing"; SKILL_COUNT=$((SKILL_COUNT + 1)); }
 [ "$MOD_KNOWLEDGE_WIKI" -eq 1 ] && { SKILL_LIST="$SKILL_LIST, knowledge-ingest, knowledge-lint"; SKILL_COUNT=$((SKILL_COUNT + 2)); }
 [ "$MOD_BROWSER" -eq 1 ] && { SKILL_LIST="$SKILL_LIST, browser-automation"; SKILL_COUNT=$((SKILL_COUNT + 1)); }
+[ "$MOD_GRAPHIFY" -eq 1 ] && { SKILL_LIST="$SKILL_LIST, graphify"; SKILL_COUNT=$((SKILL_COUNT + 1)); }
 
 # Build MCP list for summary
 MCP_LIST=""
