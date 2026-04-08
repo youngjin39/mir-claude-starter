@@ -261,16 +261,16 @@ read -p "  Select [1-11, default: 11]: " PRESET_CHOICE
 PRESET_NAME=""
 PRESET_LOCKED=0
 case "$PRESET_CHOICE" in
-  1)  PRESET_NAME="Flutter Mobile App";   LANG_FRAMEWORK="Dart/Flutter";       PKG_MANAGER="pub";    MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=1; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
-  2)  PRESET_NAME="Next.js Web App";      LANG_FRAMEWORK="TypeScript/Next.js"; PKG_MANAGER="pnpm";   MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=1; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
-  3)  PRESET_NAME="Node/TS Backend API";  LANG_FRAMEWORK="TypeScript/Node.js"; PKG_MANAGER="npm";    MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=0; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
-  4)  PRESET_NAME="Python Backend";       LANG_FRAMEWORK="Python/FastAPI";     PKG_MANAGER="uv";     MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=1; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
-  5)  PRESET_NAME="Python Data/ML";       LANG_FRAMEWORK="Python/ML";          PKG_MANAGER="uv";     MOD_CODE_REVIEW=0; MOD_TESTING=1; MOD_CONTEXT7=0; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=1; PERM_PRESET=2; PRESET_LOCKED=1 ;;
-  6)  PRESET_NAME="Rust Systems";         LANG_FRAMEWORK="Rust";               PKG_MANAGER="cargo";  MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; PERM_PRESET=1; PRESET_LOCKED=1 ;;
-  7)  PRESET_NAME="Go Service";           LANG_FRAMEWORK="Go";                 PKG_MANAGER="go mod"; MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
-  8)  PRESET_NAME="Embedded C/C++";       LANG_FRAMEWORK="C/C++";              PKG_MANAGER="cmake";  MOD_CODE_REVIEW=1; MOD_TESTING=0; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; PERM_PRESET=1; PRESET_LOCKED=1 ;;
-  9)  PRESET_NAME="Claude-only Agent";    LANG_FRAMEWORK="Claude (no code)";   PKG_MANAGER="n/a";    MOD_CODE_REVIEW=0; MOD_TESTING=0; MOD_CONTEXT7=0; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=1; PERM_PRESET=2; PRESET_LOCKED=1 ;;
-  10) PRESET_NAME="Static Site / Docs";   LANG_FRAMEWORK="Astro or Hugo";      PKG_MANAGER="npm";    MOD_CODE_REVIEW=0; MOD_TESTING=0; MOD_CONTEXT7=1; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
+  1)  PRESET_NAME="Flutter Mobile App";   LANG_FRAMEWORK="Dart/Flutter";       PKG_MANAGER="pub";    MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=1; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
+  2)  PRESET_NAME="Next.js Web App";      LANG_FRAMEWORK="TypeScript/Next.js"; PKG_MANAGER="pnpm";   MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=1; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=1; PERM_PRESET=2; PRESET_LOCKED=1 ;;
+  3)  PRESET_NAME="Node/TS Backend API";  LANG_FRAMEWORK="TypeScript/Node.js"; PKG_MANAGER="npm";    MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=0; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=1; PERM_PRESET=2; PRESET_LOCKED=1 ;;
+  4)  PRESET_NAME="Python Backend";       LANG_FRAMEWORK="Python/FastAPI";     PKG_MANAGER="uv";     MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=1; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
+  5)  PRESET_NAME="Python Data/ML";       LANG_FRAMEWORK="Python/ML";          PKG_MANAGER="uv";     MOD_CODE_REVIEW=0; MOD_TESTING=1; MOD_CONTEXT7=0; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=1; MOD_BROWSER=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
+  6)  PRESET_NAME="Rust Systems";         LANG_FRAMEWORK="Rust";               PKG_MANAGER="cargo";  MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=0; PERM_PRESET=1; PRESET_LOCKED=1 ;;
+  7)  PRESET_NAME="Go Service";           LANG_FRAMEWORK="Go";                 PKG_MANAGER="go mod"; MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
+  8)  PRESET_NAME="Embedded C/C++";       LANG_FRAMEWORK="C/C++";              PKG_MANAGER="cmake";  MOD_CODE_REVIEW=1; MOD_TESTING=0; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=0; PERM_PRESET=1; PRESET_LOCKED=1 ;;
+  9)  PRESET_NAME="Claude-only Agent";    LANG_FRAMEWORK="Claude (no code)";   PKG_MANAGER="n/a";    MOD_CODE_REVIEW=0; MOD_TESTING=0; MOD_CONTEXT7=0; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=1; MOD_BROWSER=1; PERM_PRESET=2; PRESET_LOCKED=1 ;;
+  10) PRESET_NAME="Static Site / Docs";   LANG_FRAMEWORK="Astro or Hugo";      PKG_MANAGER="npm";    MOD_CODE_REVIEW=0; MOD_TESTING=0; MOD_CONTEXT7=1; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=1; PERM_PRESET=2; PRESET_LOCKED=1 ;;
   *)  PRESET_NAME="Custom"; PRESET_LOCKED=0 ;;
 esac
 
@@ -334,23 +334,24 @@ echo "    [2] testing skill      — TDD enforcement"
 echo "    [3] Context7 MCP       — latest library docs auto-injection"
 echo "    [4] Sequential Thinking MCP — structured reasoning chains"
 echo "    [5] Knowledge Wiki     — LLM Wiki pattern (docs/sources + docs/wiki + ingest/lint skills)"
+echo "    [6] Browser Automation — dev-browser CLI (real Playwright in QuickJS sandbox)"
 echo ""
 if [ "$PRESET_LOCKED" -eq 1 ]; then
   MODULE_CHOICE="__preset__"
-  info "  Modules locked by preset: code-review=$MOD_CODE_REVIEW testing=$MOD_TESTING context7=$MOD_CONTEXT7 seq-think=$MOD_SEQ_THINK knowledge-wiki=$MOD_KNOWLEDGE_WIKI"
+  info "  Modules locked by preset: code-review=$MOD_CODE_REVIEW testing=$MOD_TESTING context7=$MOD_CONTEXT7 seq-think=$MOD_SEQ_THINK knowledge-wiki=$MOD_KNOWLEDGE_WIKI browser=$MOD_BROWSER"
 else
-  read -p "  Select [1-5, comma-separated, 'all', or 'none', default: all]: " MODULE_CHOICE
+  read -p "  Select [1-6, comma-separated, 'all', or 'none', default: all]: " MODULE_CHOICE
 fi
 
 # Parse selection
 if [ "$MODULE_CHOICE" = "__preset__" ]; then
   : # already set by preset
 elif [ -z "$MODULE_CHOICE" ] || [ "$MODULE_CHOICE" = "all" ]; then
-  MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=1; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=1
+  MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=1; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=1; MOD_BROWSER=1
 elif [ "$MODULE_CHOICE" = "none" ]; then
-  MOD_CODE_REVIEW=0; MOD_TESTING=0; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0
+  MOD_CODE_REVIEW=0; MOD_TESTING=0; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=0
 else
-  MOD_CODE_REVIEW=0; MOD_TESTING=0; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0
+  MOD_CODE_REVIEW=0; MOD_TESTING=0; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=0
   IFS=',' read -ra MODS <<< "$MODULE_CHOICE"
   for m in "${MODS[@]}"; do
     m=$(echo "$m" | tr -d ' ')
@@ -360,10 +361,12 @@ else
       3) MOD_CONTEXT7=1 ;;
       4) MOD_SEQ_THINK=1 ;;
       5) MOD_KNOWLEDGE_WIKI=1 ;;
+      6) MOD_BROWSER=1 ;;
     esac
   done
 fi
 MOD_KNOWLEDGE_WIKI=${MOD_KNOWLEDGE_WIKI:-0}
+MOD_BROWSER=${MOD_BROWSER:-0}
 
 # Remove unselected optional skills + update CLAUDE.md references
 if [ "$MOD_CODE_REVIEW" -eq 0 ]; then
@@ -435,6 +438,15 @@ WIKIEOF
   SETUP_DATE=$(date +%Y-%m-%d) perl -pi -e 's/SETUP_DATE/$ENV{SETUP_DATE}/g' docs/sources/index.md docs/wiki/README.md
 fi
 
+if [ "$MOD_BROWSER" -eq 0 ]; then
+  info "  Skipping: Browser Automation"
+  rm -rf .claude/skills/browser-automation
+else
+  info "  Including: Browser Automation (dev-browser CLI)"
+  warn "  dev-browser is NOT auto-installed. Run in your terminal after setup:"
+  warn "    npm install -g dev-browser && dev-browser install"
+fi
+
 # Build .mcp.json dynamically
 # Note: web access is handled by Claude Code's built-in WebFetch tool — no MCP server needed.
 MCP_JSON='{\n  "mcpServers": {'
@@ -468,9 +480,10 @@ SELECTED_COUNT=0
 [ "$MOD_CONTEXT7" -eq 1 ] && SELECTED_COUNT=$((SELECTED_COUNT + 1))
 [ "$MOD_SEQ_THINK" -eq 1 ] && SELECTED_COUNT=$((SELECTED_COUNT + 1))
 [ "$MOD_KNOWLEDGE_WIKI" -eq 1 ] && SELECTED_COUNT=$((SELECTED_COUNT + 1))
+[ "$MOD_BROWSER" -eq 1 ] && SELECTED_COUNT=$((SELECTED_COUNT + 1))
 
 echo ""
-info "$SELECTED_COUNT/5 optional modules selected."
+info "$SELECTED_COUNT/6 optional modules selected."
 
 # --- Step 6: Permissions + settings.local.json ---
 echo ""
@@ -503,6 +516,16 @@ case "$PERM_CHOICE" in
 esac
 
 info "Permission level: $PERM_LEVEL"
+
+# Inject dev-browser allow entry if Browser Automation module is enabled
+if [ "$MOD_BROWSER" -eq 1 ] && [ "$PERM_LEVEL" != "permissive" ]; then
+  if [ "$PERM_ALLOW" = "[]" ]; then
+    PERM_ALLOW='["Bash(dev-browser *)"]'
+  else
+    PERM_ALLOW="${PERM_ALLOW%]}, \"Bash(dev-browser *)\"]"
+  fi
+  info "  + allowed: Bash(dev-browser *)"
+fi
 
 info "Generating settings.local.json..."
 cat > .claude/settings.local.json << SETEOF
@@ -595,6 +618,7 @@ SKILL_COUNT=7
 [ "$MOD_CODE_REVIEW" -eq 1 ] && { SKILL_LIST="$SKILL_LIST, code-review"; SKILL_COUNT=$((SKILL_COUNT + 1)); }
 [ "$MOD_TESTING" -eq 1 ] && { SKILL_LIST="$SKILL_LIST, testing"; SKILL_COUNT=$((SKILL_COUNT + 1)); }
 [ "$MOD_KNOWLEDGE_WIKI" -eq 1 ] && { SKILL_LIST="$SKILL_LIST, knowledge-ingest, knowledge-lint"; SKILL_COUNT=$((SKILL_COUNT + 2)); }
+[ "$MOD_BROWSER" -eq 1 ] && { SKILL_LIST="$SKILL_LIST, browser-automation"; SKILL_COUNT=$((SKILL_COUNT + 1)); }
 
 # Build MCP list for summary
 MCP_LIST=""
