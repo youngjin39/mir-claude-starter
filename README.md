@@ -24,9 +24,9 @@ The installer walks you through:
 
 | Step | What it does |
 |---|---|
+| **Language** | Pick installer language first — English, Korean, Japanese, Chinese, or custom. All subsequent prompts appear in the chosen language. |
 | Project info | Name, language/framework, package manager |
 | Preset | Pick from 10 stack presets or Custom (auto-fills stack + modules + permissions) |
-| Language | User-facing output language (Korean, English, Japanese, Chinese, custom) |
 | Module selection | Choose optional skills and MCP servers (skipped if preset chosen) |
 | Permission level | Strict / Standard / Permissive tool access (skipped if preset chosen) |
 

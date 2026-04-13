@@ -24,6 +24,243 @@ info()  { echo -e "${GREEN}[+]${NC} $1"; }
 warn()  { echo -e "${YELLOW}[!]${NC} $1"; }
 error() { echo -e "${RED}[x]${NC} $1"; exit 1; }
 
+# --- Message definitions ---
+load_messages_en() {
+  # Errors
+  MSG_ERR_DIR_NOT_EMPTY="Directory is not empty. Run this script in an empty folder."
+  MSG_ERR_GIT_NOT_FOUND="git is not installed."
+  MSG_ERR_CLONE_FAILED="${RED}ERROR: Failed to clone harness repo. Check network connection.${NC}"
+  MSG_ERR_CLAUDE_DIR_EXISTS="${RED}ERROR: .claude/ directory already exists. Remove it first or run from an empty directory.${NC}"
+
+  # Info / progress
+  MSG_INFO_CLONING="Cloning claude-code-harness..."
+  MSG_INFO_SETUP_STRUCTURE="Setting up project structure..."
+  MSG_INFO_CLEANING="Cleaning harness development artifacts..."
+  MSG_INFO_INIT_TASKS="Initializing tasks/..."
+  MSG_INFO_PREP_CLAUDE_MD="Preparing CLAUDE.md..."
+  MSG_INFO_CONF_MODULES="Configuring optional modules..."
+  MSG_INFO_PERM_LEVEL="Permission level: "
+  MSG_INFO_GEN_SETTINGS="Generating settings.local.json..."
+  MSG_INFO_GIT_INIT="Initializing git repository..."
+
+  # Section headers
+  MSG_HDR_PROJECT_CONFIG="--- Project Configuration ---"
+  MSG_HDR_PRESET="--- Project Preset ---"
+  MSG_HDR_MODULE="--- Module Selection ---"
+  MSG_HDR_PERM="--- Permission Level ---"
+
+  # Project config prompts
+  MSG_PROJECT_NAME_PROMPT="Project name: "
+  MSG_LANG_FW_PROMPT="Language/Framework (e.g., TypeScript/Next.js): "
+  MSG_PKG_MANAGER_PROMPT="Package manager (e.g., npm, pnpm, pip): "
+
+  # Preset section
+  MSG_PRESET_INTRO="  Pick a preset to auto-fill stack + modules + permissions."
+  MSG_PRESET_EDIT_NOTE="  You can still edit CLAUDE.md and .mcp.json afterwards."
+  MSG_PRESET_1="   [1]  Flutter Mobile App     (Dart, pub)         testing+code-review, Context7"
+  MSG_PRESET_2="   [2]  Next.js Web App        (TypeScript, pnpm)  testing+code-review, Context7+SeqThink"
+  MSG_PRESET_3="   [3]  Node/TS Backend API    (TypeScript, npm)   testing+code-review, SeqThink"
+  MSG_PRESET_4="   [4]  Python Backend         (Python, uv)        testing+code-review, Context7"
+  MSG_PRESET_5="   [5]  Python Data/ML         (Python, uv)        testing, SeqThink"
+  MSG_PRESET_6="   [6]  Rust Systems           (Rust, cargo)       testing+code-review, Strict perms"
+  MSG_PRESET_7="   [7]  Go Service             (Go, go mod)        testing+code-review"
+  MSG_PRESET_8="   [8]  Embedded C/C++         (C/C++, cmake)      code-review only, Strict perms"
+  MSG_PRESET_9="   [9]  Claude-only Agent      (no code, content)  no testing, SeqThink"
+  MSG_PRESET_10="   [10] Static Site / Docs     (Astro/Hugo, npm)   minimal modules"
+  MSG_PRESET_11="   [11] Custom                 (manual entry — current behavior)"
+  MSG_PRESET_SELECT_PROMPT="  Select [1-11, default: 11]: "
+  MSG_PRESET_LOCKED="Preset: "
+  MSG_PRESET_LOCKED_MODULES="  Modules locked by preset: "
+
+  # Module section
+  MSG_MOD_CORE_HEADER="  Core (always included):"
+  MSG_MOD_CORE_SKILLS="    ✓ 6 skills: brainstorming, writing-plans, verification,"
+  MSG_MOD_CORE_SKILLS2="                 deep-interview, git-commit, project-doctor"
+  MSG_MOD_CORE_AGENTS="    ✓ 3 agents: orchestrator, executor, quality"
+  MSG_MOD_CORE_HOOKS="    ✓ 5 hooks:  session-start, pre-compact, pre-tool-use, post-edit-check, session-end"
+  MSG_MOD_CORE_WEB="    ✓ Web:      built-in WebFetch / WebSearch (no MCP needed)"
+  MSG_MOD_OPTIONAL_HEADER="  Optional modules:"
+  MSG_MOD_1="    [1] code-review skill  — PR/quality review"
+  MSG_MOD_2="    [2] testing skill      — TDD enforcement"
+  MSG_MOD_3="    [3] Context7 MCP       — latest library docs auto-injection"
+  MSG_MOD_4="    [4] Sequential Thinking MCP — structured reasoning chains"
+  MSG_MOD_5="    [5] Knowledge Wiki     — LLM Wiki pattern (docs/sources + docs/wiki + ingest/lint skills)"
+  MSG_MOD_6="    [6] Browser Automation — agent-browser CLI (Vercel Labs, accessibility-tree snapshots)"
+  MSG_MOD_7="    [7] Code Review Graph  — local code knowledge graph + blast-radius analysis (8.2x token saving)"
+  MSG_MOD_SELECT_PROMPT="  Select [1-7, comma-separated, 'all', or 'none', default: all]: "
+  MSG_MOD_SKIP_CODE_REVIEW="  Skipping: code-review skill"
+  MSG_MOD_INC_CODE_REVIEW="  Including: code-review skill"
+  MSG_MOD_SKIP_TESTING="  Skipping: testing skill"
+  MSG_MOD_INC_TESTING="  Including: testing skill"
+  MSG_MOD_SKIP_KNOWLEDGE_WIKI="  Skipping: Knowledge Wiki"
+  MSG_MOD_INC_KNOWLEDGE_WIKI="  Including: Knowledge Wiki (docs/sources + docs/wiki + ingest/lint skills)"
+  MSG_MOD_SKIP_BROWSER="  Skipping: Browser Automation"
+  MSG_MOD_INC_BROWSER="  Including: Browser Automation (agent-browser CLI)"
+  MSG_MOD_BROWSER_INSTALL="  agent-browser is NOT auto-installed. Run in your terminal after setup:"
+  MSG_MOD_BROWSER_CMD="    npm install -g agent-browser && agent-browser install"
+  MSG_MOD_SKIP_CODE_GRAPH="  Skipping: Code Review Graph"
+  MSG_MOD_INC_CODE_GRAPH="  Including: Code Review Graph (blast-radius + MCP 22 tools)"
+  MSG_MOD_CODE_GRAPH_INSTALL="  code-review-graph is NOT auto-installed. Run in your terminal after setup:"
+  MSG_MOD_CODE_GRAPH_CMD="    pip install code-review-graph && code-review-graph install"
+  MSG_MOD_SKIP_CONTEXT7="  Skipping: Context7 MCP"
+  MSG_MOD_INC_CONTEXT7="  Including: Context7 MCP"
+  MSG_MOD_SKIP_SEQ_THINK="  Skipping: Sequential Thinking MCP"
+  MSG_MOD_INC_SEQ_THINK="  Including: Sequential Thinking MCP"
+  MSG_MOD_COUNT_SELECTED=" optional modules selected."
+
+  # Permission section
+  MSG_PERM_1="  [1] Strict  — ask before every tool use (safest)"
+  MSG_PERM_2="  [2] Standard — allow read-only tools, ask for writes (recommended)"
+  MSG_PERM_3="  [3] Permissive — allow most tools, ask for destructive ops only"
+  MSG_PERM_SELECT_PROMPT="  Select [1-3, default: 2]: "
+  MSG_PERM_LOCKED="  Permissions locked by preset: option "
+  MSG_PERM_BROWSER_ADDED="  + allowed: Bash(agent-browser *)"
+
+  # Summary labels
+  MSG_SUM_HEADER_LINE="${GREEN}========================================${NC}"
+  MSG_SUM_HEADER_TEXT="${GREEN}  Setup complete!${NC}"
+  MSG_SUM_PROJECT="  Project:    "
+  MSG_SUM_PRESET="  Preset:     "
+  MSG_SUM_STACK="  Stack:      "
+  MSG_SUM_LANGUAGE="  Language:   "
+  MSG_SUM_PERMS="  Permissions:"
+  MSG_SUM_AGENTS="  Agents:      3 (orchestrator, executor, quality)"
+  MSG_SUM_SKILLS="  Skills:     "
+  MSG_SUM_MCP="  MCP:        "
+  MSG_SUM_HOOKS="  Hooks:       5 (SessionStart, PreCompact, PreToolUse, PostToolUse, SessionEnd)"
+  MSG_SUM_TASKS_NOTE="  Note: tasks/ files are local working memory (gitignored by default)."
+
+  # Next steps
+  MSG_NEXT_HEADER="  Next steps:"
+  MSG_NEXT_2="    2. Review CLAUDE.md and customize Build & Run section"
+  MSG_NEXT_3="    3. Configure tool permissions in .claude/settings.local.json"
+  MSG_NEXT_4="    4. Start Claude Code: claude"
+  MSG_NEXT_OPT_HEADER="  Optional:"
+  MSG_NEXT_OPT_SKILLS="    - Add domain skills to .claude/skills/"
+  MSG_NEXT_OPT_REMOTE="    - Connect to remote: git remote add origin <url> && git push -u origin main"
+
+  # MCP none label
+  MSG_MCP_NONE="(none — built-in WebFetch only)"
+}
+
+load_messages_ko() {
+  # Errors
+  MSG_ERR_DIR_NOT_EMPTY="디렉토리가 비어있지 않습니다. 빈 폴더에서 실행하세요."
+  MSG_ERR_GIT_NOT_FOUND="git이 설치되어 있지 않습니다."
+  MSG_ERR_CLONE_FAILED="${RED}ERROR: 하네스 레포 클론에 실패했습니다. 네트워크 연결을 확인하세요.${NC}"
+  MSG_ERR_CLAUDE_DIR_EXISTS="${RED}ERROR: .claude/ 디렉토리가 이미 존재합니다. 먼저 삭제하거나 빈 디렉토리에서 실행하세요.${NC}"
+
+  # Info / progress
+  MSG_INFO_CLONING="claude-code-harness 클론 중..."
+  MSG_INFO_SETUP_STRUCTURE="프로젝트 구조 설정 중..."
+  MSG_INFO_CLEANING="하네스 개발 전용 파일 정리 중..."
+  MSG_INFO_INIT_TASKS="tasks/ 초기화 중..."
+  MSG_INFO_PREP_CLAUDE_MD="CLAUDE.md 준비 중..."
+  MSG_INFO_CONF_MODULES="선택 모듈 구성 중..."
+  MSG_INFO_PERM_LEVEL="권한 레벨: "
+  MSG_INFO_GEN_SETTINGS="settings.local.json 생성 중..."
+  MSG_INFO_GIT_INIT="git 레포지토리 초기화 중..."
+
+  # Section headers
+  MSG_HDR_PROJECT_CONFIG="--- 프로젝트 설정 ---"
+  MSG_HDR_PRESET="--- 프로젝트 프리셋 ---"
+  MSG_HDR_MODULE="--- 모듈 선택 ---"
+  MSG_HDR_PERM="--- 권한 레벨 ---"
+
+  # Project config prompts
+  MSG_PROJECT_NAME_PROMPT="프로젝트 이름: "
+  MSG_LANG_FW_PROMPT="언어/프레임워크 (예: TypeScript/Next.js): "
+  MSG_PKG_MANAGER_PROMPT="패키지 매니저 (예: npm, pnpm, pip): "
+
+  # Preset section
+  MSG_PRESET_INTRO="  프리셋을 선택하면 스택, 모듈, 권한이 자동으로 설정됩니다."
+  MSG_PRESET_EDIT_NOTE="  설정 후 CLAUDE.md와 .mcp.json을 직접 수정할 수 있습니다."
+  MSG_PRESET_1="   [1]  Flutter 모바일 앱     (Dart, pub)          testing+code-review, Context7"
+  MSG_PRESET_2="   [2]  Next.js 웹 앱          (TypeScript, pnpm)   testing+code-review, Context7+SeqThink"
+  MSG_PRESET_3="   [3]  Node/TS 백엔드 API    (TypeScript, npm)    testing+code-review, SeqThink"
+  MSG_PRESET_4="   [4]  Python 백엔드          (Python, uv)         testing+code-review, Context7"
+  MSG_PRESET_5="   [5]  Python 데이터/ML      (Python, uv)         testing, SeqThink"
+  MSG_PRESET_6="   [6]  Rust 시스템            (Rust, cargo)        testing+code-review, Strict perms"
+  MSG_PRESET_7="   [7]  Go 서비스              (Go, go mod)         testing+code-review"
+  MSG_PRESET_8="   [8]  임베디드 C/C++         (C/C++, cmake)       code-review only, Strict perms"
+  MSG_PRESET_9="   [9]  Claude 전용 에이전트   (코드 없음, 콘텐츠)  testing 없음, SeqThink"
+  MSG_PRESET_10="   [10] 정적 사이트 / 문서     (Astro/Hugo, npm)    최소 모듈"
+  MSG_PRESET_11="   [11] 커스텀                 (직접 입력)"
+  MSG_PRESET_SELECT_PROMPT="  선택 [1-11, 기본값: 11]: "
+  MSG_PRESET_LOCKED="프리셋 적용: "
+  MSG_PRESET_LOCKED_MODULES="  프리셋으로 고정된 모듈: "
+
+  # Module section
+  MSG_MOD_CORE_HEADER="  기본 포함 (항상 설치):"
+  MSG_MOD_CORE_SKILLS="    ✓ 스킬 6개: brainstorming, writing-plans, verification,"
+  MSG_MOD_CORE_SKILLS2="                 deep-interview, git-commit, project-doctor"
+  MSG_MOD_CORE_AGENTS="    ✓ 에이전트 3개: orchestrator, executor, quality"
+  MSG_MOD_CORE_HOOKS="    ✓ 훅 5개:  session-start, pre-compact, pre-tool-use, post-edit-check, session-end"
+  MSG_MOD_CORE_WEB="    ✓ 웹:      내장 WebFetch / WebSearch (MCP 불필요)"
+  MSG_MOD_OPTIONAL_HEADER="  선택 모듈:"
+  MSG_MOD_1="    [1] code-review 스킬  — PR/품질 리뷰"
+  MSG_MOD_2="    [2] testing 스킬      — TDD 강제 적용"
+  MSG_MOD_3="    [3] Context7 MCP       — 최신 라이브러리 문서 자동 주입"
+  MSG_MOD_4="    [4] Sequential Thinking MCP — 구조화된 추론 체인"
+  MSG_MOD_5="    [5] Knowledge Wiki     — LLM 위키 패턴 (docs/sources + docs/wiki + ingest/lint 스킬)"
+  MSG_MOD_6="    [6] Browser Automation — agent-browser CLI (Vercel Labs, 접근성 트리 스냅샷)"
+  MSG_MOD_7="    [7] Code Review Graph  — 로컬 코드 지식 그래프 + blast-radius 분석 (토큰 8.2x 절감)"
+  MSG_MOD_SELECT_PROMPT="  선택 [1-7, 쉼표 구분, 'all', 'none', 기본값: all]: "
+  MSG_MOD_SKIP_CODE_REVIEW="  code-review 스킬 제외"
+  MSG_MOD_INC_CODE_REVIEW="  code-review 스킬 포함"
+  MSG_MOD_SKIP_TESTING="  testing 스킬 제외"
+  MSG_MOD_INC_TESTING="  testing 스킬 포함"
+  MSG_MOD_SKIP_KNOWLEDGE_WIKI="  Knowledge Wiki 제외"
+  MSG_MOD_INC_KNOWLEDGE_WIKI="  Knowledge Wiki 포함 (docs/sources + docs/wiki + ingest/lint 스킬)"
+  MSG_MOD_SKIP_BROWSER="  Browser Automation 제외"
+  MSG_MOD_INC_BROWSER="  Browser Automation 포함 (agent-browser CLI)"
+  MSG_MOD_BROWSER_INSTALL="  agent-browser는 자동 설치되지 않습니다. 설정 후 터미널에서 실행하세요:"
+  MSG_MOD_BROWSER_CMD="    npm install -g agent-browser && agent-browser install"
+  MSG_MOD_SKIP_CODE_GRAPH="  Code Review Graph 제외"
+  MSG_MOD_INC_CODE_GRAPH="  Code Review Graph 포함 (blast-radius + MCP 22개 도구)"
+  MSG_MOD_CODE_GRAPH_INSTALL="  code-review-graph는 자동 설치되지 않습니다. 설정 후 터미널에서 실행하세요:"
+  MSG_MOD_CODE_GRAPH_CMD="    pip install code-review-graph && code-review-graph install"
+  MSG_MOD_SKIP_CONTEXT7="  Context7 MCP 제외"
+  MSG_MOD_INC_CONTEXT7="  Context7 MCP 포함"
+  MSG_MOD_SKIP_SEQ_THINK="  Sequential Thinking MCP 제외"
+  MSG_MOD_INC_SEQ_THINK="  Sequential Thinking MCP 포함"
+  MSG_MOD_COUNT_SELECTED="개 선택 모듈 적용."
+
+  # Permission section
+  MSG_PERM_1="  [1] Strict     — 모든 도구 사용 전 확인 (가장 안전)"
+  MSG_PERM_2="  [2] Standard   — 읽기 도구 허용, 쓰기 시 확인 (권장)"
+  MSG_PERM_3="  [3] Permissive — 대부분 허용, 파괴적 작업만 확인"
+  MSG_PERM_SELECT_PROMPT="  선택 [1-3, 기본값: 2]: "
+  MSG_PERM_LOCKED="  프리셋으로 고정된 권한: 옵션 "
+  MSG_PERM_BROWSER_ADDED="  + 허용 추가: Bash(agent-browser *)"
+
+  # Summary labels
+  MSG_SUM_HEADER_LINE="${GREEN}========================================${NC}"
+  MSG_SUM_HEADER_TEXT="${GREEN}  설정 완료!${NC}"
+  MSG_SUM_PROJECT="  프로젝트:   "
+  MSG_SUM_PRESET="  프리셋:     "
+  MSG_SUM_STACK="  스택:       "
+  MSG_SUM_LANGUAGE="  출력 언어:  "
+  MSG_SUM_PERMS="  권한:       "
+  MSG_SUM_AGENTS="  에이전트:    3개 (orchestrator, executor, quality)"
+  MSG_SUM_SKILLS="  스킬:       "
+  MSG_SUM_MCP="  MCP:        "
+  MSG_SUM_HOOKS="  훅:          5개 (SessionStart, PreCompact, PreToolUse, PostToolUse, SessionEnd)"
+  MSG_SUM_TASKS_NOTE="  참고: tasks/ 파일은 로컬 작업 메모리입니다 (기본적으로 gitignore 처리)."
+
+  # Next steps
+  MSG_NEXT_HEADER="  다음 단계:"
+  MSG_NEXT_2="    2. CLAUDE.md 검토 후 Build & Run 섹션 커스터마이징"
+  MSG_NEXT_3="    3. .claude/settings.local.json에서 도구 권한 설정"
+  MSG_NEXT_4="    4. Claude Code 시작: claude"
+  MSG_NEXT_OPT_HEADER="  선택 사항:"
+  MSG_NEXT_OPT_SKILLS="    - 도메인 스킬 추가: .claude/skills/"
+  MSG_NEXT_OPT_REMOTE="    - 원격 연결: git remote add origin <url> && git push -u origin main"
+
+  # MCP none label
+  MSG_MCP_NONE="(없음 — 내장 WebFetch만 사용)"
+}
+
 # --- Pre-checks ---
 if [ "$(ls -A 2>/dev/null | grep -v setup.sh | grep -v .DS_Store)" ]; then
   error "Directory is not empty. Run this script in an empty folder."
@@ -31,17 +268,37 @@ fi
 
 command -v git >/dev/null 2>&1 || error "git is not installed."
 
+# --- Language selection (bilingual prompt — we don't know the language yet) ---
+echo ""
+echo "  Select language / 언어를 선택하세요:"
+echo "    [1] English"
+echo "    [2] 한국어 (Korean)"
+echo "    [3] Japanese (日本語)"
+echo "    [4] Chinese (中文)"
+echo "    [5] Other / 기타"
+read -p "  [1-5, default: 1]: " _LANG_CHOICE
+
+case "$_LANG_CHOICE" in
+  2) USER_LANG="Korean";   load_messages_ko ;;
+  3) USER_LANG="Japanese"; load_messages_en ;;
+  4) USER_LANG="Chinese";  load_messages_en ;;
+  5) read -p "  Enter language name / 언어 이름 입력: " USER_LANG; load_messages_en ;;
+  *) USER_LANG="English";  load_messages_en ;;
+esac
+
+echo ""
+
 # --- Step 1: Clone ---
-info "Cloning claude-code-harness..."
-git clone --depth 1 "$REPO_URL" "$HARNESS_DIR" || { echo -e "${RED}ERROR: Failed to clone harness repo. Check network connection.${NC}"; exit 1; }
+info "$MSG_INFO_CLONING"
+git clone --depth 1 "$REPO_URL" "$HARNESS_DIR" || { echo -e "$MSG_ERR_CLONE_FAILED"; exit 1; }
 rm -rf "$HARNESS_DIR/.git"
 
 # --- Step 2: Move files ---
-info "Setting up project structure..."
+info "$MSG_INFO_SETUP_STRUCTURE"
 
 # Guard against overwriting existing .claude/ directory
 if [ -d ".claude" ]; then
-  echo -e "${RED}ERROR: .claude/ directory already exists. Remove it first or run from an empty directory.${NC}"
+  echo -e "$MSG_ERR_CLAUDE_DIR_EXISTS"
   rm -rf "$HARNESS_DIR"
   exit 1
 fi
@@ -57,7 +314,7 @@ mv "$HARNESS_DIR"/docs .
 rm -rf "$HARNESS_DIR"
 
 # --- Step 3: Clean harness-specific content ---
-info "Cleaning harness development artifacts..."
+info "$MSG_INFO_CLEANING"
 
 # Remove harness-specific docs (keep directory structure)
 rm -f docs/decisions/master-plan-v2.md
@@ -166,7 +423,7 @@ MEMEOF
 SETUP_DATE=$(date +%Y-%m-%d) perl -pi -e 's/SETUP_DATE/$ENV{SETUP_DATE}/g' docs/memory-map.md
 
 # --- Step 4: Initialize tasks/ ---
-info "Initializing tasks/..."
+info "$MSG_INFO_INIT_TASKS"
 mkdir -p tasks/handoffs tasks/sessions tasks/log
 
 cat > tasks/plan.md << 'EOF'
@@ -231,32 +488,32 @@ cat > tasks/cost-log.md << 'EOF'
 EOF
 
 # --- Step 5: Update CLAUDE.md placeholders ---
-info "Preparing CLAUDE.md..."
+info "$MSG_INFO_PREP_CLAUDE_MD"
 
 # Prompt user for project info
 echo ""
-echo -e "${YELLOW}--- Project Configuration ---${NC}"
-read -p "Project name: " PROJECT_NAME
+echo -e "${YELLOW}$MSG_HDR_PROJECT_CONFIG${NC}"
+read -p "$MSG_PROJECT_NAME_PROMPT" PROJECT_NAME
 
 # --- Preset Selection ---
 echo ""
-echo -e "${YELLOW}--- Project Preset ---${NC}"
-echo "  Pick a preset to auto-fill stack + modules + permissions."
-echo "  You can still edit CLAUDE.md and .mcp.json afterwards."
+echo -e "${YELLOW}$MSG_HDR_PRESET${NC}"
+echo "$MSG_PRESET_INTRO"
+echo "$MSG_PRESET_EDIT_NOTE"
 echo ""
-echo "   [1]  Flutter Mobile App     (Dart, pub)         testing+code-review, Context7"
-echo "   [2]  Next.js Web App        (TypeScript, pnpm)  testing+code-review, Context7+SeqThink"
-echo "   [3]  Node/TS Backend API    (TypeScript, npm)   testing+code-review, SeqThink"
-echo "   [4]  Python Backend         (Python, uv)        testing+code-review, Context7"
-echo "   [5]  Python Data/ML         (Python, uv)        testing, SeqThink"
-echo "   [6]  Rust Systems           (Rust, cargo)       testing+code-review, Strict perms"
-echo "   [7]  Go Service             (Go, go mod)        testing+code-review"
-echo "   [8]  Embedded C/C++         (C/C++, cmake)      code-review only, Strict perms"
-echo "   [9]  Claude-only Agent      (no code, content)  no testing, SeqThink"
-echo "   [10] Static Site / Docs     (Astro/Hugo, npm)   minimal modules"
-echo "   [11] Custom                 (manual entry — current behavior)"
+echo "$MSG_PRESET_1"
+echo "$MSG_PRESET_2"
+echo "$MSG_PRESET_3"
+echo "$MSG_PRESET_4"
+echo "$MSG_PRESET_5"
+echo "$MSG_PRESET_6"
+echo "$MSG_PRESET_7"
+echo "$MSG_PRESET_8"
+echo "$MSG_PRESET_9"
+echo "$MSG_PRESET_10"
+echo "$MSG_PRESET_11"
 echo ""
-read -p "  Select [1-11, default: 11]: " PRESET_CHOICE
+read -p "$MSG_PRESET_SELECT_PROMPT" PRESET_CHOICE
 
 PRESET_NAME=""
 PRESET_LOCKED=0
@@ -275,27 +532,11 @@ case "$PRESET_CHOICE" in
 esac
 
 if [ "$PRESET_LOCKED" -eq 1 ]; then
-  info "Preset: $PRESET_NAME → $LANG_FRAMEWORK ($PKG_MANAGER)"
+  info "$MSG_PRESET_LOCKED$PRESET_NAME → $LANG_FRAMEWORK ($PKG_MANAGER)"
 else
-  read -p "Language/Framework (e.g., TypeScript/Next.js): " LANG_FRAMEWORK
-  read -p "Package manager (e.g., npm, pnpm, pip): " PKG_MANAGER
+  read -p "$MSG_LANG_FW_PROMPT" LANG_FRAMEWORK
+  read -p "$MSG_PKG_MANAGER_PROMPT" PKG_MANAGER
 fi
-
-echo ""
-echo "  User-facing language (agent output, reports, logs):"
-echo "    1) Korean (한국어)"
-echo "    2) English"
-echo "    3) Japanese (日本語)"
-echo "    4) Chinese (中文)"
-echo "    5) Other (enter language name)"
-read -p "  Select [1-5, default: 2]: " LANG_CHOICE
-case "$LANG_CHOICE" in
-  1) USER_LANG="Korean" ;;
-  3) USER_LANG="Japanese" ;;
-  4) USER_LANG="Chinese" ;;
-  5) read -p "  Enter language name: " USER_LANG ;;
-  *) USER_LANG="English" ;;
-esac
 
 # Update CLAUDE.md (use perl to avoid sed delimiter issues with user input)
 if [ -n "$PROJECT_NAME" ]; then
@@ -317,31 +558,31 @@ else
 fi
 
 # --- Step 5c: Module Selection ---
-info "Configuring optional modules..."
+info "$MSG_INFO_CONF_MODULES"
 echo ""
-echo -e "${YELLOW}--- Module Selection ---${NC}"
+echo -e "${YELLOW}$MSG_HDR_MODULE${NC}"
 echo ""
-echo "  Core (always included):"
-echo "    ✓ 6 skills: brainstorming, writing-plans, verification,"
-echo "                 deep-interview, git-commit, project-doctor"
-echo "    ✓ 3 agents: orchestrator, executor, quality"
-echo "    ✓ 5 hooks:  session-start, pre-compact, pre-tool-use, post-edit-check, session-end"
-echo "    ✓ Web:      built-in WebFetch / WebSearch (no MCP needed)"
+echo "$MSG_MOD_CORE_HEADER"
+echo "$MSG_MOD_CORE_SKILLS"
+echo "$MSG_MOD_CORE_SKILLS2"
+echo "$MSG_MOD_CORE_AGENTS"
+echo "$MSG_MOD_CORE_HOOKS"
+echo "$MSG_MOD_CORE_WEB"
 echo ""
-echo "  Optional modules:"
-echo "    [1] code-review skill  — PR/quality review"
-echo "    [2] testing skill      — TDD enforcement"
-echo "    [3] Context7 MCP       — latest library docs auto-injection"
-echo "    [4] Sequential Thinking MCP — structured reasoning chains"
-echo "    [5] Knowledge Wiki     — LLM Wiki pattern (docs/sources + docs/wiki + ingest/lint skills)"
-echo "    [6] Browser Automation — agent-browser CLI (Vercel Labs, accessibility-tree snapshots)"
-echo "    [7] Code Review Graph  — local code knowledge graph + blast-radius analysis (8.2x token saving)"
+echo "$MSG_MOD_OPTIONAL_HEADER"
+echo "$MSG_MOD_1"
+echo "$MSG_MOD_2"
+echo "$MSG_MOD_3"
+echo "$MSG_MOD_4"
+echo "$MSG_MOD_5"
+echo "$MSG_MOD_6"
+echo "$MSG_MOD_7"
 echo ""
 if [ "$PRESET_LOCKED" -eq 1 ]; then
   MODULE_CHOICE="__preset__"
-  info "  Modules locked by preset: code-review=$MOD_CODE_REVIEW testing=$MOD_TESTING context7=$MOD_CONTEXT7 seq-think=$MOD_SEQ_THINK knowledge-wiki=$MOD_KNOWLEDGE_WIKI browser=$MOD_BROWSER"
+  info "$MSG_PRESET_LOCKED_MODULES""code-review=$MOD_CODE_REVIEW testing=$MOD_TESTING context7=$MOD_CONTEXT7 seq-think=$MOD_SEQ_THINK knowledge-wiki=$MOD_KNOWLEDGE_WIKI browser=$MOD_BROWSER"
 else
-  read -p "  Select [1-7, comma-separated, 'all', or 'none', default: all]: " MODULE_CHOICE
+  read -p "$MSG_MOD_SELECT_PROMPT" MODULE_CHOICE
 fi
 
 # Parse selection
@@ -373,33 +614,33 @@ MOD_CODE_GRAPH=${MOD_CODE_GRAPH:-0}
 
 # Remove unselected optional skills + update CLAUDE.md references
 if [ "$MOD_CODE_REVIEW" -eq 0 ]; then
-  info "  Skipping: code-review skill"
+  info "$MSG_MOD_SKIP_CODE_REVIEW"
   rm -rf .claude/skills/code-review
   rm -f docs/integrations/codex-code-review.md
   perl -ni -e 'print unless /code-review.*SKILL\.md/' CLAUDE.md
   perl -pi -e 's/ → code-review//g' CLAUDE.md
   perl -ni -e 'print unless /\| code-review /' docs/memory-map.md
 else
-  info "  Including: code-review skill"
+  info "$MSG_MOD_INC_CODE_REVIEW"
 fi
 
 if [ "$MOD_TESTING" -eq 0 ]; then
-  info "  Skipping: testing skill"
+  info "$MSG_MOD_SKIP_TESTING"
   rm -rf .claude/skills/testing
   rm -f docs/integrations/computer-use-gui-testing.md
   perl -ni -e 'print unless /\| test, TDD.*testing/' CLAUDE.md
   perl -pi -e 's/ → testing//g' CLAUDE.md
   perl -ni -e 'print unless /\| testing /' docs/memory-map.md
 else
-  info "  Including: testing skill"
+  info "$MSG_MOD_INC_TESTING"
 fi
 
 if [ "$MOD_KNOWLEDGE_WIKI" -eq 0 ]; then
-  info "  Skipping: Knowledge Wiki"
+  info "$MSG_MOD_SKIP_KNOWLEDGE_WIKI"
   rm -rf .claude/skills/knowledge-ingest
   rm -rf .claude/skills/knowledge-lint
 else
-  info "  Including: Knowledge Wiki (docs/sources + docs/wiki + ingest/lint skills)"
+  info "$MSG_MOD_INC_KNOWLEDGE_WIKI"
   mkdir -p docs/sources docs/wiki
   cat > docs/sources/index.md << 'WIKIEOF'
 ---
@@ -442,23 +683,23 @@ WIKIEOF
 fi
 
 if [ "$MOD_BROWSER" -eq 0 ]; then
-  info "  Skipping: Browser Automation"
+  info "$MSG_MOD_SKIP_BROWSER"
   rm -rf .claude/skills/browser-automation
 else
-  info "  Including: Browser Automation (agent-browser CLI)"
-  warn "  agent-browser is NOT auto-installed. Run in your terminal after setup:"
-  warn "    npm install -g agent-browser && agent-browser install"
+  info "$MSG_MOD_INC_BROWSER"
+  warn "$MSG_MOD_BROWSER_INSTALL"
+  warn "$MSG_MOD_BROWSER_CMD"
 fi
 
 if [ "$MOD_CODE_GRAPH" -eq 0 ]; then
-  info "  Skipping: Code Review Graph"
+  info "$MSG_MOD_SKIP_CODE_GRAPH"
   rm -rf .claude/skills/code-review-graph
 else
-  info "  Including: Code Review Graph (blast-radius + MCP 22 tools)"
+  info "$MSG_MOD_INC_CODE_GRAPH"
   # Ensure .code-review-graph/ is gitignored
   grep -qxF ".code-review-graph/" .gitignore 2>/dev/null || echo ".code-review-graph/" >> .gitignore
-  warn "  code-review-graph is NOT auto-installed. Run in your terminal after setup:"
-  warn "    pip install code-review-graph && code-review-graph install"
+  warn "$MSG_MOD_CODE_GRAPH_INSTALL"
+  warn "$MSG_MOD_CODE_GRAPH_CMD"
 fi
 
 # Build .mcp.json dynamically
@@ -467,21 +708,21 @@ MCP_JSON='{\n  "mcpServers": {'
 MCP_FIRST=1
 
 if [ "$MOD_CONTEXT7" -eq 1 ]; then
-  info "  Including: Context7 MCP"
+  info "$MSG_MOD_INC_CONTEXT7"
   [ "$MCP_FIRST" -eq 0 ] && MCP_JSON="$MCP_JSON"','
   MCP_JSON="$MCP_JSON"'\n    "context7": {\n      "command": "npx",\n      "args": ["-y", "@upstash/context7-mcp@latest"]\n    }'
   MCP_FIRST=0
 else
-  info "  Skipping: Context7 MCP"
+  info "$MSG_MOD_SKIP_CONTEXT7"
 fi
 
 if [ "$MOD_SEQ_THINK" -eq 1 ]; then
-  info "  Including: Sequential Thinking MCP"
+  info "$MSG_MOD_INC_SEQ_THINK"
   [ "$MCP_FIRST" -eq 0 ] && MCP_JSON="$MCP_JSON"','
   MCP_JSON="$MCP_JSON"'\n    "sequential-thinking": {\n      "command": "npx",\n      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"]\n    }'
   MCP_FIRST=0
 else
-  info "  Skipping: Sequential Thinking MCP"
+  info "$MSG_MOD_SKIP_SEQ_THINK"
 fi
 
 MCP_JSON="$MCP_JSON"'\n  }\n}'
@@ -498,21 +739,21 @@ SELECTED_COUNT=0
 [ "$MOD_CODE_GRAPH" -eq 1 ] && SELECTED_COUNT=$((SELECTED_COUNT + 1))
 
 echo ""
-info "$SELECTED_COUNT/7 optional modules selected."
+info "${SELECTED_COUNT}/7 $MSG_MOD_COUNT_SELECTED"
 
 # --- Step 6: Permissions + settings.local.json ---
 echo ""
-echo -e "${YELLOW}--- Permission Level ---${NC}"
+echo -e "${YELLOW}$MSG_HDR_PERM${NC}"
 echo ""
-echo "  [1] Strict  — ask before every tool use (safest)"
-echo "  [2] Standard — allow read-only tools, ask for writes (recommended)"
-echo "  [3] Permissive — allow most tools, ask for destructive ops only"
+echo "$MSG_PERM_1"
+echo "$MSG_PERM_2"
+echo "$MSG_PERM_3"
 echo ""
 if [ "$PRESET_LOCKED" -eq 1 ]; then
   PERM_CHOICE="$PERM_PRESET"
-  info "  Permissions locked by preset: option $PERM_CHOICE"
+  info "$MSG_PERM_LOCKED$PERM_CHOICE"
 else
-  read -p "  Select [1-3, default: 2]: " PERM_CHOICE
+  read -p "$MSG_PERM_SELECT_PROMPT" PERM_CHOICE
 fi
 
 case "$PERM_CHOICE" in
@@ -530,7 +771,7 @@ case "$PERM_CHOICE" in
     ;;
 esac
 
-info "Permission level: $PERM_LEVEL"
+info "$MSG_INFO_PERM_LEVEL$PERM_LEVEL"
 
 # Inject agent-browser allow entry if Browser Automation module is enabled
 if [ "$MOD_BROWSER" -eq 1 ] && [ "$PERM_LEVEL" != "permissive" ]; then
@@ -539,10 +780,10 @@ if [ "$MOD_BROWSER" -eq 1 ] && [ "$PERM_LEVEL" != "permissive" ]; then
   else
     PERM_ALLOW="${PERM_ALLOW%]}, \"Bash(agent-browser *)\"]"
   fi
-  info "  + allowed: Bash(agent-browser *)"
+  info "$MSG_PERM_BROWSER_ADDED"
 fi
 
-info "Generating settings.local.json..."
+info "$MSG_INFO_GEN_SETTINGS"
 cat > .claude/settings.local.json << SETEOF
 {
   "permissions": {
@@ -616,16 +857,16 @@ cat > .claude/settings.local.json << SETEOF
 SETEOF
 
 # --- Step 7: Git init ---
-info "Initializing git repository..."
+info "$MSG_INFO_GIT_INIT"
 git init -q
 git add -A
 git commit -q -m "feat: initialize project with claude-code-harness"
 
 # --- Done ---
 echo ""
-echo -e "${GREEN}========================================${NC}"
-echo -e "${GREEN}  Setup complete!${NC}"
-echo -e "${GREEN}========================================${NC}"
+echo -e "$MSG_SUM_HEADER_LINE"
+echo -e "$MSG_SUM_HEADER_TEXT"
+echo -e "$MSG_SUM_HEADER_LINE"
 echo ""
 # Build skill list for summary
 SKILL_LIST="brainstorming, writing-plans, verification, interview, git-commit, project-doctor, self-audit, ux-ui-design"
@@ -641,27 +882,27 @@ MCP_LIST=""
 MCP_COUNT=0
 [ "$MOD_CONTEXT7" -eq 1 ] && { MCP_LIST="${MCP_LIST:+$MCP_LIST, }context7"; MCP_COUNT=$((MCP_COUNT + 1)); }
 [ "$MOD_SEQ_THINK" -eq 1 ] && { MCP_LIST="${MCP_LIST:+$MCP_LIST, }sequential-thinking"; MCP_COUNT=$((MCP_COUNT + 1)); }
-[ "$MCP_COUNT" -eq 0 ] && MCP_LIST="(none — built-in WebFetch only)"
+[ "$MCP_COUNT" -eq 0 ] && MCP_LIST="$MSG_MCP_NONE"
 
-echo "  Project:     ${PROJECT_NAME:-unnamed}"
-echo "  Preset:      ${PRESET_NAME}"
-echo "  Stack:       ${LANG_FRAMEWORK} (${PKG_MANAGER})"
-echo "  Language:    ${USER_LANG} (user-facing output)"
-echo "  Permissions: ${PERM_LEVEL}"
-echo "  Agents:      3 (orchestrator, executor, quality)"
-echo "  Skills:      ${SKILL_COUNT} (${SKILL_LIST})"
-echo "  MCP:         ${MCP_COUNT} (${MCP_LIST})"
-echo "  Hooks:       5 (SessionStart, PreCompact, PreToolUse, PostToolUse, SessionEnd)"
+echo "$MSG_SUM_PROJECT${PROJECT_NAME:-unnamed}"
+echo "$MSG_SUM_PRESET${PRESET_NAME}"
+echo "$MSG_SUM_STACK${LANG_FRAMEWORK} (${PKG_MANAGER})"
+echo "$MSG_SUM_LANGUAGE${USER_LANG}"
+echo "$MSG_SUM_PERMS${PERM_LEVEL}"
+echo "$MSG_SUM_AGENTS"
+echo "$MSG_SUM_SKILLS${SKILL_COUNT} (${SKILL_LIST})"
+echo "$MSG_SUM_MCP${MCP_COUNT} (${MCP_LIST})"
+echo "$MSG_SUM_HOOKS"
 echo ""
-echo "  Note: tasks/ files are local working memory (gitignored by default)."
+echo "$MSG_SUM_TASKS_NOTE"
 echo ""
-echo "  Next steps:"
+echo "$MSG_NEXT_HEADER"
 echo "    1. cd $(pwd)"
-echo "    2. Review CLAUDE.md and customize Build & Run section"
-echo "    3. Configure tool permissions in .claude/settings.local.json"
-echo "    4. Start Claude Code: claude"
+echo "$MSG_NEXT_2"
+echo "$MSG_NEXT_3"
+echo "$MSG_NEXT_4"
 echo ""
-echo "  Optional:"
-echo "    - Add domain skills to .claude/skills/"
-echo "    - Connect to remote: git remote add origin <url> && git push -u origin main"
+echo "$MSG_NEXT_OPT_HEADER"
+echo "$MSG_NEXT_OPT_SKILLS"
+echo "$MSG_NEXT_OPT_REMOTE"
 echo ""
