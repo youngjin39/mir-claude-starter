@@ -8,7 +8,7 @@ type: archive
 
 # Optimization Log
 
-Full history of integrity audits and refactoring performed on the harness.
+Full history of integrity audits and refactoring performed on the starter.
 
 ## Audit Methodology
 

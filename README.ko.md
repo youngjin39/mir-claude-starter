@@ -1,23 +1,26 @@
-# Claude Code 프롬프트 하네스
+# Mir Claude Starter
 
-Claude Code를 구조화된 개발 시스템으로 전환하는 프로젝트 관리 하네스. 에이전트, 스킬, 메모리, 품질 게이트를 포함합니다.
+Claude Code 스타터 — 원커맨드로 3개 에이전트, 14개 스킬, 5개 훅, 3계층 메모리, 게이트 파이프라인을 새 프로젝트에 설치. 24라운드 무결성 감사(30개 fix)로 튜닝됨.
 
 > **[English README](README.md)**
 
-## 왜 만들었는가
+## 포지셔닝
 
-Claude Code를 구조 없이 사용하면 30%의 성능만 발휘합니다. 에이전트 + 스킬 + 훅 + 메모리 하네스를 씌우면 100%가 됩니다. 이 프로젝트는 새 프로젝트에 원커맨드로 하네스를 설치하는 도구입니다.
+이 프로젝트는 **스타터**이며 완전한 하네스가 아닙니다. 진짜 하네스는 규칙을 **구조적으로 강제**합니다 — 금지 경로 차단, 런타임 상태 파일(`state/current-task.json`), 빌드를 실패시키는 아키텍처 테스트. 이 스타터는 AI 엔지니어링 3단계 중 1~2단계는 완전히, 3단계는 부분적으로 커버합니다:
 
-설계 철학은 AI 엔지니어링의 3단계 진화를 따릅니다:
-1. **프롬프트 엔지니어링** — 질문을 잘 던지는 법
-2. **맥락 엔지니어링** — 데이터를 잘 떠먹이는 법
-3. **하네스 엔지니어링** — 안전하게 굴리는 법
+| 단계 | 커버리지 |
+|---|---|
+| 1. 프롬프트 엔지니어링 — 질문을 잘 던지기 | ✅ 스킬 + 4종 트리거 시스템 |
+| 2. 맥락 엔지니어링 — 데이터를 잘 떠먹이기 | ✅ 3계층 메모리 + JIT 키워드 인덱스 |
+| 3. 하네스 엔지니어링 — 구조적 강제 | ⚠️ 부분 (5개 훅, soft gate; 완전 강제는 로드맵) |
+
+완전한 하네스는 별도 프로젝트로 추적합니다. 이 스타터로 프로젝트를 부트스트랩하고, 프로젝트가 요구하면 진짜 하네스로 그래듀에이트하세요.
 
 ## 빠른 시작
 
 ```bash
 # 빈 프로젝트 디렉토리에서 실행
-bash <(curl -fsSL https://raw.githubusercontent.com/youngjin39/Claude-Code-Prompt-Harness/main/setup.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/youngjin39/mir-claude-starter/main/setup.sh)
 ```
 
 설치 과정에서 다음을 설정합니다:
@@ -46,7 +49,7 @@ bash <(curl -fsSL https://raw.githubusercontent.com/youngjin39/Claude-Code-Promp
 | 10 | 정적 사이트/문서 | Astro/Hugo, npm | 최소 모듈 |
 | 11 | Custom | 수동 입력 | (기존 동작) |
 
-설치 후 `claude` 명령으로 시작하면 하네스가 자동으로 작동합니다.
+설치 후 `claude` 명령으로 시작하면 스타터 파이프라인이 자동으로 작동합니다.
 
 ### 사전 요구사항
 
@@ -229,7 +232,7 @@ Select [1-4, comma-separated, 'all', or 'none', default: all]:
 .
 ├── CLAUDE.md                    # 루트 설정 (AI 헌법)
 ├── .mcp.json                    # MCP 서버 (동적 생성)
-├── setup.sh                     # 하네스 설치기
+├── setup.sh                     # 스타터 설치기
 ├── .claude/
 │   ├── settings.local.json      # 권한 + 훅
 │   ├── agents/                  # 에이전트 3개
@@ -252,7 +255,7 @@ Select [1-4, comma-separated, 'all', or 'none', default: all]:
 
 ## 도메인 스킬 추가
 
-하네스 스킬은 범용, 도메인 스킬은 프로젝트 전용:
+스타터 스킬은 범용, 도메인 스킬은 프로젝트 전용:
 
 ```bash
 mkdir -p .claude/skills/my-domain-skill

@@ -9,7 +9,7 @@ type: integration
 # External Code Review — GitHub PR + OpenAI Codex
 
 ## Overview
-Complement the harness's internal code-review skill with automated external review.
+Complement the starter's internal code-review skill with automated external review.
 Agent creates branch + PR on GitHub; OpenAI Codex reviews the diff automatically.
 
 ## Setup
@@ -28,7 +28,7 @@ Agent completes task
   → Merge when approved
 ```
 
-## Integration with Harness Code Review
+## Integration with Starter Code Review
 | Layer | Tool | Purpose |
 |---|---|---|
 | Internal (immediate) | quality-agent | Real-time review during development |

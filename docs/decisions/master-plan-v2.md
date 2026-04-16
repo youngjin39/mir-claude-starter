@@ -6,7 +6,7 @@ last_used: 2026-03-24
 type: archive
 ---
 
-# Master Plan — prompt_DEV Harness (v2, Three-Axis Redesign)
+# Master Plan — mir-claude-starter (v2, Three-Axis Redesign)
 
 > Core axes: **Development Workflow** / **Memory Efficiency** / **Context Efficiency**
 > Foundation: Analysis of CLI-Anything, oh-my-claudecode, Superpowers, everything-claude-code

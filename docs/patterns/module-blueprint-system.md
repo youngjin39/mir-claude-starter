@@ -90,7 +90,7 @@ Every blueprint must pass ALL:
 | 5-15 modules | Recommended — blueprints for complex modules only |
 | 15+ modules | Required — full blueprint coverage |
 
-## Relationship to Harness Memory System
+## Relationship to Starter Memory System
 - Blueprints live in `docs/blueprints/` (Layer 1: Project Knowledge)
 - Blueprint index registered in `docs/memory-map.md`
 - Complements (not replaces) existing architecture docs

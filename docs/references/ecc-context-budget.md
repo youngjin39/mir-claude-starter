@@ -9,7 +9,7 @@ last_used: 2026-04-12
 # Context Budget Thresholds
 
 Source: everything-claude-code (ECC) context-budget skill analysis.
-Applied to our harness via project-doctor Context Budget Audit section.
+Applied to our starter via project-doctor Context Budget Audit section.
 
 ## Token Estimation Heuristics
 - Prose content: word count × 1.3

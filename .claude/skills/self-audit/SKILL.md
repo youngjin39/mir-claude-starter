@@ -1,15 +1,15 @@
 ---
 name: self-audit
-description: "Harness compliance self-check. Validates CLAUDE.md sections, .claude/ components, docs/ structure, and tasks/ files against the 21-element baseline.\n\nTrigger: self-audit, compliance, harness check, self-check, 자기점검"
+description: "Starter compliance self-check. Validates CLAUDE.md sections, .claude/ components, docs/ structure, and tasks/ files against the 21-element baseline.\n\nTrigger: self-audit, compliance, starter check, self-check, 자기점검"
 user-invocable: true
 context: fork
 allowed-tools: Read, Grep, Glob, Bash
 ---
 
-# Self-Audit — Harness Compliance Check
+# Self-Audit — Starter Compliance Check
 
-Run this skill periodically to verify the project follows the harness baseline.
-Unlike project-doctor (build/security/memory integrity), this skill checks **structural compliance** with the 21-element harness standard.
+Run this skill periodically to verify the project follows the starter baseline.
+Unlike project-doctor (build/security/memory integrity), this skill checks **structural compliance** with the 21-element starter standard.
 
 ## Procedure
 
@@ -86,7 +86,7 @@ Domain-specific skills/agents beyond baseline are noted but not flagged.
 
 ## Output
 ```
-## Self-Audit Report — Harness Compliance
+## Self-Audit Report — Starter Compliance
 Date: {YYYY-MM-DD}
 Project: {project name from CLAUDE.md}
 

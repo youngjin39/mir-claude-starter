@@ -1,23 +1,26 @@
-# Claude Code Prompt Harness
+# Mir Claude Starter
 
-A project management harness that turns Claude Code into a structured, gate-enforced development system with agents, skills, memory, and quality controls.
+An opinionated Claude Code starter — a one-command installer that drops 3 agents, 14 skills, 5 hooks, a 3-layer memory system, and a gate-enforced pipeline into any new project. Tuned by 24 rounds of integrity audit (30+ fixes).
 
 > **[한국어 README](README.ko.md)**
 
-## Why This Exists
+## Positioning
 
-Claude Code without structure operates at 30%. With a harness — agents, skills, hooks, memory — it operates at 100%. This project provides that harness as a one-command installer for any new project.
+This is a **starter**, not a full harness. A real harness enforces rules structurally — forbidden-path blockers, runtime state files (`state/current-task.json`), architecture tests that fail the build. This starter covers the first two engineering stages and partially the third:
 
-The design philosophy follows three stages of AI engineering:
-1. **Prompt Engineering** — asking better questions
-2. **Context Engineering** — feeding better data
-3. **Harness Engineering** — enforcing safe, consistent execution
+| Stage | Coverage |
+|---|---|
+| 1. Prompt Engineering — better questions | ✅ skills + 4-type trigger system |
+| 2. Context Engineering — better data feeding | ✅ 3-layer memory + JIT keyword index |
+| 3. Harness Engineering — structural enforcement | ⚠️ partial (5 hooks, soft gates; full enforcement is roadmap) |
+
+Full harness work is tracked separately. Use this starter to bootstrap a project with sensible defaults; graduate to a real harness when the project demands it.
 
 ## Quick Start
 
 ```bash
 # Run in an empty project directory
-bash <(curl -fsSL https://raw.githubusercontent.com/youngjin39/Claude-Code-Prompt-Harness/main/setup.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/youngjin39/mir-claude-starter/main/setup.sh)
 ```
 
 The installer walks you through:
@@ -46,7 +49,7 @@ The installer walks you through:
 | 10 | Static Site / Docs | Astro or Hugo, npm | minimal modules |
 | 11 | Custom | manual entry | (current behavior) |
 
-After setup, start Claude Code with `claude` and the harness takes over.
+After setup, start Claude Code with `claude` and the starter pipeline takes over.
 
 ### Prerequisites
 
@@ -182,7 +185,7 @@ These govern all agent behavior at the highest level:
 
 ## Built-in Prompt Techniques
 
-The harness integrates proven prompt engineering techniques structurally, not as bolt-ons:
+The starter integrates proven prompt engineering techniques structurally, not as bolt-ons:
 
 | Technique | Where Applied |
 |---|---|
@@ -229,7 +232,7 @@ Unselected modules are removed at setup time — no dead context, no wasted toke
 .
 ├── CLAUDE.md                    # Root configuration (AI constitution)
 ├── .mcp.json                    # MCP servers (dynamically generated)
-├── setup.sh                     # Harness installer
+├── setup.sh                     # Starter installer
 ├── .claude/
 │   ├── settings.local.json      # Permissions + hooks
 │   ├── agents/                  # 3 agents
@@ -252,7 +255,7 @@ Unselected modules are removed at setup time — no dead context, no wasted toke
 
 ## Adding Domain Skills
 
-Harness skills are universal. Domain skills are project-specific:
+Starter skills are universal. Domain skills are project-specific:
 
 ```bash
 mkdir -p .claude/skills/my-domain-skill

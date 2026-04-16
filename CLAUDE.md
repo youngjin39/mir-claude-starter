@@ -1,21 +1,21 @@
-# claude-code-harness — Claude Code Project Management Harness
+# mir-claude-starter — Opinionated Claude Code Starter
 
 ## Development Environment
 | Item | Value |
 |---|---|
 | OS | macOS Darwin 25.3.0 (ARM64, Apple Silicon) |
-| Language/Framework | TBD (project management harness) |
+| Language/Framework | TBD (Claude Code starter) |
 | Package Manager | TBD |
 
 ## Build & Run
-- Harness-only configuration. Update this section when a code project is added.
+- Starter-only configuration. Update this section when a code project is added.
 
 ## Project Structure
 ```
 .
 ├── CLAUDE.md
 ├── .mcp.json
-├── setup.sh             # harness installer
+├── setup.sh             # starter installer
 ├── README.md
 ├── LICENSE
 ├── .claude/
@@ -117,7 +117,7 @@ When triggered: report trigger reason + loaded skill(s) (max 3) in one line.
 | plan, implementation plan, step design | writing-plans | .claude/skills/writing-plans/SKILL.md |
 | verify, done check, proof, self-check | verification | .claude/skills/verification/SKILL.md |
 | interview, requirements, clarify, ambiguous | deep-interview | .claude/skills/deep-interview/SKILL.md |
-| self-audit, compliance, harness check, 자기점검 | self-audit | .claude/skills/self-audit/SKILL.md |
+| self-audit, compliance, starter check, 자기점검 | self-audit | .claude/skills/self-audit/SKILL.md |
 | ui, ux, screen, wireframe, frontend, design system, 화면, 디자인 | ux-ui-design | .claude/skills/ux-ui-design/SKILL.md |
 
 > On skill trigger: update `last_used` + `count` in docs/memory-map.md Skill Usage table.

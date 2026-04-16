@@ -1,18 +1,18 @@
 #!/bin/bash
-# claude-code-harness setup script
+# mir-claude-starter setup script
 # Usage: Place in an empty project folder and run: bash setup.sh
 #
 # What it does:
-#   1. Clones the harness repo
-#   2. Removes harness-specific development history
+#   1. Clones the starter repo
+#   2. Removes starter-specific development history
 #   3. Initializes clean project files (tasks/, docs/)
 #   4. Sets up CLAUDE.md with your project info
 #   5. Initializes a fresh git repo
 
 set -euo pipefail
 
-REPO_URL="https://github.com/youngjin39/Claude-Code-Prompt-Harness.git"
-HARNESS_DIR=".harness-tmp"
+REPO_URL="https://github.com/youngjin39/mir-claude-starter.git"
+STARTER_DIR=".starter-tmp"
 
 # --- Colors ---
 RED='\033[0;31m'
@@ -29,13 +29,13 @@ load_messages_en() {
   # Errors
   MSG_ERR_DIR_NOT_EMPTY="Directory is not empty. Run this script in an empty folder."
   MSG_ERR_GIT_NOT_FOUND="git is not installed."
-  MSG_ERR_CLONE_FAILED="${RED}ERROR: Failed to clone harness repo. Check network connection.${NC}"
+  MSG_ERR_CLONE_FAILED="${RED}ERROR: Failed to clone starter repo. Check network connection.${NC}"
   MSG_ERR_CLAUDE_DIR_EXISTS="${RED}ERROR: .claude/ directory already exists. Remove it first or run from an empty directory.${NC}"
 
   # Info / progress
-  MSG_INFO_CLONING="Cloning claude-code-harness..."
+  MSG_INFO_CLONING="Cloning mir-claude-starter..."
   MSG_INFO_SETUP_STRUCTURE="Setting up project structure..."
-  MSG_INFO_CLEANING="Cleaning harness development artifacts..."
+  MSG_INFO_CLEANING="Cleaning starter development artifacts..."
   MSG_INFO_INIT_TASKS="Initializing tasks/..."
   MSG_INFO_PREP_CLAUDE_MD="Preparing CLAUDE.md..."
   MSG_INFO_CONF_MODULES="Configuring optional modules..."
@@ -147,13 +147,13 @@ load_messages_ko() {
   # Errors
   MSG_ERR_DIR_NOT_EMPTY="디렉토리가 비어있지 않습니다. 빈 폴더에서 실행하세요."
   MSG_ERR_GIT_NOT_FOUND="git이 설치되어 있지 않습니다."
-  MSG_ERR_CLONE_FAILED="${RED}ERROR: 하네스 레포 클론에 실패했습니다. 네트워크 연결을 확인하세요.${NC}"
+  MSG_ERR_CLONE_FAILED="${RED}ERROR: 스타터 레포 클론에 실패했습니다. 네트워크 연결을 확인하세요.${NC}"
   MSG_ERR_CLAUDE_DIR_EXISTS="${RED}ERROR: .claude/ 디렉토리가 이미 존재합니다. 먼저 삭제하거나 빈 디렉토리에서 실행하세요.${NC}"
 
   # Info / progress
-  MSG_INFO_CLONING="claude-code-harness 클론 중..."
+  MSG_INFO_CLONING="mir-claude-starter 클론 중..."
   MSG_INFO_SETUP_STRUCTURE="프로젝트 구조 설정 중..."
-  MSG_INFO_CLEANING="하네스 개발 전용 파일 정리 중..."
+  MSG_INFO_CLEANING="스타터 개발 전용 파일 정리 중..."
   MSG_INFO_INIT_TASKS="tasks/ 초기화 중..."
   MSG_INFO_PREP_CLAUDE_MD="CLAUDE.md 준비 중..."
   MSG_INFO_CONF_MODULES="선택 모듈 구성 중..."
@@ -290,8 +290,8 @@ echo ""
 
 # --- Step 1: Clone ---
 info "$MSG_INFO_CLONING"
-git clone --depth 1 "$REPO_URL" "$HARNESS_DIR" || { echo -e "$MSG_ERR_CLONE_FAILED"; exit 1; }
-rm -rf "$HARNESS_DIR/.git"
+git clone --depth 1 "$REPO_URL" "$STARTER_DIR" || { echo -e "$MSG_ERR_CLONE_FAILED"; exit 1; }
+rm -rf "$STARTER_DIR/.git"
 
 # --- Step 2: Move files ---
 info "$MSG_INFO_SETUP_STRUCTURE"
@@ -299,24 +299,24 @@ info "$MSG_INFO_SETUP_STRUCTURE"
 # Guard against overwriting existing .claude/ directory
 if [ -d ".claude" ]; then
   echo -e "$MSG_ERR_CLAUDE_DIR_EXISTS"
-  rm -rf "$HARNESS_DIR"
+  rm -rf "$STARTER_DIR"
   exit 1
 fi
 
-mv "$HARNESS_DIR"/.claude .
-mv "$HARNESS_DIR"/.gitignore .
-mv "$HARNESS_DIR"/CLAUDE.md .
-mv "$HARNESS_DIR"/LICENSE .
-mv "$HARNESS_DIR"/docs .
+mv "$STARTER_DIR"/.claude .
+mv "$STARTER_DIR"/.gitignore .
+mv "$STARTER_DIR"/CLAUDE.md .
+mv "$STARTER_DIR"/LICENSE .
+mv "$STARTER_DIR"/docs .
 # Skip README.md (user will create their own), setup.sh (this script)
 # Skip .mcp.json (generated in module selection step)
 
-rm -rf "$HARNESS_DIR"
+rm -rf "$STARTER_DIR"
 
-# --- Step 3: Clean harness-specific content ---
+# --- Step 3: Clean starter-specific content ---
 info "$MSG_INFO_CLEANING"
 
-# Remove harness-specific docs (keep directory structure)
+# Remove starter-specific docs (keep directory structure)
 rm -f docs/decisions/master-plan-v2.md
 rm -f docs/decisions/optimization-log.md
 rm -f docs/references/repo-analysis-summary.md
@@ -430,7 +430,7 @@ cat > tasks/plan.md << 'EOF'
 # Plan
 
 ## Current State
-- Project initialized with claude-code-harness.
+- Project initialized with mir-claude-starter.
 
 ## Next Action
 - Define project scope and goals.
@@ -540,10 +540,10 @@ fi
 
 # Update CLAUDE.md (use perl to avoid sed delimiter issues with user input)
 if [ -n "$PROJECT_NAME" ]; then
-  P="$PROJECT_NAME" perl -pi -e 's/claude-code-harness — Claude Code Project Management Harness/$ENV{P} — Claude Code Project Management Harness/' CLAUDE.md
+  P="$PROJECT_NAME" perl -pi -e 's/mir-claude-starter — Opinionated Claude Code Starter/$ENV{P} — Opinionated Claude Code Starter/' CLAUDE.md
 fi
 if [ -n "$LANG_FRAMEWORK" ]; then
-  P="$LANG_FRAMEWORK" perl -pi -e 's/\| Language\/Framework \| TBD \(project management harness\) \|/| Language\/Framework | $ENV{P} |/' CLAUDE.md
+  P="$LANG_FRAMEWORK" perl -pi -e 's/\| Language\/Framework \| TBD \(Claude Code starter\) \|/| Language\/Framework | $ENV{P} |/' CLAUDE.md
 fi
 if [ -n "$PKG_MANAGER" ]; then
   P="$PKG_MANAGER" perl -pi -e 's/\| Package Manager \| TBD \|/| Package Manager | $ENV{P} |/' CLAUDE.md
@@ -860,7 +860,7 @@ SETEOF
 info "$MSG_INFO_GIT_INIT"
 git init -q
 git add -A
-git commit -q -m "feat: initialize project with claude-code-harness"
+git commit -q -m "feat: initialize project with mir-claude-starter"
 
 # --- Done ---
 echo ""
