@@ -38,7 +38,7 @@ allowed-tools: Read, Grep, Glob, Bash
 ## Context Efficiency Check
 19. plan.md ≤ 50 lines.
 20. CLAUDE.md has trigger table (no skill body inline).
-21. tasks/handoffs/ and tasks/sessions/ directories exist.
+21. tasks/handoffs/, tasks/runner/, and tasks/sessions/ directories exist.
 
 ## Skill Health Check
 22. Each skill's referenced commands exist (e.g., `npm run lint` → package.json has lint script).

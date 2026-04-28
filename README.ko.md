@@ -1,6 +1,6 @@
 # Mir Claude Starter
 
-Claude Code 스타터 — 원커맨드로 3개 에이전트, 14개 스킬, 6개 훅, 3계층 메모리, `execute.py` 상태 엔진, 게이트 파이프라인을 새 프로젝트에 설치. 24라운드 무결성 감사(30개 fix)로 튜닝됨.
+Claude Code 스타터 — 원커맨드로 3개 에이전트, 18개 스킬, 6개 훅, 3계층 메모리, `execute.py` 상태 엔진, 게이트 파이프라인을 새 프로젝트에 설치. 24라운드 무결성 감사(30개 fix)로 튜닝됨.
 
 > **[English README](README.md)**
 
@@ -28,27 +28,27 @@ bash <(curl -fsSL https://raw.githubusercontent.com/youngjin39/mir-claude-starte
 
 | 단계 | 내용 |
 |---|---|
+| 출력 언어 | 한국어, 영어, 일본어, 중국어, 기타 |
 | 프로젝트 정보 | 이름, 언어/프레임워크, 패키지 매니저 |
 | 프리셋 | 10개 스택 프리셋 또는 Custom (스택+모듈+권한 자동 설정) |
-| 출력 언어 | 한국어, 영어, 일본어, 중국어, 기타 |
-| 모듈 선택 | 선택적 스킬 및 MCP 서버 선택, Custom 설치의 기본값은 코어만 사용 (프리셋 선택 시 스킵) |
+| 모듈 선택 | 프로젝트별 부가 모듈과 MCP 서버 선택. 범용 워크플로와 진단 스킬은 기본 설치 |
 | 권한 수준 | Strict / Standard / Permissive (프리셋 선택 시 스킵) |
 
 ### 프로젝트 프리셋
 
 | # | 프리셋 | 스택 | 자동 설정 |
 |---|---|---|---|
-| 1 | Flutter 모바일 앱 | Dart/Flutter, pub | testing+code-review, Context7 |
-| 2 | Next.js 웹 앱 | TypeScript/Next.js, pnpm | testing+code-review, Context7+SeqThink |
-| 3 | Node/TS 백엔드 API | TypeScript/Node, npm | testing+code-review, SeqThink |
-| 4 | Python 백엔드 | Python/FastAPI, uv | testing+code-review, Context7 |
-| 5 | Python 데이터/ML | Python, uv | testing, SeqThink |
-| 6 | Rust 시스템 | Rust, cargo | testing+code-review, Strict 권한 |
-| 7 | Go 서비스 | Go, go mod | testing+code-review |
-| 8 | 임베디드 C/C++ | C/C++, cmake | code-review만, Strict 권한 |
-| 9 | Claude 전용 에이전트 | 코드 없음, 콘텐츠/판단 | testing 제외, SeqThink |
-| 10 | 정적 사이트/문서 | Astro/Hugo, npm | 최소 모듈 |
-| 11 | Custom | 수동 입력 | (기존 동작) |
+| 1 | Flutter 모바일 앱 | Dart/Flutter, pub | Context7 |
+| 2 | Next.js 웹 앱 | TypeScript/Next.js, pnpm | Context7 + SeqThink + Browser |
+| 3 | Node/TS 백엔드 API | TypeScript/Node, npm | SeqThink + Browser |
+| 4 | Python 백엔드 | Python/FastAPI, uv | Context7 |
+| 5 | Python 데이터/ML | Python, uv | SeqThink + Knowledge Wiki |
+| 6 | Rust 시스템 | Rust, cargo | Strict 권한 |
+| 7 | Go 서비스 | Go, go mod | 기본 구성 |
+| 8 | 임베디드 C/C++ | C/C++, cmake | Strict 권한 |
+| 9 | Claude 전용 에이전트 | 코드 없음, 콘텐츠/판단 | SeqThink + Knowledge Wiki + Browser |
+| 10 | 정적 사이트/문서 | Astro/Hugo, npm | Context7 + Browser |
+| 11 | Custom | 수동 입력 | 범용 기본값 + 선택 확장 |
 
 설치 후 `claude` 명령으로 시작하면 스타터 파이프라인이 자동으로 작동합니다.
 
@@ -145,13 +145,14 @@ quality-agent는 **적대적 렌즈**를 사용합니다: executor가 놓친 것
 스타터 자체를 수정할 때는 에이전트, 훅, 스킬, 스크립트, 생성된 Codex 산출물, 사용자 문서를 하나의 계약으로 취급하세요. 스타터 갱신 완료를 주장하기 전 `python3 scripts/verify_starter_integrity.py`를 실행해야 합니다.
 이 계약은 사람 설명용만이 아닙니다. 에이전트가 처음 읽는 파일만으로 자신의 런타임과 게이트를 분류할 수 있게 쓰여야 합니다.
 
-### 스킬 (10개 코어 + 선택형 확장)
+### 스킬 (워크플로 코어 12개 + 기본 진단 2개 + 선택형 확장)
 
 **코어** (항상 설치):
 
 | 스킬 | 트리거 | 핵심 기능 |
 |---|---|---|
 | brainstorming | 설계, 아키텍처, 새 기능 | Hard Gate. 2~3개 다른 관점의 대안. 반대 서사 공격. 합성 옵션. |
+| ai-ready-bluebricks-development | 아키텍처 리뷰, 저장소 탐색, 다중 모듈 리팩터링 | blueprint 문맥, hidden hazard 점검, bounded system 분석을 적용하는 AI-ready 코드베이스 워크플로. |
 | writing-plans | 계획, 구현 계획 | 구체적 코드 포함 필수. 금지: "테스트 추가", "필요시 리팩터링". |
 | verification | 검증, 완료 확인 | 6단계 게이트 + Red Team 6Q 자가 공격 + 숨은 전제 심문. |
 | deep-interview | 인터뷰, 요구사항, 명확화 | 모호성 점수 + 병목 진단 (팩트/논리/편향/실행). |
@@ -160,7 +161,15 @@ quality-agent는 **적대적 렌즈**를 사용합니다: executor가 놓친 것
 | ux-ui-design | ui, ux, screen, frontend | 구현 전 플로우 + 와이어프레임 + 컴포넌트 명세를 강제하는 UI 하드 게이트. |
 | git-commit | 커밋, git, 변경 저장 | 구조화된 커밋 규칙 + 트레일러. |
 | project-doctor | 진단, 헬스체크 | 구조 + 메모리 + 컨텍스트 진단. |
+| runner | 장기 실행, 백그라운드, 재개 | compact/handoff를 넘어 `pid`/로그/산출물/단계를 추적하는 작업 장부. |
 | self-audit | audit, integrity, drift | 스타터 준수성과 drift 점검. 스타터 검증이 여기에 의존하므로 코어로 유지합니다. |
+
+**기본 진단** (항상 설치, 요청 시 트리거):
+
+| 스킬 | 트리거 | 핵심 기능 |
+|---|---|---|
+| ai-readiness-cartography | ai-readiness score, repo cartography | 저장소를 AI-ready 루브릭으로 점수화하고 JSON/대시보드용 근거를 생성합니다. |
+| improve-token-efficiency | token efficiency, session cost, usage report | 저장소 단위 Claude 세션 비용과 토큰 효율을 분석하고 절감안을 제시합니다. |
 
 **선택** (설치 시 opt-in, Custom 설치 기본값은 none):
 
@@ -264,15 +273,16 @@ quality-agent는 **적대적 렌즈**를 사용합니다: executor가 놓친 것
 
 ```
 Optional modules:
-  [1] code-review skill  — PR/품질 리뷰
-  [2] testing skill      — TDD 강제
-  [3] Context7 MCP       — 라이브러리 최신 문서 자동 주입
-  [4] Sequential Thinking MCP — 구조화된 추론 체인
+  [1] Context7 MCP
+  [2] Sequential Thinking MCP
+  [3] Knowledge Wiki
+  [4] Browser Automation
+  [5] Code Review Graph
 
-Select [1-4, comma-separated, 'all', or 'none', default: none]:
+Select [1-5, comma-separated, 'all', or 'none', default: none]:
 ```
 
-미선택 모듈은 설치 시 제거됩니다 — 죽은 컨텍스트 없음, 토큰 낭비 없음.
+범용 워크플로 스킬, 코드 작업 스킬, 진단 스킬은 기본 유지됩니다. 여기서는 프로젝트별 추가 기능만 토글합니다.
 
 ## 커스텀 하네스 문서
 
@@ -310,7 +320,7 @@ Select [1-4, comma-separated, 'all', or 'none', default: none]:
 │   ├── settings.local.json      # 권한 + 훅
 │   ├── agents/                  # 에이전트 3개
 │   ├── hooks/                   # 자동화 훅 6개
-│   └── skills/                  # 코어 6개 + 선택형 확장
+│   └── skills/                  # 기본 14개 스킬 + 선택형 확장
 ├── tasks/                       # 작업 메모리 (gitignore)
 │   ├── plan.md                  # 현재 계획
 │   ├── context.md               # 결정 근거
@@ -319,6 +329,7 @@ Select [1-4, comma-separated, 'all', or 'none', default: none]:
 │   ├── lessons.md               # 실패/성공 규칙
 │   ├── cost-log.md              # 토큰 비용 추적
 │   ├── handoffs/                # 페이즈 핸드오프 문서
+│   ├── runner/                  # 장기 실행 작업 장부
 │   ├── sessions/                # 세션 스냅샷
 │   └── log/                     # 완료 작업 아카이브
 └── docs/                        # 장기 메모리 (소멸 없음)

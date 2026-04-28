@@ -203,17 +203,17 @@ def validate_runtime_doc_contracts() -> List[str]:
         ),
         (
             CLAUDE_PATH,
-            "10. `docs/operations/hook-contract.md` when hook behavior, enforcement boundaries, or Codex parity matters",
+            "13. `docs/operations/hook-contract.md` when hook behavior, enforcement boundaries, or Codex parity matters",
             "hook-contract required read",
         ),
         (
             CLAUDE_PATH,
-            "11. `docs/operations/harness-application.md` when applying harness techniques across Claude and Codex",
+            "14. `docs/operations/harness-application.md` when applying harness techniques across Claude and Codex",
             "harness-application required read",
         ),
         (
             CLAUDE_PATH,
-            "12. `docs/operations/starter-maintenance-mode.md` when the task modifies starter contracts, verifiers, or cross-harness behavior",
+            "15. `docs/operations/starter-maintenance-mode.md` when the task modifies starter contracts, verifiers, or cross-harness behavior",
             "starter-maintenance-mode required read",
         ),
         (
@@ -248,7 +248,7 @@ def validate_runtime_doc_contracts() -> List[str]:
         ),
         (
             CLAUDE_PATH,
-            "Core default = `brainstorming`, `code-review`, `deep-interview`, `git-commit`, `project-doctor`, `self-audit`, `testing`, `ux-ui-design`, `verification`, `writing-plans`.",
+            "Core default = `ai-ready-bluebricks-development`, `brainstorming`, `code-review`, `deep-interview`, `git-commit`, `project-doctor`, `runner`, `self-audit`, `testing`, `ux-ui-design`, `verification`, `writing-plans`.",
             "CLAUDE self-audit core-default rule",
         ),
         (
@@ -313,22 +313,22 @@ def validate_runtime_doc_contracts() -> List[str]:
         ),
         (
             AGENTS_PATH,
-            "9. `docs/operations/codex-runtime.md` when task flow, generated instructions, or memory behavior matters",
+            "12. `docs/operations/codex-runtime.md` when task flow, generated instructions, or memory behavior matters",
             "Codex runtime required read",
         ),
         (
             AGENTS_PATH,
-            "10. `docs/operations/hook-contract.md` when hook behavior, enforcement boundaries, or Codex parity matters",
+            "13. `docs/operations/hook-contract.md` when hook behavior, enforcement boundaries, or Codex parity matters",
             "Codex hook-contract required read",
         ),
         (
             AGENTS_PATH,
-            "11. `docs/operations/harness-application.md` when applying harness techniques across Claude and Codex",
+            "14. `docs/operations/harness-application.md` when applying harness techniques across Claude and Codex",
             "Codex harness-application required read",
         ),
         (
             AGENTS_PATH,
-            "12. `docs/operations/starter-maintenance-mode.md` when the task modifies starter contracts, verifiers, or cross-harness behavior",
+            "15. `docs/operations/starter-maintenance-mode.md` when the task modifies starter contracts, verifiers, or cross-harness behavior",
             "Codex starter-maintenance-mode required read",
         ),
         (
@@ -348,7 +348,7 @@ def validate_runtime_doc_contracts() -> List[str]:
         ),
         (
             AGENTS_PATH,
-            "- Skills: `brainstorming, code-review, deep-interview, git-commit, project-doctor, self-audit, testing, ux-ui-design, verification, writing-plans`",
+            "- Skills: `ai-ready-bluebricks-development, brainstorming, code-review, deep-interview, git-commit, project-doctor, runner, self-audit, testing, ux-ui-design, verification, writing-plans`",
             "Codex startup skill list includes self-audit",
         ),
         (

@@ -52,7 +52,7 @@ Glob for files and compare against baseline:
 
 | Component | Required | Check |
 |---|---|---|
-| Core skills | brainstorming, code-review, deep-interview, git-commit, project-doctor, self-audit, testing, ux-ui-design, verification, writing-plans | `ls .claude/skills/*/SKILL.md` |
+| Core skills | ai-ready-bluebricks-development, brainstorming, code-review, deep-interview, git-commit, project-doctor, runner, self-audit, testing, ux-ui-design, verification, writing-plans | `ls .claude/skills/*/SKILL.md` |
 | Agents | main-orchestrator, executor-agent, quality-agent | `ls .claude/agents/*.md` |
 | Hooks | session-start.sh, pre-compact.sh, pre-tool-use.sh, tdd-guard.sh, post-edit-check.sh, session-end.sh | `ls .claude/hooks/*.sh` |
 
@@ -63,13 +63,13 @@ Domain-specific skills/agents beyond baseline are noted but not flagged.
 |---|---|
 | memory-map.md | Exists + has keyword entries (not empty template) |
 | 7 subdirectories | architecture/, decisions/, patterns/, domain/, risks/, integrations/, references/ |
-| operations docs | claude-runtime.md, codex-runtime.md, hook-contract.md, harness-application.md, starter-maintenance-mode.md |
+| operations docs | claude-runtime.md, codex-long-running-tasks.md, codex-runtime.md, hook-contract.md, harness-application.md, starter-maintenance-mode.md |
 
 ### Phase 4: tasks/ File Check
 | Required | Check |
 |---|---|
 | Core files | plan.md, context.md, checklist.md, change_log.md, lessons.md, cost-log.md |
-| Directories | handoffs/, sessions/, log/ |
+| Directories | handoffs/, runner/, sessions/, log/ |
 | plan.md size | ≤ 50 lines (warn if exceeded) |
 
 ### Phase 5: Cross-Validation
@@ -108,7 +108,7 @@ Project: {project name from CLAUDE.md}
 ### .claude/ Components
 | Component | Expected | Found | Missing |
 |---|---|---|---|
-| Skills | 10 core | {N} | {list} |
+| Skills | 12 core | {N} | {list} |
 | Agents | 3 | {N} | {list} |
 | Hooks | 6 | {N} | {list} |
 

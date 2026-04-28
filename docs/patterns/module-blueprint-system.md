@@ -16,6 +16,11 @@ Each new session requires re-reading all source files — wasteful and error-pro
 Create **self-contained per-module blueprint files** with a master index.
 Each blueprint holds enough detail for AI to implement/modify the module without reading source.
 
+## Relationship to AI-Ready Development
+- A blueprint is the durable storage format.
+- A "bluebrick" is a reasoning lens over the same unit: a bounded module with explicit interfaces, hazards, dependencies, composition, and orchestration.
+- Do not create parallel storage systems for blueprints vs bluebricks. Extend the same module document.
+
 ## Directory Structure
 ```
 docs/blueprints/
@@ -40,6 +45,21 @@ req-coverage: [requirement IDs]
 ## Purpose
 One-paragraph description.
 
+## WHAT
+What the module does at a glance.
+
+## HOW
+Normal change path, safe edit zones, and expected workflow.
+
+## HOW NOT
+Non-obvious hazards, forbidden edits, and compatibility traps.
+
+## WHERE
+Upstream/downstream dependencies and impact boundaries.
+
+## WHY
+Tacit knowledge, legacy reasons, policy constraints, and incident history.
+
 ## File Inventory
 | File | Role | LOC | Key Contents |
 |---|---|---|---|
@@ -58,9 +78,18 @@ States, transitions, entry/exit conditions.
 - **Provides:** APIs/events this module exposes
 - **Requires:** APIs/events this module consumes
 
+## Composition
+How this module is combined with other modules.
+
+## Orchestration
+Who calls this module, in what order, and under what conditions.
+
 ## Modification Guide
 - **Safe zones:** areas that can change without ripple effects
 - **Danger zones:** changes here require cross-module testing
+
+## Validation
+Smallest meaningful tests, checks, or runtime probes for changes here.
 
 ## Change History
 Append-only development log.
@@ -82,6 +111,7 @@ Every blueprint must pass ALL:
 - **Data-complete:** All data structures have field-level docs?
 - **Dependency-clear:** All dependencies named with specific contracts?
 - **Modification-safe:** Safe/danger zones marked?
+- **Hazard-clear:** `HOW NOT` and validation sections capture non-obvious breakage modes?
 
 ## When to Use
 | Project Size | Recommendation |

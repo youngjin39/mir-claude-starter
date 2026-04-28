@@ -27,3 +27,5 @@
 | 2026-03-24 | 9 files | 5-round integrity audit — 30 fixes (see docs/decisions/optimization-log.md) | Final stabilization |
 | 2026-04-26 00:35 | .claude/hooks/tdd-guard.sh, execute.py | start phase `implementation` | wire harness state engine |
 | 2026-04-26 00:35 | .claude/hooks/tdd-guard.sh, execute.py | checkpoint `implementation` | added state engine and tdd guard |
+| 2026-04-28 ~ 2026-04-29 | CLAUDE.md, .claude/agents/, .claude/skills/, docs/, scripts/ | Added AI-ready harness layering and Claude→Codex parity updates | align generic rules, development rules, blueprint/bluebrick flow, and verifier-backed derivation |
+| 2026-04-29 | docs/decisions/ai-ready-harness-layering.md | Decision record added | preserve rationale, mapping, validation, and non-goals for the rollout |

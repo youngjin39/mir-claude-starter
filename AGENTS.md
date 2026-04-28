@@ -11,23 +11,27 @@
 - Use generated Codex skills first.
 - If derived files are stale, regenerate from Claude source.
 
-- Skills: `brainstorming, code-review, deep-interview, git-commit, project-doctor, self-audit, testing, ux-ui-design, verification, writing-plans`
+- Skills: `ai-ready-bluebricks-development, brainstorming, code-review, deep-interview, git-commit, project-doctor, runner, self-audit, testing, ux-ui-design, verification, writing-plans`
 
 ## Required Reads
 1. `tasks/plan.md`
 2. `tasks/lessons.md`
 3. `docs/memory-map.md`
-4. `PRD.md` when present and product scope, UX priorities, or MVP boundaries matter
-5. `ARCHITECTURE.md` when wrappers, boundaries, or data flow matter
-6. `ADR.md` when historical decisions or tradeoffs matter
-7. `UI_GUIDE.md` when present and UI behavior, visual rules, or anti-patterns matter
-8. `harness/README.md` when harness runtime commands, incidents, or commit policy matter
-9. `docs/operations/codex-runtime.md` when task flow, generated instructions, or memory behavior matters
-10. `docs/operations/hook-contract.md` when hook behavior, enforcement boundaries, or Codex parity matters
-11. `docs/operations/harness-application.md` when applying harness techniques across Claude and Codex
-12. `docs/operations/starter-maintenance-mode.md` when the task modifies starter contracts, verifiers, or cross-harness behavior
-13. `docs/integrations/claude-to-codex-derivation.md` when Codex parity or regeneration matters
-14. `docs/integrations/project-family-classification.md` when bootstrapping, surveying, or classifying a new project family
+4. `docs/operations/common-ai-rules.md` when task flow changes cross-cutting AI execution policy, non-code agent behavior, or closeout rules
+5. `docs/patterns/ai-ready-development.md` when the task involves code writing, code analysis, debugging, refactoring, architecture review, or PR review
+6. `docs/patterns/module-blueprint-system.md` when module mapping, system boundaries, or multi-module impact matter
+7. `PRD.md` when present and product scope, UX priorities, or MVP boundaries matter
+8. `ARCHITECTURE.md` when wrappers, boundaries, or data flow matter
+9. `ADR.md` when historical decisions or tradeoffs matter
+10. `UI_GUIDE.md` when present and UI behavior, visual rules, or anti-patterns matter
+11. `harness/README.md` when harness runtime commands, incidents, or commit policy matter
+12. `docs/operations/codex-runtime.md` when task flow, generated instructions, or memory behavior matters
+13. `docs/operations/hook-contract.md` when hook behavior, enforcement boundaries, or Codex parity matters
+14. `docs/operations/harness-application.md` when applying harness techniques across Claude and Codex
+15. `docs/operations/starter-maintenance-mode.md` when the task modifies starter contracts, verifiers, or cross-harness behavior
+16. `docs/integrations/claude-to-codex-derivation.md` when Codex parity or regeneration matters
+17. `docs/integrations/project-family-classification.md` when bootstrapping, surveying, or classifying a new project family
+18. `docs/operations/codex-long-running-tasks.md` when launching, monitoring, compacting, handing off, or resuming long-running/background work
 
 
 ## Workflow
@@ -35,6 +39,9 @@
 - 1~2-step task → direct execution + self-check
 - 3+ step task with unresolved product/design choices → `brainstorming` → `writing-plans` → `executor-agent` → `verification`
 - 3+ step task with concrete scope and no meaningful design fork → `writing-plans` → `executor-agent` → `verification`
+- Multi-module codebase exploration, architecture review, dependency impact analysis, or broad refactor planning → load `ai-ready-bluebricks-development` before broad search
+- Long-running/background/restartable execution → load `runner` before launch and keep `tasks/runner/` current
+- `runner` is a core/default runtime skill. Do not wait for an explicit `runner` command before launching, monitoring, handing off, or resuming long-running/background/restartable work.
 - UI work → `ux-ui-design` before implementation
 - Review request or 4+ issues → `quality-agent`
 - New-project bootstrap or repository onboarding → classify family first using `docs/integrations/project-family-classification.md`, then choose `push/init`, `migrate`, `skip-migrate + profile`, `bootstrap only + boundary`, or `supersede`
@@ -55,8 +62,11 @@
 - Skills own task-specific procedure:
   - Load only the matching generated skill bodies you need.
   - Prefer workflow skills in canonical order: `deep-interview` → `brainstorming` → `writing-plans` → `verification`.
+  - Use `runner` for long-running/background/restartable commands. Externalize `cwd`, `command`, `env`, `session`, `pid`, `stdout`, `artifacts`, and `stage` in `tasks/runner/` before relying on memory or chat history.
   - AI-facing contract text must let the agent identify its current runtime, active mode, enforcement path, and completion gate before acting.
   - Do not force `brainstorming` for concrete, localized implementation tasks with an obvious path; reserve it for real design forks, new features, architecture changes, or when the user explicitly wants options first.
+  - Use `ai-ready-bluebricks-development` for architecture review, repository exploration, multi-module refactors, PR review, dependency impact analysis, and tasks that require module-blueprint context.
+  - Do not load `ai-ready-bluebricks-development` for single-file or otherwise obvious local edits unless hidden dependency risk is likely.
   - Use `writing-plans` for any multi-step execution that needs checkpointed steps, even if `brainstorming` is skipped because the design is already clear.
   - Do an inline self-review before invoking heavier review/delegation loops unless the task is high-risk, broad-scope, or the user explicitly asked for review.
   - Use `testing`, `code-review`, and `ux-ui-design` as first-class runtime skills, not as optional afterthoughts.
@@ -116,10 +126,11 @@
 
 
 ## Skill Trigger Table
-Core default = `brainstorming`, `code-review`, `deep-interview`, `git-commit`, `project-doctor`, `self-audit`, `testing`, `ux-ui-design`, `verification`, `writing-plans`.
+Core default = `ai-ready-bluebricks-development`, `brainstorming`, `code-review`, `deep-interview`, `git-commit`, `project-doctor`, `runner`, `self-audit`, `testing`, `ux-ui-design`, `verification`, `writing-plans`.
 
 | Intent | Skill | Path |
 |---|---|---|
+| architecture review, repository exploration, multi-module refactor, dependency impact | ai-ready-bluebricks-development | .claude/skills/ai-ready-bluebricks-development/SKILL.md |
 | design, architecture, new feature | brainstorming | .claude/skills/brainstorming/SKILL.md |
 | plan, step design | writing-plans | .claude/skills/writing-plans/SKILL.md |
 | verify, proof, self-check | verification | .claude/skills/verification/SKILL.md |
@@ -127,14 +138,20 @@ Core default = `brainstorming`, `code-review`, `deep-interview`, `git-commit`, `
 | commit, git, save changes | git-commit | .claude/skills/git-commit/SKILL.md |
 | review, PR, quality | code-review | .claude/skills/code-review/SKILL.md |
 | audit, compliance, starter check | self-audit | .claude/skills/self-audit/SKILL.md |
+| runner, long-running, background, monitor, resume, compact, handoff, tail, pid | runner | .claude/skills/runner/SKILL.md |
 | test, TDD, unit test | testing | .claude/skills/testing/SKILL.md |
 | diagnose, doctor, health check | project-doctor | .claude/skills/project-doctor/SKILL.md |
 | ui, ux, screen, frontend | ux-ui-design | .claude/skills/ux-ui-design/SKILL.md |
+| ai-readiness score, repo cartography, agent-friendly audit | ai-readiness-cartography | .claude/skills/ai-readiness-cartography/SKILL.md |
+| token efficiency, session cost, usage report | improve-token-efficiency | .claude/skills/improve-token-efficiency/SKILL.md |
 
 
 ## Context Management
 - Handoffs only. Never pass session history to sub-agents.
-- Before `/compact`, write a handoff in `tasks/handoffs/`.
+- Before `/compact`, write a handoff in `tasks/handoffs/` and refresh any active `tasks/runner/` ledger first.
+- Prefer one session per task. If the active context is approaching roughly 40%, compact before it turns into bloat.
+- Split long-running work into stage-based sessions when practical instead of carrying one oversized session indefinitely.
+- Compact summaries should preserve only: current goal, files already modified, failed approaches, remaining work, and non-negotiable constraints.
 - Do not start complex work in the last 20% of context.
 
 

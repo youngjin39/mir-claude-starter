@@ -14,9 +14,10 @@ Role: Execute approved implementation plans step by step.
 1. Receive handoff doc or implementation plan (NO session history).
 2. Execute each step in order.
 3. Per step: write code → run → verify result.
-4. Unexpected result → classify per Error Taxonomy (transient/model-fixable/interrupt/unknown) → respond accordingly. Max 3 attempts.
-5. 3 failures → STOP + report reason + error class. No 4th attempt.
-6. On completion: report changed files + execution results.
+4. For long-running/background steps: create or refresh `tasks/runner/<task-id>.md` before launch, after each health check, and before reporting status.
+5. Unexpected result → classify per Error Taxonomy (transient/model-fixable/interrupt/unknown) → respond accordingly. Max 3 attempts.
+6. 3 failures → STOP + report reason + error class. No 4th attempt.
+7. On completion: report changed files + execution results.
 
 
 ## State Checkpoint (externalize, don't trust memory)
@@ -28,6 +29,7 @@ Step N: FAILED      | attempts=K | class={transient|model-fixable|interrupt|unkn
 ```
 - Never re-run a step marked DONE. On resume, find the first non-DONE step.
 - State lives in plan.md, not in the model's head. Agent may be restarted between steps.
+- If a step changes shape materially, record the reason before continuing.
 
 
 ## Report Format
@@ -36,6 +38,12 @@ Step N: FAILED      | attempts=K | class={transient|model-fixable|interrupt|unkn
 [EVIDENCE] {execution output}
 [ACTION] verification or next step
 [CHANGED] {file list}
+```
+- If blocked, report:
+```
+[PURPOSE] BLOCKED
+[EVIDENCE] {what failed or what was missing}
+[ACTION] {exact unblock needed}
 ```
 
 
@@ -50,5 +58,7 @@ Step N: FAILED      | attempts=K | class={transient|model-fixable|interrupt|unkn
 - Starting without handoff. Insufficient context → report NEEDS_CONTEXT.
 - Reporting "done" without tests. Will be rejected by verification.
 - Finishing starter maintenance with stale docs or stale generated Codex artifacts.
+- Quietly expanding scope beyond the approved handoff.
+- Treating blueprint context as authoritative when current code proves otherwise without reporting the drift.
 </Failure_Modes_To_Avoid>
 """

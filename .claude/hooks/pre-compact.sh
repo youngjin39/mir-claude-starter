@@ -13,24 +13,42 @@ mkdir -p "$HANDOFF_DIR" || { echo "[PreCompact] ERROR: Cannot create $HANDOFF_DI
 {
   echo "# Auto Handoff — $TIMESTAMP"
   echo ""
-  echo "## Current State"
+  echo "## Compact Rule"
+  echo "- One session should stay focused on one task."
+  echo '- Prefer `/compact` before the active context grows beyond roughly 40%.'
+  echo "- Split long-running work into stage-based sessions when practical."
+  echo ""
+  echo "## Summary Guide"
+  echo "When summarizing, preserve only:"
+  echo "1. Current goal"
+  echo "2. Files already modified"
+  echo "3. Failed approaches"
+  echo "4. Remaining work"
+  echo "5. Non-negotiable constraints"
+  echo ""
+  echo "## Current Goal"
   if [ -f "$PROJECT_DIR/tasks/plan.md" ]; then
     echo '```'
     head -20 "$PROJECT_DIR/tasks/plan.md"
     echo '```'
   fi
   echo ""
-  echo "## Recent Changes"
+  echo "## Files Already Modified"
   if [ -d "$PROJECT_DIR/.git" ]; then
-    git -C "$PROJECT_DIR" log --oneline -5 2>/dev/null | sed 's/^/- /'
+    git -C "$PROJECT_DIR" status --short 2>/dev/null | sed 's/^/- /'
   fi
   echo ""
-  echo "## TODO (fill before compact)"
-  echo "- Decisions:"
-  echo "- Rejected alternatives:"
-  echo "- Remaining risks:"
-  echo "- Next actions:"
-  echo "- Key files modified:"
+  echo "## Failed Approaches"
+  echo "- "
+  echo ""
+  echo "## Remaining Work"
+  echo "- "
+  echo ""
+  echo "## Non-Negotiable Constraints"
+  echo "- "
+  echo ""
+  echo "## Runner Ledger"
+  echo '- Refresh active `tasks/runner/` ledgers before compact if long-running/background work exists.'
 } > "$HANDOFF_FILE"
 
 if [ -f "$HANDOFF_FILE" ]; then
@@ -38,4 +56,4 @@ if [ -f "$HANDOFF_FILE" ]; then
 else
   echo "[PreCompact] ERROR: Failed to write handoff file."
 fi
-echo "Review and fill the TODO section before compaction proceeds."
+echo "Review and fill the compact summary sections before compaction proceeds."

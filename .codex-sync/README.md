@@ -17,9 +17,10 @@ This repository checks in a core migration pack:
 - `AGENTS.md`
 - `.codex/config.toml`
 - `.codex/agents/*`
-- `.agents/skills/{brainstorming,code-review,deep-interview,git-commit,project-doctor,self-audit,testing,ux-ui-design,verification,writing-plans}`
+- `.agents/skills/{ai-ready-bluebricks-development,brainstorming,code-review,deep-interview,git-commit,project-doctor,runner,self-audit,testing,ux-ui-design,verification,writing-plans}`
 
 Default generation profile is `core`. Generated Codex files intentionally inherit Codex's default model selection. Run with `CODEX_DERIVATION_PROFILE=full` to expand to the full portable skill set.
+The `full` profile now includes the optional repo-audit skills `ai-readiness-cartography` and `improve-token-efficiency` in addition to the existing optional pack.
 
 ## Minimum Process
 1. Update a Claude source file.

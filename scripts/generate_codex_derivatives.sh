@@ -22,11 +22,13 @@ fi
 mkdir -p "$OUTPUT_ROOT/.codex/agents" "$OUTPUT_ROOT/.agents/skills" "$OUTPUT_ROOT/.codex-sync"
 
 CORE_SKILLS=(
+  ai-ready-bluebricks-development
   brainstorming
   code-review
   deep-interview
   git-commit
   project-doctor
+  runner
   self-audit
   testing
   ux-ui-design
@@ -35,15 +37,19 @@ CORE_SKILLS=(
 )
 
 FULL_SKILLS=(
+  ai-ready-bluebricks-development
+  ai-readiness-cartography
   brainstorming
   browser-automation
   code-review
   code-review-graph
   deep-interview
   git-commit
+  improve-token-efficiency
   knowledge-ingest
   knowledge-lint
   project-doctor
+  runner
   self-audit
   testing
   ux-ui-design
@@ -265,8 +271,8 @@ emit_codex_required_reads() {
 import sys
 text = sys.stdin.read()
 text = text.replace(
-    "9. `docs/operations/claude-runtime.md` when task flow, hooks, or memory behavior matters",
-    "9. `docs/operations/codex-runtime.md` when task flow, generated instructions, or memory behavior matters",
+    "12. `docs/operations/claude-runtime.md` when task flow, hooks, or memory behavior matters",
+    "12. `docs/operations/codex-runtime.md` when task flow, generated instructions, or memory behavior matters",
 )
 sys.stdout.write(text)
 '

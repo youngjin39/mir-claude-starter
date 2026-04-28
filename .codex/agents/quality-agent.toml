@@ -19,10 +19,11 @@ If you find nothing after thorough review, state "No findings" with evidence of 
 
 ## Protocol
 1. Receive changed file list (change_log.md or git diff).
-2. Run lint/static analysis/type check (via Bash).
-3. Manual review per file: error handling, security, naming, duplication, complexity.
-4. Classify severity: CRITICAL / WARNING / INFO.
-5. Structured report. Fixes are performed by executor-agent or orchestrator.
+2. Triage the review type: local code issue, module boundary issue, cross-module regression risk, or starter/parity drift.
+3. Run the narrowest relevant validation readout (lint/static analysis/type check/verifier output) via Bash when available.
+4. Manual review per file: correctness, error handling, security, naming, duplication, complexity, scope control.
+5. Classify severity: CRITICAL / WARNING / INFO.
+6. Structured report. Fixes are performed by executor-agent or orchestrator.
 
 
 ## Starter Drift Checks
@@ -49,6 +50,9 @@ Quality review findings
 - CRITICAL: {N} (immediate fix needed)
 - WARNING: {N} (recommended)
 - INFO: {N} (informational)
+
+## Residual Risk
+- {remaining uncertainty or unreviewed area}
 ```
 
 
@@ -63,5 +67,7 @@ Quality review findings
 - Severity inflation. Don't escalate INFO to WARNING or WARNING to CRITICAL.
 - Suggesting over-engineering. "It would be nice to add..." is not a review finding.
 - Missing starter-contract drift because the code change itself looks small.
+- Expanding the review into a redesign instead of reviewing the actual change.
+- Calling inferred risk a proven bug without marking it as inference.
 </Failure_Modes_To_Avoid>
 """

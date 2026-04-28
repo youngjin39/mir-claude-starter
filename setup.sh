@@ -67,16 +67,16 @@ load_messages_en() {
   # Preset section
   MSG_PRESET_INTRO="  Pick a preset to auto-fill stack + modules + permissions."
   MSG_PRESET_EDIT_NOTE="  You can still edit CLAUDE.md and .mcp.json afterwards."
-  MSG_PRESET_1="   [1]  Flutter Mobile App     (Dart, pub)         testing+code-review, Context7"
-  MSG_PRESET_2="   [2]  Next.js Web App        (TypeScript, pnpm)  testing+code-review, Context7+SeqThink"
-  MSG_PRESET_3="   [3]  Node/TS Backend API    (TypeScript, npm)   testing+code-review, SeqThink"
-  MSG_PRESET_4="   [4]  Python Backend         (Python, uv)        testing+code-review, Context7"
-  MSG_PRESET_5="   [5]  Python Data/ML         (Python, uv)        testing, SeqThink"
-  MSG_PRESET_6="   [6]  Rust Systems           (Rust, cargo)       testing+code-review, Strict perms"
-  MSG_PRESET_7="   [7]  Go Service             (Go, go mod)        testing+code-review"
-  MSG_PRESET_8="   [8]  Embedded C/C++         (C/C++, cmake)      code-review only, Strict perms"
-  MSG_PRESET_9="   [9]  Claude-only Agent      (no code, content)  no testing, SeqThink"
-  MSG_PRESET_10="   [10] Static Site / Docs     (Astro/Hugo, npm)   minimal modules"
+  MSG_PRESET_1="   [1]  Flutter Mobile App     (Dart, pub)         Context7"
+  MSG_PRESET_2="   [2]  Next.js Web App        (TypeScript, pnpm)  Context7+SeqThink+Browser"
+  MSG_PRESET_3="   [3]  Node/TS Backend API    (TypeScript, npm)   SeqThink+Browser"
+  MSG_PRESET_4="   [4]  Python Backend         (Python, uv)        Context7"
+  MSG_PRESET_5="   [5]  Python Data/ML         (Python, uv)        SeqThink+Knowledge Wiki"
+  MSG_PRESET_6="   [6]  Rust Systems           (Rust, cargo)       Strict perms"
+  MSG_PRESET_7="   [7]  Go Service             (Go, go mod)        standard defaults"
+  MSG_PRESET_8="   [8]  Embedded C/C++         (C/C++, cmake)      Strict perms"
+  MSG_PRESET_9="   [9]  Claude-only Agent      (no code, content)  SeqThink+Knowledge Wiki+Browser"
+  MSG_PRESET_10="   [10] Static Site / Docs     (Astro/Hugo, npm)   Context7+Browser"
   MSG_PRESET_11="   [11] Custom                 (manual entry — current behavior)"
   MSG_PRESET_SELECT_PROMPT="  Select [1-11, default: 11]: "
   MSG_PRESET_LOCKED="Preset: "
@@ -84,24 +84,21 @@ load_messages_en() {
 
   # Module section
   MSG_MOD_CORE_HEADER="  Core (always included):"
-  MSG_MOD_CORE_SKILLS="    ✓ 6 skills: brainstorming, writing-plans, verification,"
-  MSG_MOD_CORE_SKILLS2="                 deep-interview, git-commit, project-doctor"
+  MSG_MOD_CORE_SKILLS="    ✓ 12 workflow skills: ai-ready-bluebricks-development, brainstorming,"
+  MSG_MOD_CORE_SKILLS2="                  code-review, deep-interview, git-commit, project-doctor,"
+  MSG_MOD_CORE_SKILLS3="                  runner, self-audit, testing, ux-ui-design, verification, writing-plans"
+  MSG_MOD_CORE_UTILS="    ✓ 2 diagnostics: ai-readiness-cartography, improve-token-efficiency"
   MSG_MOD_CORE_AGENTS="    ✓ 3 agents: orchestrator, executor, quality"
   MSG_MOD_CORE_HOOKS="    ✓ 6 hooks:  session-start, pre-compact, pre-tool-use, tdd-guard, post-edit-check, session-end"
   MSG_MOD_CORE_WEB="    ✓ Web:      built-in WebFetch / WebSearch (no MCP needed)"
   MSG_MOD_OPTIONAL_HEADER="  Optional modules:"
-  MSG_MOD_1="    [1] code-review skill  — PR/quality review"
-  MSG_MOD_2="    [2] testing skill      — TDD enforcement"
-  MSG_MOD_3="    [3] Context7 MCP       — latest library docs auto-injection"
-  MSG_MOD_4="    [4] Sequential Thinking MCP — structured reasoning chains"
-  MSG_MOD_5="    [5] Knowledge Wiki     — LLM Wiki pattern (docs/sources + docs/wiki + ingest/lint skills)"
-  MSG_MOD_6="    [6] Browser Automation — agent-browser CLI (Vercel Labs, accessibility-tree snapshots)"
-  MSG_MOD_7="    [7] Code Review Graph  — local code knowledge graph + blast-radius analysis (8.2x token saving)"
-  MSG_MOD_SELECT_PROMPT="  Select [1-7, comma-separated, 'all', or 'none', default: none]: "
-  MSG_MOD_SKIP_CODE_REVIEW="  Skipping: code-review skill"
-  MSG_MOD_INC_CODE_REVIEW="  Including: code-review skill"
-  MSG_MOD_SKIP_TESTING="  Skipping: testing skill"
-  MSG_MOD_INC_TESTING="  Including: testing skill"
+  MSG_MOD_NOTE="  Universal workflow + diagnostics are installed by default. These options add extra project-specific tooling."
+  MSG_MOD_1="    [1] Context7 MCP       — latest library docs auto-injection"
+  MSG_MOD_2="    [2] Sequential Thinking MCP — structured reasoning chains"
+  MSG_MOD_3="    [3] Knowledge Wiki     — LLM Wiki pattern (docs/sources + docs/wiki + ingest/lint skills)"
+  MSG_MOD_4="    [4] Browser Automation — agent-browser CLI (Vercel Labs, accessibility-tree snapshots)"
+  MSG_MOD_5="    [5] Code Review Graph  — local code knowledge graph + blast-radius analysis (8.2x token saving)"
+  MSG_MOD_SELECT_PROMPT="  Select [1-5, comma-separated, 'all', or 'none', default: none]: "
   MSG_MOD_SKIP_KNOWLEDGE_WIKI="  Skipping: Knowledge Wiki"
   MSG_MOD_INC_KNOWLEDGE_WIKI="  Including: Knowledge Wiki (docs/sources + docs/wiki + ingest/lint skills)"
   MSG_MOD_SKIP_BROWSER="  Skipping: Browser Automation"
@@ -199,16 +196,16 @@ load_messages_ko() {
   # Preset section
   MSG_PRESET_INTRO="  프리셋을 선택하면 스택, 모듈, 권한이 자동으로 설정됩니다."
   MSG_PRESET_EDIT_NOTE="  설정 후 CLAUDE.md와 .mcp.json을 직접 수정할 수 있습니다."
-  MSG_PRESET_1="   [1]  Flutter 모바일 앱     (Dart, pub)          testing+code-review, Context7"
-  MSG_PRESET_2="   [2]  Next.js 웹 앱          (TypeScript, pnpm)   testing+code-review, Context7+SeqThink"
-  MSG_PRESET_3="   [3]  Node/TS 백엔드 API    (TypeScript, npm)    testing+code-review, SeqThink"
-  MSG_PRESET_4="   [4]  Python 백엔드          (Python, uv)         testing+code-review, Context7"
-  MSG_PRESET_5="   [5]  Python 데이터/ML      (Python, uv)         testing, SeqThink"
-  MSG_PRESET_6="   [6]  Rust 시스템            (Rust, cargo)        testing+code-review, Strict perms"
-  MSG_PRESET_7="   [7]  Go 서비스              (Go, go mod)         testing+code-review"
-  MSG_PRESET_8="   [8]  임베디드 C/C++         (C/C++, cmake)       code-review only, Strict perms"
-  MSG_PRESET_9="   [9]  Claude 전용 에이전트   (코드 없음, 콘텐츠)  testing 없음, SeqThink"
-  MSG_PRESET_10="   [10] 정적 사이트 / 문서     (Astro/Hugo, npm)    최소 모듈"
+  MSG_PRESET_1="   [1]  Flutter 모바일 앱     (Dart, pub)          Context7"
+  MSG_PRESET_2="   [2]  Next.js 웹 앱          (TypeScript, pnpm)   Context7+SeqThink+Browser"
+  MSG_PRESET_3="   [3]  Node/TS 백엔드 API    (TypeScript, npm)    SeqThink+Browser"
+  MSG_PRESET_4="   [4]  Python 백엔드          (Python, uv)         Context7"
+  MSG_PRESET_5="   [5]  Python 데이터/ML      (Python, uv)         SeqThink+Knowledge Wiki"
+  MSG_PRESET_6="   [6]  Rust 시스템            (Rust, cargo)        Strict perms"
+  MSG_PRESET_7="   [7]  Go 서비스              (Go, go mod)         기본 구성"
+  MSG_PRESET_8="   [8]  임베디드 C/C++         (C/C++, cmake)       Strict 권한"
+  MSG_PRESET_9="   [9]  Claude 전용 에이전트   (코드 없음, 콘텐츠)  SeqThink+Knowledge Wiki+Browser"
+  MSG_PRESET_10="   [10] 정적 사이트 / 문서     (Astro/Hugo, npm)    Context7+Browser"
   MSG_PRESET_11="   [11] 커스텀                 (직접 입력)"
   MSG_PRESET_SELECT_PROMPT="  선택 [1-11, 기본값: 11]: "
   MSG_PRESET_LOCKED="프리셋 적용: "
@@ -216,24 +213,21 @@ load_messages_ko() {
 
   # Module section
   MSG_MOD_CORE_HEADER="  기본 포함 (항상 설치):"
-  MSG_MOD_CORE_SKILLS="    ✓ 스킬 6개: brainstorming, writing-plans, verification,"
-  MSG_MOD_CORE_SKILLS2="                 deep-interview, git-commit, project-doctor"
+  MSG_MOD_CORE_SKILLS="    ✓ 워크플로 스킬 12개: ai-ready-bluebricks-development, brainstorming,"
+  MSG_MOD_CORE_SKILLS2="                     code-review, deep-interview, git-commit, project-doctor,"
+  MSG_MOD_CORE_SKILLS3="                     runner, self-audit, testing, ux-ui-design, verification, writing-plans"
+  MSG_MOD_CORE_UTILS="    ✓ 진단 스킬 2개: ai-readiness-cartography, improve-token-efficiency"
   MSG_MOD_CORE_AGENTS="    ✓ 에이전트 3개: orchestrator, executor, quality"
   MSG_MOD_CORE_HOOKS="    ✓ 훅 6개:  session-start, pre-compact, pre-tool-use, tdd-guard, post-edit-check, session-end"
   MSG_MOD_CORE_WEB="    ✓ 웹:      내장 WebFetch / WebSearch (MCP 불필요)"
   MSG_MOD_OPTIONAL_HEADER="  선택 모듈:"
-  MSG_MOD_1="    [1] code-review 스킬  — PR/품질 리뷰"
-  MSG_MOD_2="    [2] testing 스킬      — TDD 강제 적용"
-  MSG_MOD_3="    [3] Context7 MCP       — 최신 라이브러리 문서 자동 주입"
-  MSG_MOD_4="    [4] Sequential Thinking MCP — 구조화된 추론 체인"
-  MSG_MOD_5="    [5] Knowledge Wiki     — LLM 위키 패턴 (docs/sources + docs/wiki + ingest/lint 스킬)"
-  MSG_MOD_6="    [6] Browser Automation — agent-browser CLI (Vercel Labs, 접근성 트리 스냅샷)"
-  MSG_MOD_7="    [7] Code Review Graph  — 로컬 코드 지식 그래프 + blast-radius 분석 (토큰 8.2x 절감)"
-  MSG_MOD_SELECT_PROMPT="  선택 [1-7, 쉼표 구분, 'all', 'none', 기본값: none]: "
-  MSG_MOD_SKIP_CODE_REVIEW="  code-review 스킬 제외"
-  MSG_MOD_INC_CODE_REVIEW="  code-review 스킬 포함"
-  MSG_MOD_SKIP_TESTING="  testing 스킬 제외"
-  MSG_MOD_INC_TESTING="  testing 스킬 포함"
+  MSG_MOD_NOTE="  범용 워크플로와 진단 스킬은 기본 설치됩니다. 아래 선택지는 프로젝트별 부가 기능입니다."
+  MSG_MOD_1="    [1] Context7 MCP       — 최신 라이브러리 문서 자동 주입"
+  MSG_MOD_2="    [2] Sequential Thinking MCP — 구조화된 추론 체인"
+  MSG_MOD_3="    [3] Knowledge Wiki     — LLM 위키 패턴 (docs/sources + docs/wiki + ingest/lint 스킬)"
+  MSG_MOD_4="    [4] Browser Automation — agent-browser CLI (Vercel Labs, 접근성 트리 스냅샷)"
+  MSG_MOD_5="    [5] Code Review Graph  — 로컬 코드 지식 그래프 + blast-radius 분석 (토큰 8.2x 절감)"
+  MSG_MOD_SELECT_PROMPT="  선택 [1-5, 쉼표 구분, 'all', 'none', 기본값: none]: "
   MSG_MOD_SKIP_KNOWLEDGE_WIKI="  Knowledge Wiki 제외"
   MSG_MOD_INC_KNOWLEDGE_WIKI="  Knowledge Wiki 포함 (docs/sources + docs/wiki + ingest/lint 스킬)"
   MSG_MOD_SKIP_BROWSER="  Browser Automation 제외"
@@ -378,7 +372,7 @@ rm -f docs/references/repo-analysis-summary.md
 rm -f docs/patterns/module-blueprint-system.md
 
 # Ensure all docs/ subdirectories exist
-for dir in architecture decisions patterns domain risks integrations references; do
+for dir in architecture blueprints decisions patterns domain risks integrations references; do
   mkdir -p "docs/$dir"
   touch "docs/$dir/.gitkeep"
 done
@@ -426,12 +420,22 @@ type: index
 ## Skill Usage Tracking
 | Skill | Last Used | Count |
 |---|---|---|
+| ai-ready-bluebricks-development | — | 0 |
+| ai-readiness-cartography | — | 0 |
 | brainstorming | — | 0 |
+| browser-automation | — | 0 |
+| code-review-graph | — | 0 |
 | code-review | — | 0 |
 | deep-interview | — | 0 |
 | git-commit | — | 0 |
+| improve-token-efficiency | — | 0 |
+| knowledge-ingest | — | 0 |
+| knowledge-lint | — | 0 |
 | project-doctor | — | 0 |
+| runner | — | 0 |
+| self-audit | — | 0 |
 | testing | — | 0 |
+| ux-ui-design | — | 0 |
 | verification | — | 0 |
 | writing-plans | — | 0 |
 
@@ -691,7 +695,7 @@ EOF
 
 # --- Step 4: Initialize tasks/ ---
 info "$MSG_INFO_INIT_TASKS"
-mkdir -p tasks/handoffs tasks/sessions tasks/log
+mkdir -p tasks/handoffs tasks/runner tasks/sessions tasks/log
 
 cat > tasks/plan.md << 'EOF'
 # Plan
@@ -785,16 +789,16 @@ read -p "$MSG_PRESET_SELECT_PROMPT" PRESET_CHOICE
 PRESET_NAME=""
 PRESET_LOCKED=0
 case "$PRESET_CHOICE" in
-  1)  PRESET_NAME="Flutter Mobile App";   LANG_FRAMEWORK="Dart/Flutter";       PKG_MANAGER="pub";    MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=1; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
-  2)  PRESET_NAME="Next.js Web App";      LANG_FRAMEWORK="TypeScript/Next.js"; PKG_MANAGER="pnpm";   MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=1; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=1; PERM_PRESET=2; PRESET_LOCKED=1 ;;
-  3)  PRESET_NAME="Node/TS Backend API";  LANG_FRAMEWORK="TypeScript/Node.js"; PKG_MANAGER="npm";    MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=0; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=1; PERM_PRESET=2; PRESET_LOCKED=1 ;;
-  4)  PRESET_NAME="Python Backend";       LANG_FRAMEWORK="Python/FastAPI";     PKG_MANAGER="uv";     MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=1; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
-  5)  PRESET_NAME="Python Data/ML";       LANG_FRAMEWORK="Python/ML";          PKG_MANAGER="uv";     MOD_CODE_REVIEW=0; MOD_TESTING=1; MOD_CONTEXT7=0; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=1; MOD_BROWSER=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
-  6)  PRESET_NAME="Rust Systems";         LANG_FRAMEWORK="Rust";               PKG_MANAGER="cargo";  MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=0; PERM_PRESET=1; PRESET_LOCKED=1 ;;
-  7)  PRESET_NAME="Go Service";           LANG_FRAMEWORK="Go";                 PKG_MANAGER="go mod"; MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
-  8)  PRESET_NAME="Embedded C/C++";       LANG_FRAMEWORK="C/C++";              PKG_MANAGER="cmake";  MOD_CODE_REVIEW=1; MOD_TESTING=0; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=0; PERM_PRESET=1; PRESET_LOCKED=1 ;;
-  9)  PRESET_NAME="Claude-only Agent";    LANG_FRAMEWORK="Claude (no code)";   PKG_MANAGER="n/a";    MOD_CODE_REVIEW=0; MOD_TESTING=0; MOD_CONTEXT7=0; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=1; MOD_BROWSER=1; PERM_PRESET=2; PRESET_LOCKED=1 ;;
-  10) PRESET_NAME="Static Site / Docs";   LANG_FRAMEWORK="Astro or Hugo";      PKG_MANAGER="npm";    MOD_CODE_REVIEW=0; MOD_TESTING=0; MOD_CONTEXT7=1; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=1; PERM_PRESET=2; PRESET_LOCKED=1 ;;
+  1)  PRESET_NAME="Flutter Mobile App";   LANG_FRAMEWORK="Dart/Flutter";       PKG_MANAGER="pub";    MOD_CONTEXT7=1; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=0; MOD_CODE_GRAPH=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
+  2)  PRESET_NAME="Next.js Web App";      LANG_FRAMEWORK="TypeScript/Next.js"; PKG_MANAGER="pnpm";   MOD_CONTEXT7=1; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=1; MOD_CODE_GRAPH=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
+  3)  PRESET_NAME="Node/TS Backend API";  LANG_FRAMEWORK="TypeScript/Node.js"; PKG_MANAGER="npm";    MOD_CONTEXT7=0; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=1; MOD_CODE_GRAPH=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
+  4)  PRESET_NAME="Python Backend";       LANG_FRAMEWORK="Python/FastAPI";     PKG_MANAGER="uv";     MOD_CONTEXT7=1; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=0; MOD_CODE_GRAPH=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
+  5)  PRESET_NAME="Python Data/ML";       LANG_FRAMEWORK="Python/ML";          PKG_MANAGER="uv";     MOD_CONTEXT7=0; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=1; MOD_BROWSER=0; MOD_CODE_GRAPH=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
+  6)  PRESET_NAME="Rust Systems";         LANG_FRAMEWORK="Rust";               PKG_MANAGER="cargo";  MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=0; MOD_CODE_GRAPH=0; PERM_PRESET=1; PRESET_LOCKED=1 ;;
+  7)  PRESET_NAME="Go Service";           LANG_FRAMEWORK="Go";                 PKG_MANAGER="go mod"; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=0; MOD_CODE_GRAPH=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
+  8)  PRESET_NAME="Embedded C/C++";       LANG_FRAMEWORK="C/C++";              PKG_MANAGER="cmake";  MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=0; MOD_CODE_GRAPH=0; PERM_PRESET=1; PRESET_LOCKED=1 ;;
+  9)  PRESET_NAME="Claude-only Agent";    LANG_FRAMEWORK="Claude (no code)";   PKG_MANAGER="n/a";    MOD_CONTEXT7=0; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=1; MOD_BROWSER=1; MOD_CODE_GRAPH=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
+  10) PRESET_NAME="Static Site / Docs";   LANG_FRAMEWORK="Astro or Hugo";      PKG_MANAGER="npm";    MOD_CONTEXT7=1; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=1; MOD_CODE_GRAPH=0; PERM_PRESET=2; PRESET_LOCKED=1 ;;
   *)  PRESET_NAME="Custom"; PRESET_LOCKED=0 ;;
 esac
 
@@ -832,22 +836,24 @@ echo ""
 echo "$MSG_MOD_CORE_HEADER"
 echo "$MSG_MOD_CORE_SKILLS"
 echo "$MSG_MOD_CORE_SKILLS2"
+echo "$MSG_MOD_CORE_SKILLS3"
+echo "$MSG_MOD_CORE_UTILS"
 echo "$MSG_MOD_CORE_AGENTS"
 echo "$MSG_MOD_CORE_HOOKS"
 echo "$MSG_MOD_CORE_WEB"
 echo ""
 echo "$MSG_MOD_OPTIONAL_HEADER"
+echo "$MSG_MOD_NOTE"
+echo ""
 echo "$MSG_MOD_1"
 echo "$MSG_MOD_2"
 echo "$MSG_MOD_3"
 echo "$MSG_MOD_4"
 echo "$MSG_MOD_5"
-echo "$MSG_MOD_6"
-echo "$MSG_MOD_7"
 echo ""
 if [ "$PRESET_LOCKED" -eq 1 ]; then
   MODULE_CHOICE="__preset__"
-  info "$MSG_PRESET_LOCKED_MODULES""code-review=$MOD_CODE_REVIEW testing=$MOD_TESTING context7=$MOD_CONTEXT7 seq-think=$MOD_SEQ_THINK knowledge-wiki=$MOD_KNOWLEDGE_WIKI browser=$MOD_BROWSER"
+  info "$MSG_PRESET_LOCKED_MODULES""context7=$MOD_CONTEXT7 seq-think=$MOD_SEQ_THINK knowledge-wiki=$MOD_KNOWLEDGE_WIKI browser=$MOD_BROWSER code-graph=$MOD_CODE_GRAPH"
 else
   read -p "$MSG_MOD_SELECT_PROMPT" MODULE_CHOICE
 fi
@@ -856,51 +862,26 @@ fi
 if [ "$MODULE_CHOICE" = "__preset__" ]; then
   : # already set by preset
 elif [ -z "$MODULE_CHOICE" ] || [ "$MODULE_CHOICE" = "none" ]; then
-  MOD_CODE_REVIEW=0; MOD_TESTING=0; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=0; MOD_CODE_GRAPH=0
+  MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=0; MOD_CODE_GRAPH=0
 elif [ "$MODULE_CHOICE" = "all" ]; then
-  MOD_CODE_REVIEW=1; MOD_TESTING=1; MOD_CONTEXT7=1; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=1; MOD_BROWSER=1; MOD_CODE_GRAPH=1
+  MOD_CONTEXT7=1; MOD_SEQ_THINK=1; MOD_KNOWLEDGE_WIKI=1; MOD_BROWSER=1; MOD_CODE_GRAPH=1
 else
-  MOD_CODE_REVIEW=0; MOD_TESTING=0; MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=0; MOD_CODE_GRAPH=0
+  MOD_CONTEXT7=0; MOD_SEQ_THINK=0; MOD_KNOWLEDGE_WIKI=0; MOD_BROWSER=0; MOD_CODE_GRAPH=0
   IFS=',' read -ra MODS <<< "$MODULE_CHOICE"
   for m in "${MODS[@]}"; do
     m=$(echo "$m" | tr -d ' ')
     case "$m" in
-      1) MOD_CODE_REVIEW=1 ;;
-      2) MOD_TESTING=1 ;;
-      3) MOD_CONTEXT7=1 ;;
-      4) MOD_SEQ_THINK=1 ;;
-      5) MOD_KNOWLEDGE_WIKI=1 ;;
-      6) MOD_BROWSER=1 ;;
-      7) MOD_CODE_GRAPH=1 ;;
+      1) MOD_CONTEXT7=1 ;;
+      2) MOD_SEQ_THINK=1 ;;
+      3) MOD_KNOWLEDGE_WIKI=1 ;;
+      4) MOD_BROWSER=1 ;;
+      5) MOD_CODE_GRAPH=1 ;;
     esac
   done
 fi
 MOD_KNOWLEDGE_WIKI=${MOD_KNOWLEDGE_WIKI:-0}
 MOD_BROWSER=${MOD_BROWSER:-0}
 MOD_CODE_GRAPH=${MOD_CODE_GRAPH:-0}
-
-# Remove unselected optional skills + update CLAUDE.md references
-if [ "$MOD_CODE_REVIEW" -eq 0 ]; then
-  info "$MSG_MOD_SKIP_CODE_REVIEW"
-  rm -rf .claude/skills/code-review
-  rm -f docs/integrations/codex-code-review.md
-  perl -ni -e 'print unless /code-review.*SKILL\.md/' CLAUDE.md
-  perl -pi -e 's/ → code-review//g' CLAUDE.md
-  perl -ni -e 'print unless /\| code-review /' docs/memory-map.md
-else
-  info "$MSG_MOD_INC_CODE_REVIEW"
-fi
-
-if [ "$MOD_TESTING" -eq 0 ]; then
-  info "$MSG_MOD_SKIP_TESTING"
-  rm -rf .claude/skills/testing
-  rm -f docs/integrations/computer-use-gui-testing.md
-  perl -ni -e 'print unless /\| test, TDD.*testing/' CLAUDE.md
-  perl -pi -e 's/ → testing//g' CLAUDE.md
-  perl -ni -e 'print unless /\| testing /' docs/memory-map.md
-else
-  info "$MSG_MOD_INC_TESTING"
-fi
 
 if [ "$MOD_KNOWLEDGE_WIKI" -eq 0 ]; then
   info "$MSG_MOD_SKIP_KNOWLEDGE_WIKI"
@@ -997,8 +978,6 @@ echo -e "$MCP_JSON" > .mcp.json
 
 # Count selected modules
 SELECTED_COUNT=0
-[ "$MOD_CODE_REVIEW" -eq 1 ] && SELECTED_COUNT=$((SELECTED_COUNT + 1))
-[ "$MOD_TESTING" -eq 1 ] && SELECTED_COUNT=$((SELECTED_COUNT + 1))
 [ "$MOD_CONTEXT7" -eq 1 ] && SELECTED_COUNT=$((SELECTED_COUNT + 1))
 [ "$MOD_SEQ_THINK" -eq 1 ] && SELECTED_COUNT=$((SELECTED_COUNT + 1))
 [ "$MOD_KNOWLEDGE_WIKI" -eq 1 ] && SELECTED_COUNT=$((SELECTED_COUNT + 1))
@@ -1006,7 +985,7 @@ SELECTED_COUNT=0
 [ "$MOD_CODE_GRAPH" -eq 1 ] && SELECTED_COUNT=$((SELECTED_COUNT + 1))
 
 echo ""
-info "${SELECTED_COUNT}/7 $MSG_MOD_COUNT_SELECTED"
+info "${SELECTED_COUNT}/5 $MSG_MOD_COUNT_SELECTED"
 
 # --- Step 6: Permissions + settings.local.json ---
 echo ""
@@ -1156,10 +1135,8 @@ echo -e "$MSG_SUM_HEADER_TEXT"
 echo -e "$MSG_SUM_HEADER_LINE"
 echo ""
 # Build skill list for summary
-SKILL_LIST="brainstorming, writing-plans, verification, interview, git-commit, project-doctor, self-audit, ux-ui-design"
-SKILL_COUNT=8
-[ "$MOD_CODE_REVIEW" -eq 1 ] && { SKILL_LIST="$SKILL_LIST, code-review"; SKILL_COUNT=$((SKILL_COUNT + 1)); }
-[ "$MOD_TESTING" -eq 1 ] && { SKILL_LIST="$SKILL_LIST, testing"; SKILL_COUNT=$((SKILL_COUNT + 1)); }
+SKILL_LIST="ai-ready-bluebricks-development, ai-readiness-cartography, brainstorming, code-review, deep-interview, git-commit, improve-token-efficiency, project-doctor, runner, self-audit, testing, ux-ui-design, verification, writing-plans"
+SKILL_COUNT=14
 [ "$MOD_KNOWLEDGE_WIKI" -eq 1 ] && { SKILL_LIST="$SKILL_LIST, knowledge-ingest, knowledge-lint"; SKILL_COUNT=$((SKILL_COUNT + 2)); }
 [ "$MOD_BROWSER" -eq 1 ] && { SKILL_LIST="$SKILL_LIST, browser-automation"; SKILL_COUNT=$((SKILL_COUNT + 1)); }
 [ "$MOD_CODE_GRAPH" -eq 1 ] && { SKILL_LIST="$SKILL_LIST, code-review-graph"; SKILL_COUNT=$((SKILL_COUNT + 1)); }

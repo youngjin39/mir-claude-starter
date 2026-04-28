@@ -36,6 +36,13 @@ type: guide
 - Must never delete context or mutate source files.
 - May create only `tasks/handoffs/auto-*.md`.
 - Output is advisory and creates a handoff skeleton; it does not block compaction by itself. The handoff file is the durable artifact.
+- The current handoff skeleton is optimized for compact summaries that preserve only:
+  - current goal,
+  - files already modified,
+  - failed approaches,
+  - remaining work,
+  - non-negotiable constraints.
+- Repo-level hooks can prepare the summary skeleton, but they do not have a reliable live context-usage signal for enforcing a hard `40%` threshold by themselves.
 
 ### PreToolUse
 - Input comes from tool event JSON on stdin.
@@ -70,13 +77,15 @@ type: guide
 - Therefore generated Codex docs must mirror hook expectations explicitly:
   - read the same startup files, including the latest session snapshot when present,
   - before invoking compaction, manually create a handoff document in `tasks/handoffs/` mirroring the PreCompact contract,
+  - refresh any active `tasks/runner/` ledger before compaction, handoff, or final status reporting,
   - use the same mode-classification entry rules for starter/parity work,
   - name the same blocked-intent set: destructive `rm`, protected-branch force push, hook/signing bypass flags, shared-ref history rewrite, piped remote install, `sudo`, writes outside the project, writes to secret material, and writes into `.git` internals,
   - respect the same test-first boundary for existing source files with zero detected related tests,
   - do not claim hook-driven incident counting for Codex-only sessions unless a Codex workflow explicitly records incidents; otherwise `harness/state/incidents.json` remains Claude-hook state rather than a Codex parity guarantee,
   - preserve the same post-edit review intent for debug leftovers and credential leaks,
-  - treat hook-managed files as canonical artifacts.
+  - treat hook-managed files as canonical artifacts,
   - at session end, manually create a session snapshot in `tasks/sessions/` mirroring the SessionEnd contract.
+  - resume long-running/background work from `tasks/runner/` before starting a replacement command.
 - This mirror is instruction-backed, and selected contract snippets plus generated outputs are verifier-checked. It is not native pre-execution blocking or behavioral parity.
 - If Codex behavior diverges from hook policy, fix Claude source docs and regenerate. Do not patch generated files only.
 

@@ -32,7 +32,7 @@ type: guide
 - Codex parity here is manual compliance + verifier-checked contract drift, not native pre-execution blocking or behavioral parity.
 
 ### 3. State artifacts beat conversation memory
-- `tasks/plan.md`, `tasks/handoffs/`, `tasks/sessions/`, and `harness/state/` are canonical state artifacts.
+- `tasks/plan.md`, `tasks/handoffs/`, `tasks/runner/`, `tasks/sessions/`, and `harness/state/` are canonical state artifacts.
 - Agents must externalize progress and recovery state there instead of relying on chat memory.
 - Resume logic should start from files first, not from recalled context.
 

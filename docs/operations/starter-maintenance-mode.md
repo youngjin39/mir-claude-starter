@@ -29,7 +29,7 @@ type: guide
 - `scripts/generate_codex_derivatives.sh`
 - `scripts/verify_*.py`
 - `docs/operations/*`
-- `tasks/plan.md`, `tasks/handoffs/*`, `tasks/sessions/*`, or `harness/state/*` when the change alters runtime-state contract, startup continuity, or completion evidence rather than ordinary task content
+- `tasks/plan.md`, `tasks/handoffs/*`, `tasks/runner/*`, `tasks/sessions/*`, or `harness/state/*` when the change alters runtime-state contract, startup continuity, or completion evidence rather than ordinary task content
 - `harness/README.md`
 
 ### Enter Cross-Harness Parity Mode when the task additionally changes:

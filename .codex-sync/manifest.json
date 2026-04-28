@@ -36,6 +36,14 @@
       "notes": "Generated custom agent"
     },
     {
+      "source": ".claude/skills/ai-ready-bluebricks-development/SKILL.md",
+      "targets": [".agents/skills/ai-ready-bluebricks-development/SKILL.md"],
+      "change_scope": "content",
+      "sync_policy": "regenerate",
+      "owner": "project-maintainer",
+      "notes": "Generated Codex skill"
+    },
+    {
       "source": ".claude/skills/brainstorming/SKILL.md",
       "targets": [".agents/skills/brainstorming/SKILL.md"],
       "change_scope": "content",
@@ -70,6 +78,14 @@
     {
       "source": ".claude/skills/project-doctor/SKILL.md",
       "targets": [".agents/skills/project-doctor/SKILL.md"],
+      "change_scope": "content",
+      "sync_policy": "regenerate",
+      "owner": "project-maintainer",
+      "notes": "Generated Codex skill"
+    },
+    {
+      "source": ".claude/skills/runner/SKILL.md",
+      "targets": [".agents/skills/runner/SKILL.md"],
       "change_scope": "content",
       "sync_policy": "regenerate",
       "owner": "project-maintainer",

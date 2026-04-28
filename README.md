@@ -1,6 +1,6 @@
 # Mir Claude Starter
 
-An opinionated Claude Code starter — a one-command installer that drops 3 agents, 14 skills, 6 hooks, a 3-layer memory system, an `execute.py` state engine, and a gate-enforced pipeline into any new project. Tuned by 24 rounds of integrity audit (30+ fixes).
+An opinionated Claude Code starter — a one-command installer that drops 3 agents, 18 skills, 6 hooks, a 3-layer memory system, an `execute.py` state engine, and a gate-enforced pipeline into any new project. Tuned by 24 rounds of integrity audit (30+ fixes).
 
 > **[한국어 README](README.ko.md)**
 
@@ -31,24 +31,24 @@ The installer walks you through:
 | **Language** | Pick installer language first — English, Korean, Japanese, Chinese, or custom. All subsequent prompts appear in the chosen language. |
 | Project info | Name, language/framework, package manager |
 | Preset | Pick from 10 stack presets or Custom (auto-fills stack + modules + permissions) |
-| Module selection | Choose optional skills and MCP servers, defaulting to core-only for Custom installs (skipped if preset chosen) |
+| Module selection | Choose extra project-specific modules and MCP servers. Universal workflow + diagnostic skills are installed by default. |
 | Permission level | Strict / Standard / Permissive tool access (skipped if preset chosen) |
 
 ### Project Presets
 
 | # | Preset | Stack | Auto-config |
 |---|---|---|---|
-| 1 | Flutter Mobile App | Dart/Flutter, pub | testing+code-review, Context7 |
-| 2 | Next.js Web App | TypeScript/Next.js, pnpm | testing+code-review, Context7+SeqThink |
-| 3 | Node/TS Backend API | TypeScript/Node, npm | testing+code-review, SeqThink |
-| 4 | Python Backend | Python/FastAPI, uv | testing+code-review, Context7 |
-| 5 | Python Data/ML | Python, uv | testing, SeqThink |
-| 6 | Rust Systems | Rust, cargo | testing+code-review, Strict perms |
-| 7 | Go Service | Go, go mod | testing+code-review |
-| 8 | Embedded C/C++ | C/C++, cmake | code-review only, Strict perms |
-| 9 | Claude-only Agent | no code, content/judgment | no testing, SeqThink |
-| 10 | Static Site / Docs | Astro or Hugo, npm | minimal modules |
-| 11 | Custom | manual entry | (current behavior) |
+| 1 | Flutter Mobile App | Dart/Flutter, pub | Context7 |
+| 2 | Next.js Web App | TypeScript/Next.js, pnpm | Context7 + SeqThink + Browser |
+| 3 | Node/TS Backend API | TypeScript/Node, npm | SeqThink + Browser |
+| 4 | Python Backend | Python/FastAPI, uv | Context7 |
+| 5 | Python Data/ML | Python, uv | SeqThink + Knowledge Wiki |
+| 6 | Rust Systems | Rust, cargo | Strict perms |
+| 7 | Go Service | Go, go mod | standard defaults |
+| 8 | Embedded C/C++ | C/C++, cmake | Strict perms |
+| 9 | Claude-only Agent | no code, content/judgment | SeqThink + Knowledge Wiki + Browser |
+| 10 | Static Site / Docs | Astro or Hugo, npm | Context7 + Browser |
+| 11 | Custom | manual entry | universal defaults + optional extras |
 
 After setup, start Claude Code with `claude` and the starter pipeline takes over.
 
@@ -172,13 +172,14 @@ The quality-agent uses an **adversarial lens**: its job is to find what the exec
 When you change the starter itself, treat agents, hooks, skills, scripts, generated Codex artifacts, and user-facing docs as one contract. Run `python3 scripts/verify_starter_integrity.py` before claiming the starter is updated.
 The contract is not only for humans. It is written so the agent can classify its runtime and gates from the files it reads first.
 
-### Skills (10 core + optional add-ons)
+### Skills (12 workflow core + 2 default diagnostics + optional add-ons)
 
 **Core** (always installed):
 
 | Skill | Trigger | Key Feature |
 |---|---|---|
 | brainstorming | design, architecture, new feature | Hard Gate. 2–3 alternatives with different lenses. Counter-narrative attack. Synthesis option. |
+| ai-ready-bluebricks-development | architecture review, repository exploration, multi-module refactor | AI-ready codebase workflow using blueprint context, hidden-hazard checks, and bounded system analysis. |
 | writing-plans | plan, implementation plan | Bite-sized steps with concrete code. Banned: "add tests", "refactor as needed". |
 | verification | verify, done check, proof | 6-stage gate + Red Team 6Q self-attack + hidden premise interrogation. |
 | deep-interview | interview, requirements, clarify | Ambiguity scoring + bottleneck diagnosis (fact/logic/bias/execution). |
@@ -187,7 +188,15 @@ The contract is not only for humans. It is written so the agent can classify its
 | ux-ui-design | ui, ux, screen, frontend | UI hard gate: flow + wireframe + component spec before implementation. |
 | git-commit | commit, git, save changes | Structured commit rules + trailers. |
 | project-doctor | diagnose, doctor, health check | Structure + memory + context diagnostics. |
+| runner | long-running, background, resume | Durable task ledger for `pid`/logs/artifacts/stage across compact and handoff. |
 | self-audit | audit, integrity, drift | Starter compliance and drift audit. Core because starter verification depends on it. |
+
+**Default diagnostics** (always installed, trigger when requested):
+
+| Skill | Trigger | Key Feature |
+|---|---|---|
+| ai-readiness-cartography | ai-readiness score, repo cartography | Repository scoring against the AI-ready rubric with JSON output and dashboard-ready evidence. |
+| improve-token-efficiency | token efficiency, session cost, usage report | Repository-level Claude session cost and efficiency analysis with savings heuristics. |
 
 **Optional** (opt-in during setup, default is none for Custom installs):
 
@@ -291,15 +300,16 @@ During setup, choose which optional modules to include:
 
 ```
 Optional modules:
-  [1] code-review skill  — PR/quality review
-  [2] testing skill      — TDD enforcement
-  [3] Context7 MCP       — latest library docs auto-injection
-  [4] Sequential Thinking MCP — structured reasoning chains
+  [1] Context7 MCP
+  [2] Sequential Thinking MCP
+  [3] Knowledge Wiki
+  [4] Browser Automation
+  [5] Code Review Graph
 
-Select [1-4, comma-separated, 'all', or 'none', default: none]:
+Select [1-5, comma-separated, 'all', or 'none', default: none]:
 ```
 
-Unselected modules are removed at setup time — no dead context, no wasted tokens.
+Universal workflow skills, code-oriented skills, and diagnostics are kept by default. Only project-specific extras are toggled here.
 
 ## Custom Harness Docs
 
@@ -337,7 +347,7 @@ Use them as hard constraints, not background notes. If your project requires "al
 │   ├── settings.local.json      # Permissions + hooks
 │   ├── agents/                  # 3 agents
 │   ├── hooks/                   # 6 automation hooks
-│   └── skills/                  # 10 core + opt-in extensions
+│   └── skills/                  # 14 default skills + opt-in extensions
 ├── tasks/                       # Working memory (gitignored)
 │   ├── plan.md                  # Current plan
 │   ├── context.md               # Decision rationale
@@ -346,6 +356,7 @@ Use them as hard constraints, not background notes. If your project requires "al
 │   ├── lessons.md               # Failure/success rules
 │   ├── cost-log.md              # Token cost tracking
 │   ├── handoffs/                # Phase handoff documents
+│   ├── runner/                  # Long-running task ledgers
 │   ├── sessions/                # Session snapshots
 │   └── log/                     # Completed task archive
 └── docs/                        # Long-term memory (no decay)

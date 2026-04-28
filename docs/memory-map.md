@@ -22,6 +22,7 @@ Manual snapshot only. Do not classify a skill as dormant from zero counts alone.
 | deep-interview | — | 0 |
 | git-commit | — | 0 |
 | project-doctor | 2026-03-24 | 1 |
+| runner | — | 0 |
 | self-audit | — | 0 |
 | testing | — | 0 |
 | ux-ui-design | — | 0 |
@@ -32,7 +33,9 @@ Manual snapshot only. Do not classify a skill as dormant from zero counts alone.
 | Skill | Last Used | Count |
 |---|---|---|
 | browser-automation | — | 0 |
+| ai-readiness-cartography | — | 0 |
 | code-review-graph | — | 0 |
+| improve-token-efficiency | — | 0 |
 | knowledge-ingest | — | 0 |
 | knowledge-lint | — | 0 |
 
@@ -41,19 +44,25 @@ Manual snapshot only. Do not classify a skill as dormant from zero counts alone.
 |---|---|---|
 | superpowers, TDD, hard-gate, cli-anything, omc, harness, everything-claude-code | references | [Repo Analysis](references/repo-analysis-summary.md) |
 | 3-axis, pipeline, master-plan, workflow, memory, context | decisions | [Master Plan v2](decisions/master-plan-v2.md) |
+| ai-ready, bluebrick, common-rules, source-first, claude, codex, derivation | decisions | [AI-Ready Harness Layering](decisions/ai-ready-harness-layering.md) |
 | audit, optimization, refactoring, stabilization, integrity | decisions | [Optimization Log](decisions/optimization-log.md) |
 | computer-use, gui, screenshot, e2e, simulator, ui-testing | integrations | [Computer Use GUI Testing](integrations/computer-use-gui-testing.md) |
 | blueprint, module, analysis, reassemble, code-analysis | patterns | [Module Blueprint System](patterns/module-blueprint-system.md) |
+| blueprint-index, module-registry, dependency-graph, assembly, blueprints | blueprints | [Blueprint Index](blueprints/blueprint-index.md) |
 | codex, external-review, github-pr, openai | integrations | [Codex Code Review](integrations/codex-code-review.md) |
 | claude, codex, derivation, one-way-sync, migration, rollout | integrations | [Claude-to-Codex Derivation](integrations/claude-to-codex-derivation.md) |
+| claude, codex, global, agents, ontology, migration, shared-rules | integrations | [Claude Global To Codex Global Migration](integrations/claude-global-to-codex-global-migration.md) |
 | project, family, classification, bootstrap, migrate, survey, startup | integrations | [Project Family Classification](integrations/project-family-classification.md) |
 | codex, boundary, bootstrap, starter, verifier, derivation | integrations | [Prompt Starter Codex Use Boundary](integrations/codex-use-boundary.md) |
+| codex, runner, long-running, background, resume, handoff, compact | architecture | [Codex Long-Running Tasks](operations/codex-long-running-tasks.md) |
+| common-ai, general-rules, context, closeout, failure-memory | architecture | [Common AI Rules](operations/common-ai-rules.md) |
 | claude, runtime, workflow, hooks, memory, operations | architecture | [Claude Runtime Guide](operations/claude-runtime.md) |
 | codex, runtime, generated, agents, skills, default-model | architecture | [Codex Runtime Guide](operations/codex-runtime.md) |
 | hooks, contract, sessionstart, pretooluse, posttooluse, precompact, sessionend, tdd | architecture | [Hook Contract Guide](operations/hook-contract.md) |
 | harness, claude, codex, parity, hooks, state, self-review, validation, workflow | architecture | [Harness Application Guide](operations/harness-application.md) |
 | starter, maintenance, mode, classification, parity, integrity, regeneration, verification | architecture | [Starter Maintenance Mode](operations/starter-maintenance-mode.md) |
 | reporting, progress, result, discussion, readability, user-facing | architecture | [User Reporting Format](operations/user-reporting-format.md) |
+| ai-ready, development, blueprint, hazards, validation, scope | patterns | [AI-Ready Development](patterns/ai-ready-development.md) |
 | error, failure, parse, retry, taxonomy, recovery, unknown, transient | patterns | [Error Handling](patterns/error-handling.md) |
 | sync, manifest, change-detection, generated-files, stale, drift | patterns | [One-Way Sync Manifest](patterns/one-way-sync-manifest.md) |
 | context-budget, token, overhead, MCP cost, session overhead, bloat | references | [ECC Context Budget Thresholds](references/ecc-context-budget.md) |
@@ -62,9 +71,10 @@ Manual snapshot only. Do not classify a skill as dormant from zero counts alone.
 ## Category Index
 | Category | Files | Description |
 |---|---|---|
-| architecture | [Claude Runtime Guide](operations/claude-runtime.md), [Codex Runtime Guide](operations/codex-runtime.md), [Hook Contract Guide](operations/hook-contract.md), [Harness Application Guide](operations/harness-application.md), [Starter Maintenance Mode](operations/starter-maintenance-mode.md), [User Reporting Format](operations/user-reporting-format.md) | System structure, design patterns |
-| decisions | [Master Plan v2](decisions/master-plan-v2.md), [Optimization Log](decisions/optimization-log.md) | ADR + full design archive |
-| patterns | [Module Blueprint System](patterns/module-blueprint-system.md), [One-Way Sync Manifest](patterns/one-way-sync-manifest.md) | Reusable code/workflow patterns |
+| architecture | [Common AI Rules](operations/common-ai-rules.md), [Claude Runtime Guide](operations/claude-runtime.md), [Codex Long-Running Tasks](operations/codex-long-running-tasks.md), [Codex Runtime Guide](operations/codex-runtime.md), [Hook Contract Guide](operations/hook-contract.md), [Harness Application Guide](operations/harness-application.md), [Starter Maintenance Mode](operations/starter-maintenance-mode.md), [User Reporting Format](operations/user-reporting-format.md) | System structure, design patterns |
+| decisions | [AI-Ready Harness Layering](decisions/ai-ready-harness-layering.md), [Master Plan v2](decisions/master-plan-v2.md), [Optimization Log](decisions/optimization-log.md) | ADR + full design archive |
+| patterns | [AI-Ready Development](patterns/ai-ready-development.md), [Module Blueprint System](patterns/module-blueprint-system.md), [One-Way Sync Manifest](patterns/one-way-sync-manifest.md) | Reusable code/workflow patterns |
+| blueprints | [Blueprint Index](blueprints/blueprint-index.md) | Module registry and per-module blueprint entrypoint |
 | domain | (none) | Domain knowledge, business rules |
 | risks | (none) | Known risks, vulnerabilities |
 | integrations | [Computer Use GUI Testing](integrations/computer-use-gui-testing.md), [Codex Code Review](integrations/codex-code-review.md), [Claude-to-Codex Derivation](integrations/claude-to-codex-derivation.md), [Project Family Classification](integrations/project-family-classification.md), [Prompt Starter Codex Use Boundary](integrations/codex-use-boundary.md) | External system APIs |

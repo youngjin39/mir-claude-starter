@@ -18,6 +18,9 @@ PRE_TOOL_USE_PATH = ROOT / ".claude" / "hooks" / "pre-tool-use.sh"
 MAIN_ORCHESTRATOR_PATH = ROOT / ".claude" / "agents" / "main-orchestrator.md"
 EXECUTOR_AGENT_PATH = ROOT / ".claude" / "agents" / "executor-agent.md"
 QUALITY_AGENT_PATH = ROOT / ".claude" / "agents" / "quality-agent.md"
+COMMON_AI_RULES_PATH = ROOT / "docs" / "operations" / "common-ai-rules.md"
+AI_READY_DEVELOPMENT_PATH = ROOT / "docs" / "patterns" / "ai-ready-development.md"
+AI_READY_SKILL_PATH = ROOT / ".claude" / "skills" / "ai-ready-bluebricks-development" / "SKILL.md"
 BRAINSTORMING_SKILL_PATH = ROOT / ".claude" / "skills" / "brainstorming" / "SKILL.md"
 # These are conditional reads in CLAUDE.md rather than unconditional starter files.
 OPTIONAL_REFERENCED_FILES = {"PRD.md", "UI_GUIDE.md", "harness/README.md"}
@@ -37,12 +40,16 @@ REQUIRED_FILES = [
     "tasks/lessons.md",
     "tasks/cost-log.md",
     "docs/memory-map.md",
+    "docs/blueprints/blueprint-index.md",
+    "docs/operations/common-ai-rules.md",
     "docs/operations/claude-runtime.md",
+    "docs/operations/codex-long-running-tasks.md",
     "docs/operations/codex-runtime.md",
     "docs/operations/hook-contract.md",
     "docs/operations/harness-application.md",
     "docs/operations/starter-maintenance-mode.md",
     "docs/operations/user-reporting-format.md",
+    "docs/patterns/ai-ready-development.md",
     "scripts/generate_codex_derivatives.sh",
     "scripts/verify_codex_sync.py",
 ]
@@ -56,8 +63,10 @@ REQUIRED_DIRS = [
     ".codex-sync",
     "tasks/handoffs",
     "tasks/log",
+    "tasks/runner",
     "tasks/sessions",
     "docs/architecture",
+    "docs/blueprints",
     "docs/decisions",
     "docs/domain",
     "docs/integrations",
@@ -83,11 +92,13 @@ REQUIRED_HOOKS = [
 ]
 
 REQUIRED_CORE_SKILLS = [
+    ".claude/skills/ai-ready-bluebricks-development/SKILL.md",
     ".claude/skills/brainstorming/SKILL.md",
     ".claude/skills/code-review/SKILL.md",
     ".claude/skills/deep-interview/SKILL.md",
     ".claude/skills/git-commit/SKILL.md",
     ".claude/skills/project-doctor/SKILL.md",
+    ".claude/skills/runner/SKILL.md",
     ".claude/skills/testing/SKILL.md",
     ".claude/skills/ux-ui-design/SKILL.md",
     ".claude/skills/verification/SKILL.md",
@@ -271,6 +282,75 @@ def check_source_contract_alignment() -> List[str]:
     for snippet, label in quality_required_snippets:
         if snippet not in quality_text:
             messages.append(fail(f"missing {label} in .claude/agents/quality-agent.md"))
+
+    common_ai_text = read_text(COMMON_AI_RULES_PATH)
+    common_ai_required_snippets = [
+        (
+            "## Persistent Context",
+            "common-ai-rules persistent-context section",
+        ),
+        (
+            "## Precise Prompting",
+            "common-ai-rules precise-prompting section",
+        ),
+        (
+            "## Output Policy",
+            "common-ai-rules output-policy section",
+        ),
+        (
+            "For this starter, durable failure memory belongs in `tasks/lessons.md`, not in a second shared control plane.",
+            "common-ai-rules starter-specific failure-memory boundary",
+        ),
+        (
+            "Do not create a neutral shared control document that Claude and Codex must discover separately.",
+            "common-ai-rules source-first boundary rule",
+        ),
+    ]
+    for snippet, label in common_ai_required_snippets:
+        if snippet not in common_ai_text:
+            messages.append(fail(f"missing {label} in docs/operations/common-ai-rules.md"))
+
+    ai_ready_text = read_text(AI_READY_DEVELOPMENT_PATH)
+    ai_ready_required_snippets = [
+        (
+            "## Context and Cost Discipline",
+            "ai-ready-development context-and-cost section",
+        ),
+        (
+            "## Sub-agent Policy",
+            "ai-ready-development sub-agent policy section",
+        ),
+        (
+            "## Command Output Policy",
+            "ai-ready-development command-output policy section",
+        ),
+        (
+            "Use `ai-ready-bluebricks-development` for repository exploration, architecture review, dependency impact analysis, PR review, and other tasks where module context matters before acting.",
+            "ai-ready-development skill-trigger guidance",
+        ),
+    ]
+    for snippet, label in ai_ready_required_snippets:
+        if snippet not in ai_ready_text:
+            messages.append(fail(f"missing {label} in docs/patterns/ai-ready-development.md"))
+
+    ai_ready_skill_text = read_text(AI_READY_SKILL_PATH)
+    ai_ready_skill_required_snippets = [
+        (
+            "If the finding is a reusable module rule, update the closest blueprint.",
+            "ai-ready skill blueprint knowledge-routing rule",
+        ),
+        (
+            "If the finding is a repeated agent mistake or workflow correction, update `tasks/lessons.md`.",
+            "ai-ready skill lessons knowledge-routing rule",
+        ),
+        (
+            "Do not invent a parallel `.ai-harness/` memory path for this starter.",
+            "ai-ready skill no-parallel-control-plane rule",
+        ),
+    ]
+    for snippet, label in ai_ready_skill_required_snippets:
+        if snippet not in ai_ready_skill_text:
+            messages.append(fail(f"missing {label} in .claude/skills/ai-ready-bluebricks-development/SKILL.md"))
 
     brainstorming_text = read_text(BRAINSTORMING_SKILL_PATH)
     required_brainstorming_snippets = [

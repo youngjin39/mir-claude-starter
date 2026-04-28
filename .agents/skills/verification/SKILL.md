@@ -32,6 +32,7 @@ Build → Type Check → Lint → Test Suite → Security Scan → Diff Review
 - **Stop on first failure**. Do not run subsequent stages (save tokens).
 - Skip unavailable stages with SKIP label (e.g., no type checker → Type Check = SKIP).
 - READY verdict only when all stages PASS.
+- For starter/parity work, include regeneration and verifier evidence in the relevant stages.
 
 ## Red Team 5Q (post-gate self-attack)
 After all 6 stages PASS, answer these 5 questions before issuing READY:
@@ -43,6 +44,21 @@ After all 6 stages PASS, answer these 5 questions before issuing READY:
 6. "What hidden assumption does this design rely on, and what happens if that assumption is wrong?"
 
 If any answer raises doubt → investigate before issuing READY.
+
+## AI-Ready Verification Lens
+When `ai-ready-bluebricks-development` was relevant, Diff Review must also confirm:
+1. The final diff stayed inside the declared task boundary.
+2. Cross-module changes did not silently expand into unrelated files.
+3. Public interfaces and downstream dependencies still match the intended scope.
+4. Any hidden hazard named during planning was actually checked.
+5. If blueprint docs exist, the change does not obviously contradict them without a reported drift note.
+
+## Diff Review Rules
+During Diff Review, explicitly ask:
+- Did implementation match the approved plan?
+- Did validation prove the risky path, or only the happy path?
+- Did the change preserve module boundaries?
+- Is any hidden assumption still untested?
 
 ## Output Parsing Recovery
 When a tool result or model output is malformed, partial, or schema-mismatched:
@@ -65,10 +81,17 @@ Banned moves: "assume the missing field is default", "parse loosely and hope", "
 | "It compiles so it works" | Compilation ≠ correct behavior. Runtime verification needed. |
 | "This is hard to test" | Hard to test = possibly bad design. |
 | "Trivial change, no verification needed" | Trivial changes kill production most often. |
+| "The diff is small so the risk is small" | Small diffs often break large boundaries. Check dependency impact. |
 
 ## Output Format
 ```
 ## Verification: {task summary}
+
+### Boundary Check
+- Type: local/module/cross-module/starter-parity
+- Blueprint/Bluebrick context used: {doc or none}
+- Scope respected: YES/NO
+- Hidden hazards checked: {list}
 
 ### 6-Stage Gate
 | Stage | Command | Result | Verdict |
@@ -82,4 +105,7 @@ Banned moves: "assume the missing field is default", "parse loosely and hope", "
 
 ### Final Verdict: READY / NOT READY
 (If NOT READY: failed stage + cause + next action)
+
+### Residual Risk
+- {remaining uncertainty}
 ```

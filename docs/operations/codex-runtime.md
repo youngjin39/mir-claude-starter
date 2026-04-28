@@ -1,7 +1,7 @@
 ---
 title: Codex Runtime Guide
 keywords: [codex, runtime, generated, agents, skills, default-model]
-related: [operations/claude-runtime.md, operations/hook-contract.md, operations/harness-application.md, operations/starter-maintenance-mode.md, integrations/claude-to-codex-derivation.md]
+related: [operations/claude-runtime.md, operations/codex-long-running-tasks.md, operations/hook-contract.md, operations/harness-application.md, operations/starter-maintenance-mode.md, integrations/claude-to-codex-derivation.md]
 created: 2026-04-25
 last_used: 2026-04-25
 type: guide
@@ -30,7 +30,7 @@ type: guide
 
 ## Core Profile Expectation
 - The default Codex profile must include every workflow skill referenced as default runtime behavior in `CLAUDE.md`.
-- Minimum core set: `brainstorming`, `deep-interview`, `writing-plans`, `verification`, `testing`, `code-review`, `ux-ui-design`, `git-commit`, `project-doctor`, `self-audit`.
+- Minimum core set: `ai-ready-bluebricks-development`, `brainstorming`, `deep-interview`, `writing-plans`, `verification`, `testing`, `code-review`, `ux-ui-design`, `git-commit`, `project-doctor`, `runner`, `self-audit`.
 - If `AGENTS.md` says "use generated Codex skills first", missing derived skills are a runtime failure, not a documentation gap.
 
 ## Runtime Rules
@@ -43,10 +43,12 @@ type: guide
 - Mirror the Claude hook contract in generated docs because Codex does not execute those hooks itself.
 - Mirror agent-level tool restrictions in generated Codex agent instructions even when sandboxing already provides a stronger guard.
 - Before compaction, manually create a handoff document in `tasks/handoffs/` mirroring the PreCompact contract.
+- For long-running/background work, keep a durable ledger in `tasks/runner/` and refresh it before compaction, handoff, or completion claims.
 - Mirror the same blocked-intent set explicitly: destructive `rm`, protected-branch force push, hook/signing bypass flags, shared-ref history rewrite, piped remote install, `sudo`, writes outside the project, writes to secret material, and writes into `.git` internals.
 - Do not claim hook-driven incident counting for Codex-only sessions unless the active Codex workflow explicitly records incidents.
 - In Codex-only sessions, `harness/state/incidents.json` remains Claude-hook state rather than a Codex parity guarantee.
 - At session end, manually create a session snapshot in `tasks/sessions/` mirroring the SessionEnd contract.
+- On resume, read existing `tasks/runner/` ledgers first and reconnect to the tracked work before launching a replacement command.
 - Describe Codex tool-safety parity as manual compliance + verifier-checked contract drift, not native pre-execution blocking or behavioral parity.
 - Use verifier commands as completion gates because Codex lacks Claude-style native hook parity.
 

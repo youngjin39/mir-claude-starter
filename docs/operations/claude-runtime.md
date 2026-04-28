@@ -1,7 +1,7 @@
 ---
 title: Claude Runtime Guide
 keywords: [claude, runtime, workflow, hooks, memory, operations]
-related: [operations/codex-runtime.md, operations/hook-contract.md, operations/harness-application.md, operations/starter-maintenance-mode.md, integrations/claude-to-codex-derivation.md]
+related: [operations/codex-runtime.md, operations/codex-long-running-tasks.md, operations/hook-contract.md, operations/harness-application.md, operations/starter-maintenance-mode.md, integrations/claude-to-codex-derivation.md]
 created: 2026-04-25
 last_used: 2026-04-25
 type: guide
@@ -22,22 +22,26 @@ type: guide
 - Complex execution: hand off to `executor-agent`.
 - Completion claim: run `verification`.
 - 4+ issues or review request: invoke `quality-agent`.
+- Long-running/background execution: load `runner` and keep a ledger in `tasks/runner/`.
 - Do an inline self-review before escalating to heavier review/delegation loops unless risk or scope already justifies the heavier path.
 
 ## Memory Rules
 - `docs/` is durable project memory.
 - `tasks/lessons.md` stores behavioral rules promoted from repeated wins/failures.
 - `tasks/sessions/` stores temporary restore points; only the latest snapshot is active.
+- `tasks/runner/` stores durable ledgers for long-running/background work.
 - Save new reusable knowledge only when it will help a future session.
 
 ## Hooks
 - SessionStart: load active context (`plan`, `lessons`, `memory-map`, latest session).
 - PreCompact: create and review a handoff skeleton before context reduction; this is advisory rather than a hard block.
+- Prefer one task per session, compact before the active context grows into obvious bloat, and treat roughly `40%` usage as the operating target for early compaction rather than as a hook-enforced hard stop.
 - PreToolUse: block destructive `rm`, protected-branch force push, hook/signing bypass flags, shared-ref history rewrite, piped remote install, `sudo`, writes outside the project, writes to secret material, and writes into `.git` internals.
 - TddGuard: require related tests before editing existing implementation files.
 - PostToolUse: inspect edits for debug leftovers and secrets.
 - SessionEnd: save session restore notes.
 - Hook-by-hook event contract lives in `docs/operations/hook-contract.md`.
+- Long-running continuity rules live in `docs/operations/codex-long-running-tasks.md`.
 
 ## Harness Application
 - Claude gets hook-backed enforcement directly.
